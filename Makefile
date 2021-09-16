@@ -10,8 +10,7 @@ LLIBS = ./btree_cotrel_query.a
 
 INC = -I. -I${DB_DIR}/include
 
-OBJS = btree_cotrel_query.a MTI.Linux createBtree cleanCit checkRTM \
-	cleanCitOld pull_EdirectLinks
+OBJS = btree_cotrel_query.a MTI.Linux createBtree
 
 all:	${OBJS}
 
@@ -62,22 +61,6 @@ parseMARC.o:	parseMARC.c M_terms.h
 
 context.o:	context.c defaults.h
 	${CC} -c ${INC} context.c
-
-cleanCit:	cleanCit.c
-	${CC} ${CFLAGS} -o cleanCit cleanCit.c
-
-checkRTM:	checkRTM.o btree_cotrel_query.a
-	${CC} ${CFLAGS} ${INC} checkRTM.o ${LLIBS} \
-	${DBLIBS} -o checkRTM
-
-checkRTM.o:	checkRTM.c  myLocal.h
-	${CC} -c ${INC} checkRTM.c
-
-cleanCitOld:	cleanCitOld.c
-	${CC} ${CFLAGS} -o cleanCitOld cleanCitOld.c
-
-pull_EdirectLinks:	pull_EdirectLinks.c
-	${CC} ${CFLAGS} -o pull_EdirectLinks pull_EdirectLinks.c
 
 install:	${OBJS}
 	cp ${OBJS} ../bin

@@ -52104,6 +52104,12 @@ int isLookForOK(char *lookFor)
               ok = FALSE;
         } /* else fi */
 
+        else if(strcmp(lookFor, "phip") == 0)
+        {
+            if(!foundInText2("PhIP", TRUE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
         else if(strcmp(lookFor, "placenta") == 0)
         {
             if(foundInText2("aschersonia placenta", FALSE, FALSE) ||

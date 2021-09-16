@@ -26773,7 +26773,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_SPARROW].CUI) == 0)
    {
        if(!isLookForOK("sparrow"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* moral bankruptcy -> Bankruptcy
@@ -26783,7 +26783,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_BANKRUPTCY].CUI) == 0)
    {
        if(!isLookForOK("bankruptcy"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* vascular habitats -> Ecosystem
@@ -26793,7 +26793,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_HABITAT].CUI) == 0)
    {
        if(!isLookForOK("habitats"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* freezing rate protocols -> RATE Protocol
@@ -26803,7 +26803,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_RATE_PROTOCOL].CUI) == 0)
    {
        if(!isLookForOK("rate protocol"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* predatory journals called "sharks"
@@ -26815,7 +26815,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
            (strcmp(cui, special_list[Special_SHARKS3].CUI) == 0))
    {
        if(!isLookForOK("sharks"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* IMPALA Trial -> Impala -> Antelopes
@@ -26825,7 +26825,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_IMPALAS].CUI) == 0)
    {
        if(!isLookForOK("impalas"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* master-slave -> Enslaved Persons
@@ -26835,7 +26835,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_SLAVES].CUI) == 0)
    {
        if(!isLookForOK("slaves"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* crispr/cas -> CRISPR
@@ -26845,7 +26845,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_CRISPR].CUI) == 0)
    {
        if(!isLookForOK("crispr"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* mormon cricket -> Mormons
@@ -26855,7 +26855,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_MORMON].CUI) == 0)
    {
        if(!isLookForOK("mormon"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* orbit-span -> Orbit
@@ -26865,7 +26865,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_ORBIT].CUI) == 0)
    {
        if(!isLookForOK("orbit"))
-             rtn = FALSE;
+          rtn = FALSE;
    } /* else fi */
 
    /* Maine Coon Cat -> Maine
@@ -26875,7 +26875,20 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if(strcmp(cui, special_list[Special_MAINE].CUI) == 0)
    {
        if(!isLookForOK("maine"))
+          rtn = FALSE;
+   } /* else fi */
+
+   /* PHIP vs PhIP
+       JGM 09/16/2021
+    */
+
+   else if(strcmp(cui, special_list[Special_PHIP].CUI) == 0)
+   {
+       if(strstr(LCentry_term, "-\"phip\"") != NULL)
+       {
+           if(!isLookForOK("phip"))
              rtn = FALSE;
+       } /* fi */
    } /* else fi */
 
    /* --------------------- ADD NEW FILTERS ABOVE HERE ---------------- */
@@ -52104,18 +52117,18 @@ int isLookForOK(char *lookFor)
               ok = FALSE;
         } /* else fi */
 
-        else if(strcmp(lookFor, "phip") == 0)
-        {
-            if(!foundInText2("PhIP", TRUE, FALSE))
-              ok = FALSE;
-        } /* else fi */
-
         else if(strcmp(lookFor, "placenta") == 0)
         {
             if(foundInText2("aschersonia placenta", FALSE, FALSE) ||
                 foundInText2("postia placenta", FALSE, FALSE) ||
                 foundInText2("oligoporus placenta", FALSE, FALSE) ||
                 foundInText2("a. placenta", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
+        else if(strcmp(lookFor, "phip") == 0)
+        {
+            if(!foundInText2("PhIP", TRUE, FALSE))
               ok = FALSE;
         } /* else fi */
     
@@ -57829,11 +57842,26 @@ int isLookForOK(char *lookFor)
 
     else if(lookFor[0] == 'z')
     {
-        if(strcmp(lookFor, "zebra") == 0)
+        if((strcmp(lookFor, "zebras") == 0) || (strcmp(lookFor, "zebra") == 0))
         {
             if(foundInText2("zebra fish", FALSE, FALSE) ||
                foundInText2("zebrafish", FALSE, FALSE) ||
                foundInText2("zebra among horses", FALSE, FALSE) ||
+               foundInText2("zebras among horses", FALSE, FALSE) ||
+               foundInText2("zebras and horses", FALSE, FALSE) ||
+               foundInText2("horses and zebras", FALSE, FALSE) ||
+               foundInText2("horses into zebras", FALSE, FALSE) ||
+               foundInText2("zebras into horses", FALSE, FALSE) ||
+               foundInText2("horse or zebra", FALSE, FALSE) ||
+               foundInText2("zebra or horse", FALSE, FALSE) ||
+               foundInText2("zebras among the horses", FALSE, FALSE) ||
+               foundInText2("zebras into horses", FALSE, FALSE) ||
+               foundInText2("zebra than a horse", FALSE, FALSE) ||
+               foundInText2("zebra no more", FALSE, FALSE) ||
+               foundInText2("the zebra", FALSE, FALSE) ||
+               foundInText2("treatable zebra", FALSE, FALSE) ||
+               foundInText2("nephrology zebra", FALSE, FALSE) ||
+               foundInText2("beyond zebra", FALSE, FALSE) ||
                foundInText2("zebra finch", FALSE, FALSE) ||
                foundInText2("zebra finches", FALSE, FALSE) ||
                foundInText2("zebrafinch", FALSE, FALSE) ||
@@ -61673,6 +61701,62 @@ int isAmbigTrig(char *lookFor)
              found = FALSE;
        } /* fi */
    } /* else fi "W" */
+
+   else if(found && (lookFor[0] == 'z'))
+   {
+       if((strcmp(lookFor, "zebras") == 0) ||
+          (strcmp(lookFor, "zebra") == 0))
+       {
+            if(foundInText2("equus grevy", FALSE, FALSE) ||
+               foundInText2("equus grevyi", FALSE, FALSE) ||
+               foundInText2("equus quagga", FALSE, FALSE) ||
+               foundInText2("equus zebra hartmannae", FALSE, FALSE) ||
+               foundInText2("equus zebra", FALSE, FALSE) ||
+               foundInText2("equus", FALSE, FALSE) ||
+               foundInText2("grevy's zebra", FALSE, FALSE) ||
+               foundInText2("grevys zebra", FALSE, FALSE) ||
+               foundInText2("grevy zebra", FALSE, FALSE) ||
+               foundInText2("plains zebra", FALSE, FALSE) ||
+               foundInText2("mountain zebra", FALSE, FALSE) ||
+               foundInText2("chapman's zebra", FALSE, FALSE) ||
+               foundInText2("chapmans zebra", FALSE, FALSE) ||
+               foundInText2("chapman zebra", FALSE, FALSE) ||
+               foundInText2("healthy zebra", FALSE, FALSE) ||
+               foundInText2("in a zebra", FALSE, FALSE) ||
+               foundInText2("in zebra", FALSE, FALSE) ||
+               foundInText2("in zebras", FALSE, FALSE) ||
+               foundInText2("in the zebra", FALSE, FALSE) ||
+               foundInText2("of zebras", FALSE, FALSE) ||
+               foundInText2("newborn zebra", FALSE, FALSE) ||
+               foundInText2("endangered zebra", FALSE, FALSE) ||
+               foundInText2("zebra model", FALSE, FALSE) ||
+               foundInText2("zebra skin", FALSE, FALSE) ||
+               foundInText2("zebra barn", FALSE, FALSE) ||
+               foundInText2("zebra breed", FALSE, FALSE) ||
+               foundInText2("zebra breeding", FALSE, FALSE) ||
+               foundInText2("zebra dung", FALSE, FALSE) ||
+               foundInText2("zebra farm", FALSE, FALSE) ||
+               foundInText2("zebra farmer", FALSE, FALSE) ||
+               foundInText2("zebra farming", FALSE, FALSE) ||
+               foundInText2("zebra fed", FALSE, FALSE) ||
+               foundInText2("zebra flock", FALSE, FALSE) ||
+               foundInText2("zebra grazing", FALSE, FALSE) ||
+               foundInText2("zebra horn", FALSE, FALSE) ||
+               foundInText2("zebra industry", FALSE, FALSE) ||
+               foundInText2("zebra manure", FALSE, FALSE) ||
+               foundInText2("zebra model", FALSE, FALSE) ||
+               foundInText2("zebra pasture", FALSE, FALSE) ||
+               foundInText2("zebra population", FALSE, FALSE) ||
+               foundInText2("zebra production", FALSE, FALSE) ||
+               foundInText2("breeding of zebra", FALSE, FALSE) ||
+               foundInText2("commercial zebra", FALSE, FALSE) ||
+               foundInText2("cross bred zebra", FALSE, FALSE) ||
+               foundInText2("cross-bred zebra", FALSE, FALSE) ||
+               foundInText2("crossbred zebra", FALSE, FALSE) ||
+               foundInText2("grazing zebra", FALSE, FALSE))
+             found = FALSE;
+       } /* fi */
+   } /* else fi "Z" */
 
    return(found);
 } /* isAmbigTrig */

@@ -3845,7 +3845,7 @@ static char *animalsList[] = { "bee", "bees", "bison", "buffalo", "camel", "came
 
 /* Human Triggers */
 
-#define numHumanTriggers 138
+#define numHumanTriggers 139
 
 struct special_HMN_struct {
    char *lookFor;
@@ -3895,6 +3895,7 @@ static struct special_HMN_struct special_Human_Triggers[] = {
      { "early childhood", 0 },
      { "gender identity", 0 },
      { "mental disorder", 0 },
+     { "rencell vm cell", 0 },
      { "healthy adults", 0 },
      { "late childhood", 0 },
      { "maternity care", 0 },

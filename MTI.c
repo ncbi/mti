@@ -7703,6 +7703,8 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"nurses'\"") != NULL) ||
       (strstr(LCentry_term, "-\"nurses\"") != NULL) ||
       (strstr(LCentry_term, "-\"nurse\"") != NULL) ||
+      (strstr(LCentry_term, "-\"objectives\"") != NULL) ||
+      (strstr(LCentry_term, "-\"objective\"") != NULL) ||
       (strstr(LCentry_term, "-\"observations\"") != NULL) ||
       (strstr(LCentry_term, "-\"observation\"") != NULL) ||
       (strstr(LCentry_term, "-\"observing\"") != NULL) ||
@@ -7888,6 +7890,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"visualization\"") != NULL) ||
       (strstr(LCentry_term, "-\"waves\"") != NULL) ||
       (strstr(LCentry_term, "-\"wave\"") != NULL) ||
+      (strstr(LCentry_term, "-\"white\"") != NULL) ||
       (strstr(LCentry_term, "-\"weight\"") != NULL) ||
       (strstr(LCentry_term, "-\"weights\"") != NULL) ||
       (strstr(LCentry_term, "black swan event") != NULL) ||
@@ -26613,6 +26616,12 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    {
        if(!isLookForOK("pigeons"))
              rtn = FALSE;
+
+       if(strcmp(cui, special_list[Special_PIGEON3].CUI) == 0)
+       {
+          if(!isLookForOK("dove"))
+            rtn = FALSE;
+       } /* fi */
    } /* else fi */
 
    /* Yawning gap -> Yawning
@@ -26889,6 +26898,36 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
            if(!isLookForOK("phip"))
              rtn = FALSE;
        } /* fi */
+   } /* else fi */
+
+   /* Dove (commercial company) vs Dove (bird)
+       JGM 09/17/2021
+    */
+
+   else if(strcmp(cui, special_list[Special_DOVE].CUI) == 0)
+   {
+       if(!isLookForOK("dove"))
+          rtn = FALSE;
+   } /* else fi */
+
+   /* "say cheese"
+       JGM 09/17/2021
+    */
+
+   else if(strcmp(cui, special_list[Special_CHEESE].CUI) == 0)
+   {
+       if(!isLookForOK("cheese"))
+          rtn = FALSE;
+   } /* else fi */
+
+   /* sexually predatory behavior
+       JGM 09/17/2021
+    */
+
+   else if(strcmp(cui, special_list[Special_PRED_BEHAV].CUI) == 0)
+   {
+       if(!isLookForOK("predatory behavior"))
+          rtn = FALSE;
    } /* else fi */
 
    /* --------------------- ADD NEW FILTERS ABOVE HERE ---------------- */
@@ -43115,7 +43154,23 @@ int isLookForOK(char *lookFor)
         else if(strcmp(lookFor, "cheese") == 0)
         {
             if(foundInText2("cheese doppler", FALSE, FALSE) ||
-               foundInText2("cheese-wire", FALSE, FALSE))
+               foundInText2("cheese-wire", FALSE, FALSE) ||
+               foundInText2("cheese-wiring", FALSE, FALSE) ||
+               foundInText2("cheese wire", FALSE, FALSE) ||
+               foundInText2("cheese wiring", FALSE, FALSE) ||
+               foundInText2("cheese tree", FALSE, FALSE) ||
+               foundInText2("cheese-tree", FALSE, FALSE) ||
+               foundInText2("cheese-curl", FALSE, FALSE) ||
+               foundInText2("cheese curl", FALSE, FALSE) ||
+               foundInText2("hole in the cheese", FALSE, FALSE) ||
+               foundInText2("say cheese", FALSE, FALSE) ||
+               foundInText2("moving cheese", FALSE, FALSE) ||
+               foundInText2("moving my cheese", FALSE, FALSE) ||
+               foundInText2("moving the cheese", FALSE, FALSE) ||
+               foundInText2("macaroni and cheese", FALSE, FALSE) ||
+               foundInText2("mac and cheese", FALSE, FALSE) ||
+               foundInText2("swiss cheese", FALSE, FALSE) ||
+               foundInText2("swiss-cheese", FALSE, FALSE))
              ok = FALSE;
         } /* else fi */
 
@@ -44035,6 +44090,15 @@ int isLookForOK(char *lookFor)
               ok = FALSE;
         } /* else fi */
 
+        else if((strcmp(lookFor, "cues") == 0) ||
+                (strcmp(lookFor, "cue") == 0))
+        {
+            if(foundInText2("CUES", TRUE, FALSE) ||
+               foundInText2("CUEs", TRUE, FALSE) ||
+               foundInText2("CUE", TRUE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
         else if(strcmp(lookFor, "canadian") == 0)
         {
             if(foundInText2("canadian task force classification", FALSE, FALSE) ||
@@ -44582,6 +44646,20 @@ int isLookForOK(char *lookFor)
                foundInText2("darkness and the light", FALSE, FALSE) ||
                foundInText2("darkness within", FALSE, FALSE) ||
                foundInText2("light into the darkness", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
+        else if((strcmp(lookFor, "doves") == 0) ||
+                (strcmp(lookFor, "dove") == 0))
+        {
+            if(foundInText2("DOVE", TRUE, FALSE) ||
+               foundInText2("dove confident", FALSE, FALSE) ||
+               foundInText2("dove evolution", FALSE, FALSE) ||
+               foundInText2("dove-tree", FALSE, FALSE) ||
+               foundInText2("dove tree", FALSE, FALSE) ||
+               foundInText2("one arm dove hunt", FALSE, FALSE) ||
+               foundInText2("hawk-dove", FALSE, FALSE) ||
+               foundInText2("hawk dove", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
 
@@ -47062,6 +47140,7 @@ int isLookForOK(char *lookFor)
                 foundInText2("zumba gold", FALSE, FALSE) ||
                 foundInText2("data gold", FALSE, FALSE) ||
                 foundInText2("black gold", FALSE, FALSE) ||
+                foundInText2("into gold", FALSE, FALSE) ||
                 foundInText2("as good as gold", FALSE, FALSE) ||
                 foundInText2("weight in gold", FALSE, FALSE) ||
                 foundInText2("gold star", FALSE, FALSE) ||
@@ -52126,6 +52205,18 @@ int isLookForOK(char *lookFor)
               ok = FALSE;
         } /* else fi */
 
+        else if((strcmp(lookFor, "predatory behaviors") == 0) ||
+                (strcmp(lookFor, "predatory behavior") == 0) ||
+                (strcmp(lookFor, "predatory behaviours") == 0) ||
+                (strcmp(lookFor, "predatory behaviour") == 0))
+        {
+            if(foundInText2("sexually predatory behavior", FALSE, FALSE) ||
+                foundInText2("sexually predatory behaviour", FALSE, FALSE) ||
+                foundInText2("sexual predatory behavior", FALSE, FALSE) ||
+                foundInText2("sexual predatory behaviour", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
         else if(strcmp(lookFor, "phip") == 0)
         {
             if(!foundInText2("PhIP", TRUE, FALSE))
@@ -54105,6 +54196,8 @@ int isLookForOK(char *lookFor)
                foundInText2("free-running", FALSE, FALSE) ||
                foundInText2("years running", FALSE, FALSE) ||
                foundInText2("year running", FALSE, FALSE) ||
+               foundInText2("walking than running", FALSE, FALSE) ||
+               foundInText2("than running", FALSE, FALSE) ||
                foundInText2("wheel-running", FALSE, FALSE) ||
                foundInText2("wheel running", FALSE, FALSE))
               ok = FALSE;
@@ -54190,10 +54283,13 @@ int isLookForOK(char *lookFor)
                 foundInText2("ram manohar", FALSE, FALSE) ||
                 foundInText2("ram flap", FALSE, FALSE) ||
                 foundInText2("ram dump", FALSE, FALSE) ||
+                foundInText2("pvc ram", FALSE, FALSE) ||
+                foundInText2("pvc-ram", FALSE, FALSE) ||
                 foundInText2("mb ram", FALSE, FALSE) ||
                 foundInText2("ram domain", FALSE, FALSE) ||
                 foundInText2("ram task", FALSE, FALSE) ||
                 foundInText2("ram pressure", FALSE, FALSE) ||
+                foundInText2("ram and sreen", FALSE, FALSE) ||
                 foundInText2("buri ram", FALSE, FALSE) ||
                 foundInText2("guru ram", FALSE, FALSE) ||
                 foundInText2("linc-ram", FALSE, FALSE) ||
@@ -54209,7 +54305,14 @@ int isLookForOK(char *lookFor)
                 foundInText2("ram column", FALSE, FALSE) ||
                 foundInText2("ram and screen", FALSE, FALSE) ||
                 foundInText2("ram filter", FALSE, FALSE) ||
+                foundInText2("ram's horn squid", FALSE, FALSE) ||
+                foundInText2("rams horn squid", FALSE, FALSE) ||
+                foundInText2("ram's horn sign", FALSE, FALSE) ||
+                foundInText2("rams horn sign", FALSE, FALSE) ||
                 foundInText2("ram extrusion", FALSE, FALSE) ||
+                foundInText2("ram extruded", FALSE, FALSE) ||
+                foundInText2("ram-extruded", FALSE, FALSE) ||
+                foundInText2("ram ventilator", FALSE, FALSE) ||
                 foundInText2("pneumatic ram", FALSE, FALSE) ||
                 foundInText2("hydraulic ram", FALSE, FALSE) ||
                 foundInText2("battering ram", FALSE, FALSE) ||
@@ -54220,6 +54323,7 @@ int isLookForOK(char *lookFor)
                 foundInText2("ram cannula", FALSE, FALSE) ||
                 foundInText2("ram cichlid", FALSE, FALSE) ||
                 foundInText2("cichlid", FALSE, FALSE) ||
+                foundInText2("squid", FALSE, FALSE) ||
                 foundInText2("ribosomal ambiguity", FALSE, FALSE) ||
                 foundInText2("free ram", FALSE, FALSE) ||
                 foundInText2("memory", FALSE, FALSE))
@@ -54986,6 +55090,13 @@ int isLookForOK(char *lookFor)
             if(foundInText2("sister species", FALSE, FALSE) ||
                 foundInText2("sister chromatid", FALSE, FALSE) ||
                 foundInText2("sister chromatids", FALSE, FALSE) ||
+                foundInText2("unequal sisters", FALSE, FALSE) ||
+                foundInText2("sinful sisters", FALSE, FALSE) ||
+                foundInText2("who are sisters", FALSE, FALSE) ||
+                foundInText2("are sisters", FALSE, FALSE) ||
+                foundInText2("sisters in", FALSE, FALSE) ||
+                foundInText2("sisters of", FALSE, FALSE) ||
+                foundInText2("brothers and sisters", FALSE, FALSE) ||
                 foundInText2("aphid sister", FALSE, FALSE) ||
                 foundInText2("sister group", FALSE, FALSE) ||
                 foundInText2("sister genus", FALSE, FALSE) ||
@@ -57711,6 +57822,7 @@ int isLookForOK(char *lookFor)
                foundInText2("walking on eggshell", FALSE, FALSE) ||
                foundInText2("walking the talk", FALSE, FALSE) ||
                foundInText2("walking the plank", FALSE, FALSE) ||
+               foundInText2("walking than running", FALSE, FALSE) ||
                foundInText2("walking horse", FALSE, FALSE) ||
                foundInText2("cross walking", FALSE, FALSE) ||
                foundInText2("cross-walking", FALSE, FALSE) ||

@@ -3,8 +3,8 @@ struct SA_Label_struct {
    long label_len;
 };
 
-static long numSA_Labels = 2997;
-static struct SA_Label_struct SA_Labels[2997] = {
+static long numSA_Labels = 2995;
+static struct SA_Label_struct SA_Labels[2995] = {
     { "study eligibility criteria, participants, and interventions", 59 },
     { "study eligibility criteria, participants and interventions", 58 },
     { "design, setting, participants, and main outcome measures", 56 },
@@ -2918,7 +2918,6 @@ static struct SA_Label_struct SA_Labels[2997] = {
     { "lessons", 7 },
     { "measure", 7 },
     { "message", 7 },
-    { "methods", 7 },
     { "numbers", 7 },
     { "objects", 7 },
     { "options", 7 },
@@ -2957,7 +2956,6 @@ static struct SA_Label_struct SA_Labels[2997] = {
     { "case 2", 6 },
     { "cohort", 6 },
     { "course", 6 },
-    { "design", 6 },
     { "ethics", 6 },
     { "factor", 6 },
     { "format", 6 },

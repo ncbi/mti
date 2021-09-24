@@ -7416,6 +7416,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"biological\"") != NULL) ||
       (strstr(LCentry_term, "-\"black howler monkeys\"") != NULL) ||
       (strstr(LCentry_term, "-\"black howler monkey\"") != NULL) ||
+      (strstr(LCentry_term, "-\"black panther\"") != NULL) ||
       (strstr(LCentry_term, "-\"booster\"") != NULL) ||
       (strstr(LCentry_term, "-\"boosting\"") != NULL) ||
       (strstr(LCentry_term, "-\"boosted\"") != NULL) ||
@@ -7717,6 +7718,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"orientated\"") != NULL) ||
       (strstr(LCentry_term, "-\"oriented\"") != NULL) ||
       (strstr(LCentry_term, "-\"orphaned\"") != NULL) ||
+      (strstr(LCentry_term, "-\"panther\"") != NULL) ||
       (strstr(LCentry_term, "-\"partners\"") != NULL) ||
       (strstr(LCentry_term, "-\"partner\"") != NULL) ||
       (strstr(LCentry_term, "-\"payments\"") != NULL) ||
@@ -7738,6 +7740,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"plea\"") != NULL) ||
       (strstr(LCentry_term, "-\"port\"") != NULL) ||
       (strstr(LCentry_term, "-\"portal\"") != NULL) ||
+      (strstr(LCentry_term, "-\"possession\"") != NULL) ||
       (strstr(LCentry_term, "-\"positioning\"") != NULL) ||
       (strstr(LCentry_term, "-\"pressure\"") != NULL) ||
       (strstr(LCentry_term, "-\"prices\"") != NULL) ||
@@ -26930,6 +26933,16 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
           rtn = FALSE;
    } /* else fi */
 
+   /* dna walkers
+       JGM 09/24/2021
+    */
+
+   else if(strcmp(cui, special_list[Special_WALKERS].CUI) == 0)
+   {
+       if(!isLookForOK("walkers"))
+          rtn = FALSE;
+   } /* else fi */
+
    /* --------------------- ADD NEW FILTERS ABOVE HERE ---------------- */
 
    if(!rtn) /* If we are going to remove it, double check the Forced list */
@@ -28831,6 +28844,8 @@ void check_ForcedCombined()
        foundInText("2019-ncov", FALSE, FALSE) || foundInText("2019 ncov", FALSE, FALSE) || 
        foundInText("2019ncov", FALSE, FALSE) || foundInText("19-ncov", FALSE, FALSE) ||
        foundInText("19 ncov", FALSE, FALSE) || foundInText("19ncov", FALSE, FALSE) ||
+       foundInText("cov-2", FALSE, FALSE) || foundInText("cov 2", FALSE, FALSE) ||
+       foundInText("cov2", FALSE, FALSE) ||
        foundInText("coronavirus disease covid-19", FALSE, FALSE) ||
        foundInText("coronavirus disease covid 19", FALSE, FALSE) ||
        foundInText("coronavirus disease covid19", FALSE, FALSE) ||
@@ -41668,6 +41683,7 @@ int isLookForOK(char *lookFor)
                foundInText2("histoligical aging", FALSE, FALSE) ||
                foundInText2("oocyte aging", FALSE, FALSE) ||
                foundInText2("vacuum aging", FALSE, FALSE) ||
+               foundInText2("photo aging", FALSE, FALSE) ||
 
                /* Ageing versions */
 
@@ -41686,8 +41702,8 @@ int isLookForOK(char *lookFor)
                foundInText2("cellular ageing", FALSE, FALSE) ||
                foundInText2("histoligical ageing", FALSE, FALSE) ||
                foundInText2("oocyte ageing", FALSE, FALSE) ||
-               foundInText2("vacuum ageing", FALSE, FALSE))
-
+               foundInText2("vacuum ageing", FALSE, FALSE) ||
+               foundInText2("photo ageing", FALSE, FALSE))
              ok = FALSE;
         } /* else fi */
 
@@ -42573,31 +42589,84 @@ int isLookForOK(char *lookFor)
         else if((strcmp(lookFor, "bull") == 0) ||
                 (strcmp(lookFor, "bulls") == 0))
         {
-            if(foundInText2("bull shark", FALSE, FALSE) ||
-               foundInText2("sharks", FALSE, FALSE) ||
-               foundInText2("shark", FALSE, FALSE) ||
-               foundInText2("bull moose", FALSE, FALSE) ||
-               foundInText2("moose", FALSE, FALSE) ||
-               foundInText2("bull elephant", FALSE, FALSE) ||
-               foundInText2("elephant", FALSE, FALSE) ||
-               foundInText2("bull elk", FALSE, FALSE) ||
-               foundInText2("bull trout", FALSE, FALSE) ||
-               foundInText2("bull terrier", FALSE, FALSE) ||
+            if(foundInText2("(bull.", FALSE, FALSE) ||
+               foundInText2("bison bull", FALSE, FALSE) ||
+               foundInText2("bison", FALSE, FALSE) ||
+               foundInText2("buffalo bull", FALSE, FALSE) ||
+               foundInText2("buffalo", FALSE, FALSE) ||
+               foundInText2("bubalus", FALSE, FALSE) ||
+               foundInText2("james-bull", FALSE, FALSE) ||
+               foundInText2("james bull", FALSE, FALSE) ||
+               foundInText2("bull method", FALSE, FALSE) ||
+               foundInText2("bull city", FALSE, FALSE) ||
                foundInText2("bull creek", FALSE, FALSE) ||
                foundInText2("bull dog", FALSE, FALSE) ||
-               foundInText2("bull-dog", FALSE, FALSE) ||
-               foundInText2("pit bull", FALSE, FALSE) ||
-               foundInText2("no bull", FALSE, FALSE) ||
-               foundInText2("buffalo bull", FALSE, FALSE) ||
-               foundInText2("elephant", FALSE, FALSE) ||
-               foundInText2("red bull", FALSE, FALSE) ||
-               foundInText2("bull's-eye", FALSE, FALSE) ||
-               foundInText2("bull's eye", FALSE, FALSE) ||
-               foundInText2("bulls-eye", FALSE, FALSE) ||
-               foundInText2("bulls eye", FALSE, FALSE) ||
-               foundInText2("bullseye", FALSE, FALSE) ||
+               foundInText2("bull elephant", FALSE, FALSE) ||
+               foundInText2("bull elk", FALSE, FALSE) ||
+               foundInText2("bull reindeer", FALSE, FALSE) ||
+               foundInText2("reindeer", FALSE, FALSE) ||
+               foundInText2("reindeer bull", FALSE, FALSE) ||
+               foundInText2("bull murrah", FALSE, FALSE) ||
+               foundInText2("murrah", FALSE, FALSE) ||
+               foundInText2("murrah bull", FALSE, FALSE) ||
+               foundInText2("bull yak", FALSE, FALSE) ||
+               foundInText2("yak", FALSE, FALSE) ||
+               foundInText2("yak bull", FALSE, FALSE) ||
+               foundInText2("bos grunniens", FALSE, FALSE) ||
+               foundInText2("bull camel", FALSE, FALSE) ||
+               foundInText2("camelus", FALSE, FALSE) ||
+               foundInText2("camel", FALSE, FALSE) ||
+               foundInText2("camel bull", FALSE, FALSE) ||
+               foundInText2("bull headed", FALSE, FALSE) ||
+               foundInText2("bull-headed", FALSE, FALSE) ||
+               foundInText2("bull's head", FALSE, FALSE) ||
+               foundInText2("bulls head", FALSE, FALSE) ||
+               foundInText2("bull's horn", FALSE, FALSE) ||
+               foundInText2("bulls horn", FALSE, FALSE) ||
+               foundInText2("bull by the horns", FALSE, FALSE) ||
+               foundInText2("bull in the middle", FALSE, FALSE) ||
                foundInText2("bull market", FALSE, FALSE) ||
-               foundInText2("(bull.", FALSE, FALSE))
+               foundInText2("bull moose", FALSE, FALSE) ||
+               foundInText2("bull shark", FALSE, FALSE) ||
+               foundInText2("bull terrier", FALSE, FALSE) ||
+               foundInText2("bull ant", FALSE, FALSE) ||
+               foundInText2("bull nettle", FALSE, FALSE) ||
+               foundInText2("bull kelp", FALSE, FALSE) ||
+               foundInText2("kelp", FALSE, FALSE) ||
+               foundInText2("bull trout", FALSE, FALSE) ||
+               foundInText2("bull's eye", FALSE, FALSE) ||
+               foundInText2("bull's-eye", FALSE, FALSE) ||
+               foundInText2("bull-dog", FALSE, FALSE) ||
+               foundInText2("bulls eye", FALSE, FALSE) ||
+               foundInText2("bulls-eye", FALSE, FALSE) ||
+               foundInText2("bullseye", FALSE, FALSE) ||
+               foundInText2("elephant", FALSE, FALSE) ||
+               foundInText2("boletus edulis", FALSE, FALSE) ||
+               foundInText2("boletus", FALSE, FALSE) ||
+               foundInText2("laetiporus sulphureus", FALSE, FALSE) ||
+               foundInText2("laetiporus", FALSE, FALSE) ||
+               foundInText2("auricularia auricular", FALSE, FALSE) ||
+               foundInText2("auricularia", FALSE, FALSE) ||
+               foundInText2("hericium erinaceus", FALSE, FALSE) ||
+               foundInText2("hericium caput-medusae", FALSE, FALSE) ||
+               foundInText2("hericium caput medusae", FALSE, FALSE) ||
+               foundInText2("hericium", FALSE, FALSE) ||
+               foundInText2("bull.:fr.", FALSE, FALSE) ||
+               foundInText2("moose", FALSE, FALSE) ||
+               foundInText2("nili ravi", FALSE, FALSE) ||
+               foundInText2("nili-ravi", FALSE, FALSE) ||
+               foundInText2("socks with the bull", FALSE, FALSE) ||
+               foundInText2("no bull", FALSE, FALSE) ||
+               foundInText2("papal bull", FALSE, FALSE) ||
+               foundInText2("tip bull", FALSE, FALSE) ||
+               foundInText2("pit bull", FALSE, FALSE) ||
+               foundInText2("red bull", FALSE, FALSE) ||
+               foundInText2("shark", FALSE, FALSE) ||
+               foundInText2("sharks", FALSE, FALSE) ||
+               foundInText2("trout", FALSE, FALSE) ||
+               foundInText2("elk", FALSE, FALSE) ||
+               foundInText2("moose", FALSE, FALSE) ||
+               foundInText2("terrier", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
 
@@ -42763,6 +42832,8 @@ int isLookForOK(char *lookFor)
                foundInText2("bipolar forceps", FALSE, FALSE) ||
                foundInText2("bipolar hemiarthroplasty", FALSE, FALSE) ||
                foundInText2("bipolar hip", FALSE, FALSE) ||
+               foundInText2("bipolar implant", FALSE, FALSE) ||
+               foundInText2("bipolar kps", FALSE, FALSE) ||
                foundInText2("bipolar lead", FALSE, FALSE) ||
                foundInText2("bipolar leads", FALSE, FALSE) ||
                foundInText2("bipolar membrane", FALSE, FALSE) ||
@@ -42777,8 +42848,10 @@ int isLookForOK(char *lookFor)
                foundInText2("bipolar pulse", FALSE, FALSE) ||
                foundInText2("bipolar pulses", FALSE, FALSE) ||
                foundInText2("bipolar radiofrequency", FALSE, FALSE) ||
+               foundInText2("bipolar radial", FALSE, FALSE) ||
                foundInText2("bipolar resection", FALSE, FALSE) ||
                foundInText2("bipolar rf", FALSE, FALSE) ||
+               foundInText2("bipolar rh", FALSE, FALSE) ||
                foundInText2("bipolar scissors", FALSE, FALSE) ||
                foundInText2("bipolar sealing", FALSE, FALSE) ||
                foundInText2("bipolar sensing", FALSE, FALSE) ||
@@ -43796,6 +43869,7 @@ int isLookForOK(char *lookFor)
                foundInText2("skin the proverbial cat", FALSE, FALSE) ||
                foundInText2("skin this proverbial cat", FALSE, FALSE) ||
                foundInText2("skin that proverbial cat", FALSE, FALSE) ||
+               foundInText2("cat by the tail", FALSE, FALSE) ||
                foundInText2("curiosity killed a cat", FALSE, FALSE) ||
                foundInText2("curiosity killed this cat", FALSE, FALSE) ||
                foundInText2("curiosity killed that cat", FALSE, FALSE) ||
@@ -44373,6 +44447,7 @@ int isLookForOK(char *lookFor)
                     foundInText2("non-verbal communication", FALSE, FALSE) ||
                     foundInText2("non verbal communication", FALSE, FALSE) ||
                     foundInText2("nonverbal communication", FALSE, FALSE) ||
+                    foundInText2("atrial communication", FALSE, FALSE) ||
                     foundInText2("hypophysial", FALSE, FALSE) ||
                     foundInText2("glioblastoma", FALSE, FALSE) ||
                     foundInText2("mitochondria", FALSE, FALSE) ||
@@ -45124,6 +45199,11 @@ int isLookForOK(char *lookFor)
                foundInText2("quack like a duck", FALSE, FALSE) ||
                foundInText2("sitting ducks", FALSE, FALSE) ||
                foundInText2("sitting duck", FALSE, FALSE) ||
+               foundInText2("tiger hitting", FALSE, FALSE) ||
+               foundInText2("tiger is hitting", FALSE, FALSE) ||
+               foundInText2("tiger and the duck", FALSE, FALSE) ||
+               foundInText2("tiger and a duck", FALSE, FALSE) ||
+               foundInText2("[The tiger] [is hitting", FALSE, FALSE) ||
                foundInText2("DUCK", TRUE, FALSE) ||
                foundInText2("DUCKs", TRUE, FALSE))
               ok = FALSE;
@@ -46298,6 +46378,8 @@ int isLookForOK(char *lookFor)
             if(foundInText2("friend in need is a friend indeed", FALSE, FALSE) ||
                foundInText2("FRIEND", TRUE, FALSE) ||
                foundInText2("not a friend", FALSE, FALSE) ||
+               foundInText2("foes to friends", FALSE, FALSE) ||
+               foundInText2("foe to friend", FALSE, FALSE) ||
                foundInText2("false friend", FALSE, FALSE) ||
                foundInText2("false-friend", FALSE, FALSE) ||
                foundInText2("isn't your friend", FALSE, FALSE) ||
@@ -48301,11 +48383,49 @@ int isLookForOK(char *lookFor)
                 foundInText2("-he", FALSE, FALSE) ||
                 (strstr(globalTitle, "he-") != NULL) ||
                 (strstr(globalTitle, "-he") != NULL) ||
+                (strstr(globalTitle, "/he") != NULL) ||
+                (strstr(globalTitle, "she/he") != NULL) ||
+                (strstr(globalTitle, "he/she") != NULL) ||
                 (strstr(globalAbstract, "he-") != NULL) ||
                 (strstr(globalAbstract, "-he") != NULL) ||
+                (strstr(globalAbstract, "/he") != NULL) ||
+                (strstr(globalAbstract, "she/he") != NULL) ||
+                (strstr(globalAbstract, "he/she") != NULL) ||
+                (strstr(citation, "He,") != NULL) ||
                 foundInText2("t he", FALSE, FALSE) ||
+                foundInText2("the he", FALSE, FALSE) ||
                 foundInText2("hes", FALSE, FALSE) ||
+                foundInText2("he+", FALSE, FALSE) ||
+                foundInText2("s(he)", FALSE, FALSE) ||
                 foundInText2("(he)", FALSE, FALSE) ||
+                foundInText2("he or she", FALSE, FALSE) ||
+                foundInText2("she or he", FALSE, FALSE) ||
+                foundInText2("he et al", FALSE, FALSE) ||
+                foundInText2("hun he", FALSE, FALSE) ||
+                foundInText2("drs he", FALSE, FALSE) ||
+                foundInText2("dr he", FALSE, FALSE) ||
+                foundInText2("of he", FALSE, FALSE) ||
+                foundInText2("he who", FALSE, FALSE) ||
+                foundInText2("he role", FALSE, FALSE) ||
+                foundInText2("he ara", FALSE, FALSE) ||
+                foundInText2("he maolin", FALSE, FALSE) ||
+                foundInText2("he la cell", FALSE, FALSE) ||
+                foundInText2("in reply to he", FALSE, FALSE) ||
+                foundInText2("he wananga", FALSE, FALSE) ||
+                foundInText2("he korowai", FALSE, FALSE) ||
+                foundInText2("he ion", FALSE, FALSE) ||
+                foundInText2("he formula", FALSE, FALSE) ||
+                foundInText2("yang he", FALSE, FALSE) ||
+                foundInText2("he xie", FALSE, FALSE) ||
+                foundInText2("he wei", FALSE, FALSE) ||
+                foundInText2("he tian", FALSE, FALSE) ||
+                foundInText2("he pikinga", FALSE, FALSE) ||
+                foundInText2("he puawaitanga", FALSE, FALSE) ||
+                foundInText2("he jiankui's", FALSE, FALSE) ||
+                foundInText2("he jiankui", FALSE, FALSE) ||
+                foundInText2("he inclusion", FALSE, FALSE) ||
+                foundInText2("he united", FALSE, FALSE) ||
+                foundInText2("he is us", FALSE, FALSE) ||
                 foundInText2("HEs", TRUE, FALSE))
               ok = FALSE;
         } /* else fi */
@@ -49591,7 +49711,10 @@ int isLookForOK(char *lookFor)
         else if((strcmp(lookFor, "lamb") == 0) ||
                 (strcmp(lookFor, "lambs") == 0))
         {
-            if(foundInText2("lamb wave", FALSE, FALSE) ||
+            if(foundInText2("sheep", FALSE, FALSE))
+              ok = TRUE;
+
+            else if(foundInText2("lamb wave", FALSE, FALSE) ||
                foundInText2("lamb mode", FALSE, FALSE) ||
                foundInText2("lamb's lettuce", FALSE, FALSE) ||
                foundInText2("lambs lettuce", FALSE, FALSE) ||
@@ -49613,6 +49736,9 @@ int isLookForOK(char *lookFor)
                foundInText2("amphotericin", FALSE, FALSE) ||
                foundInText2("lamb rotavirus", FALSE, FALSE) ||
                foundInText2("pinus massoniana", FALSE, FALSE) ||
+               foundInText2("pinus banksiana", FALSE, FALSE) ||
+               foundInText2("pinus nigra", FALSE, FALSE) ||
+               foundInText2("pinus", FALSE, FALSE) ||
                foundInText2("LamB", TRUE, FALSE) ||
                foundInText2("LAmB", TRUE, FALSE) ||
                foundInText2("lamB", TRUE, FALSE) ||
@@ -54177,6 +54303,7 @@ int isLookForOK(char *lookFor)
                foundInText2("hit the ground running", FALSE, FALSE) ||
                foundInText2("running on empty", FALSE, FALSE) ||
                foundInText2("running a", FALSE, FALSE) ||
+               foundInText2("running an", FALSE, FALSE) ||
                foundInText2("running the", FALSE, FALSE) ||
                foundInText2("running for", FALSE, FALSE) ||
                foundInText2("running conditions", FALSE, FALSE) ||
@@ -56203,6 +56330,11 @@ int isLookForOK(char *lookFor)
                foundInText2("tiger nuts", FALSE, FALSE) ||
                foundInText2("tiger-nuts", FALSE, FALSE) ||
                foundInText2("tiger-nut", FALSE, FALSE) ||
+               foundInText2("tiger hitting", FALSE, FALSE) ||
+               foundInText2("tiger is hitting", FALSE, FALSE) ||
+               foundInText2("tiger and the duck", FALSE, FALSE) ||
+               foundInText2("tiger and a duck", FALSE, FALSE) ||
+               foundInText2("[The tiger] [is hitting", FALSE, FALSE) ||
                foundInText2("tiger tooth croaker", FALSE, FALSE) ||
                foundInText2("tiger-tailed seahorse", FALSE, FALSE) ||
                foundInText2("tiger-tail seahorse", FALSE, FALSE) ||
@@ -57828,6 +57960,34 @@ int isLookForOK(char *lookFor)
                foundInText2("cross-walking", FALSE, FALSE) ||
                foundInText2("chain walking", FALSE, FALSE) ||
                foundInText2("chain-walking", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+    
+        else if((strcmp(lookFor, "walkers") == 0) ||
+                (strcmp(lookFor, "walkers") == 0))
+        {
+            if(foundInText2("a walker", FALSE, FALSE) ||
+                foundInText2("cane", FALSE, FALSE) ||
+                foundInText2("wheelchair", FALSE, FALSE) ||
+                foundInText2("rollator", FALSE, FALSE) ||
+                foundInText2("smart walker", FALSE, FALSE) ||
+                foundInText2("walker-assisted", FALSE, FALSE) ||
+                foundInText2("walker assisted", FALSE, FALSE) ||
+                foundInText2("robotic walker", FALSE, FALSE) ||
+                foundInText2("support walker", FALSE, FALSE) ||
+                foundInText2("rolling walker", FALSE, FALSE) ||
+                foundInText2("wheeled walker", FALSE, FALSE) ||
+                foundInText2("motorized walker", FALSE, FALSE) ||
+                foundInText2("instrumented walker", FALSE, FALSE) ||
+                foundInText2("anterior walker", FALSE, FALSE) ||
+                foundInText2("posterior walker", FALSE, FALSE) ||
+                foundInText2("assistive walker", FALSE, FALSE) ||
+                foundInText2("low-cost walker", FALSE, FALSE) ||
+                foundInText2("low cost walker", FALSE, FALSE) ||
+                foundInText2("standard walker", FALSE, FALSE) ||
+                foundInText2("cast walker", FALSE, FALSE))
+              ok = TRUE;
+            else
               ok = FALSE;
         } /* else fi */
     

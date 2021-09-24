@@ -383,6 +383,7 @@ void makePTasTopic(long ptPos, char *reason);
 void addFemalePregnancy(long pregnancyPos);
 char *verifyAmbig_Metaphor(char *triggerList);
 int countForced(char *trigger);
+char *XoutPercentages(char *text);
 
 /***************************************************************************
 *                                                                          *
@@ -7654,6 +7655,13 @@ void checkForAgeYears()
        lcCit = strdup(foo);
        free(foo);
 
+       /* Remove any percentages prior to looking for ages (age groups: 7.7%) */
+
+       foo = XoutPercentages(lcCit);
+       free(lcCit);
+       lcCit = strdup(foo);
+       free(foo);
+
        if(RTM_Debug)
        {
            fprintf(fout, "Age Range (Humans Found): %s\n", muid);
@@ -13489,8 +13497,8 @@ void checkMaleFemalePct()
 
            if(RTM_Debug)
            {
-               fprintf(stderr, "Sentence Male/Female Pct Snippet: #%s#\n", snippet);
-               fflush(stderr);
+               fprintf(fout, "Sentence Male/Female Pct Snippet: #%s#\n", snippet);
+               fflush(fout);
            } /* fi */
 
            if(foundFemale)
@@ -15066,3 +15074,39 @@ int countForced(char *trigger)
 
     return(rtn);
 } /* countForced */
+
+/***************************************************************************
+*
+*  XoutPercentages --
+*
+*      This 
+*
+***************************************************************************/
+
+char *XoutPercentages(char *text)
+{
+   char *base, *foo, *baseLookFor;
+   int okLeft, okRight;
+   long i, j, baseLen, lfLen, diff, rPos, pos;
+
+   okLeft = okRight = FALSE;
+   lfLen = (long)strlen("%");
+   triggerLen = lfLen;
+   base = strdup(text);
+   baseLen = (long)strlen(text);
+   baseLookFor = strdup("%");
+
+   foo = strstr(base, baseLookFor);
+   while(foo != NULL)
+   {
+       diff = foo - base;
+       j = diff;
+       while(isdigit(base[j]) || (base[j] == '%'))
+         base[j--] = 'X';
+
+       foo = strstr(base, baseLookFor);
+  } /* while foo */
+
+   free(baseLookFor);
+   return(base);
+} /* XoutPercentages */

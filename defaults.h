@@ -127,5 +127,12 @@ int hasRPF = localFalse;
 int hasROF = localFalse;
 int hasUOF = localFalse;
 
+/*
+int numTTHosts = 5;
+char *texToolHosts[] = { "ii-server1", "ii-server4", "ii-server5", "ii-server11", "ii-server13" };
+
+int numTTHosts = 4;
+char *texToolHosts[] = { "ii-server4", "ii-server5", "ii-server11", "ii-server13" };
+*/
 int numTTHosts = 5;
 char *texToolHosts[] = { "ii-server1", "ii-server4", "ii-server5", "ii-server11", "ii-server13" };

@@ -205,6 +205,7 @@ void checkPT_Negation(char *lookFor);
 void addPT(char *DUI, char *loc, char *lookFor, char *MHname, char *globalET,
            char *globalPI, int flag, int isSpecial);
 int isAmbigTrig(char *lookFor);
+char *removeHEXCODE(char *text);
 
 extern void splitCitation();
 extern void checkSentPTs();
@@ -249,6 +250,8 @@ extern void cleanFinalList();
 extern int idWithinContext(char *text, long len, char *lookFor, char *refine,
                            int windowSize);
 extern void checkDina_RegEx();
+extern int isModelOrganism(char *dui);
+extern int isFDOC_SCR(char *name);
 
 
 struct PTsStruct {
@@ -1483,6 +1486,46 @@ int main(int argc, char *argv[])
 
                       okCont = FALSE;
                   } /* fi exitNoResult */
+
+                  /* MTIA - if we have no answer, can we provide a default answer?
+
+                     100953980|ALTEX - Animal Testing Alternatives
+                   */
+
+                  if(okCont)
+                  {
+                      if(strcmp(JID, "100953980") == 0)
+                      {
+                          numOK = 0;
+                          for(i = 0; i < max; i++)
+                          {
+                              if(mt_table[i].oktoprint && mt_table[i].safe &&
+                                 (mt_table[i].datatype != SH) && (mt_table[i].datatype != NM))
+                              {
+                                  if(strcmp(mt_table[i].mh, "Humans") == 0)
+                                  {
+                                      numOK++;
+                                      if(RTM_Debug)
+                                        fprintf(stderr, "MTIA Journal Check OK: %s - %d\n",
+                                                mt_table[i].mh, mt_table[i].datatype);
+                                  } /* fi */
+                              } /* fi */
+                          } /* for */
+
+                          if(RTM_Debug)
+                          {
+                              fprintf(stderr, "MTIA Journal Check numOK: %ld\n", numOK);
+                              fflush(stderr);
+                          } /* fi */
+
+                          if(numOK == 0)
+                          {
+                              process_mterm(FALSE, "", "Animal Testing Alternatives", MMI,
+                                            1000.00, MH, "", "", "Forced Default for Journal", 
+                                            "D000826", "", "", TRUE);
+                          } /* fi */
+                      } /* fi */
+                  } /* fi */
 
                   if(okCont)
                   {
@@ -5926,6 +5969,10 @@ void read_Normal_Citation()
          strcpy(globalTitle, foo);
          free(foo);
 
+         foo = removeHEXCODE(globalTitle);
+         strcpy(globalTitle, foo);
+         free(foo);
+
          foo = removeEMAIL(globalTitle);
          strcpy(globalTitle, foo);
          free(foo);
@@ -6012,6 +6059,10 @@ void read_Normal_Citation()
          */
 
          foo = removeHTTP(globalAbstract);
+         strcpy(globalAbstract, foo);
+         free(foo);
+
+         foo = removeHEXCODE(globalAbstract);
          strcpy(globalAbstract, foo);
          free(foo);
 
@@ -7439,6 +7490,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"casting\"") != NULL) ||
       (strstr(LCentry_term, "-\"casted\"") != NULL) ||
       (strstr(LCentry_term, "-\"cast\"") != NULL) ||
+      (strstr(LCentry_term, "-\"cell\"") != NULL) ||
       (strstr(LCentry_term, "-\"century botany\"") != NULL) ||
       (strstr(LCentry_term, "-\"chameleon\"") != NULL) ||
       (strstr(LCentry_term, "-\"chameleons\"") != NULL) ||
@@ -7540,7 +7592,12 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"echoes\"") != NULL) ||
       (strstr(LCentry_term, "-\"echoing\"") != NULL) ||
       (strstr(LCentry_term, "-\"ecological\"") != NULL) ||
+      (strstr(LCentry_term, "-\"ekbom's syndrome\"") != NULL) ||
+      (strstr(LCentry_term, "-\"ekboms syndrome\"") != NULL) ||
+      (strstr(LCentry_term, "-\"ekbom syndrome\"") != NULL) ||
       (strstr(LCentry_term, "-\"elvis\"") != NULL) ||
+      (strstr(LCentry_term, "-\"emergencies\"") != NULL) ||
+      (strstr(LCentry_term, "-\"emergency\"") != NULL) ||
       (strstr(LCentry_term, "-\"employed\"") != NULL) ||
       (strstr(LCentry_term, "-\"emesis\"") != NULL) ||
       (strstr(LCentry_term, "-\"encoding\"") != NULL) ||
@@ -7563,6 +7620,8 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"everyday\"") != NULL) ||
       (strstr(LCentry_term, "-\"fad\"") != NULL) ||
       (strstr(LCentry_term, "-\"fads\"") != NULL) ||
+      (strstr(LCentry_term, "-\"fathers\"") != NULL) ||
+      (strstr(LCentry_term, "-\"father\"") != NULL) ||
       (strstr(LCentry_term, "-\"five factor\"") != NULL) ||
       (strstr(LCentry_term, "-\"five-factor\"") != NULL) ||
       (strstr(LCentry_term, "-\"flown\"") != NULL) ||
@@ -7574,6 +7633,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"genetic\"") != NULL) ||
       (strstr(LCentry_term, "-\"generations\"") != NULL) ||
       (strstr(LCentry_term, "-\"generation\"") != NULL) ||
+      (strstr(LCentry_term, "-\"global temperature\"") != NULL) ||
       (strstr(LCentry_term, "-\"globes\"") != NULL) ||
       (strstr(LCentry_term, "-\"globe\"") != NULL) ||
       (strstr(LCentry_term, "-\"gloves\"") != NULL) ||
@@ -7598,6 +7658,8 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"heading\"") != NULL) ||
       (strstr(LCentry_term, "-\"headed\"") != NULL) ||
       (strstr(LCentry_term, "-\"header\"") != NULL) ||
+      (strstr(LCentry_term, "-\"heads\"") != NULL) ||
+      (strstr(LCentry_term, "-\"head\"") != NULL) ||
       (strstr(LCentry_term, "-\"held\"") != NULL) ||
       (strstr(LCentry_term, "-\"helical\"") != NULL) ||
       (strstr(LCentry_term, "-\"helical\"") != NULL)||
@@ -7612,11 +7674,14 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"hollands\"") != NULL) ||
       (strstr(LCentry_term, "-\"holland\"") != NULL) ||
       (strstr(LCentry_term, "-\"homo\"") != NULL) ||
+      (strstr(LCentry_term, "-\"hope\"") != NULL) ||
       (strstr(LCentry_term, "-\"hospital planning\"") != NULL) ||
       (strstr(LCentry_term, "-\"hotspot\"") != NULL) ||
       (strstr(LCentry_term, "-\"hotspots\"") != NULL) ||
       (strstr(LCentry_term, "-\"housings\"") != NULL) ||
       (strstr(LCentry_term, "-\"humor\"") != NULL) ||
+      (strstr(LCentry_term, "-\"hydrops\"") != NULL) ||
+      (strstr(LCentry_term, "-\"hydrop\"") != NULL) ||
       (strstr(LCentry_term, "-\"iccs\"") != NULL) ||
       (strstr(LCentry_term, "-\"ii complexes\"") != NULL) ||
       (strstr(LCentry_term, "-\"ii complex\"") != NULL) ||
@@ -7660,6 +7725,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"length\"") != NULL) ||
       (strstr(LCentry_term, "-\"lightness\"") != NULL) ||
       (strstr(LCentry_term, "-\"licensed\"") != NULL) ||
+      (strstr(LCentry_term, "-\"lithic\"") != NULL) ||
       (strstr(LCentry_term, "-\"loved\"") != NULL) ||
       (strstr(LCentry_term, "-\"loving\"") != NULL) ||
       (strstr(LCentry_term, "-\"luminal\"") != NULL) ||
@@ -7726,6 +7792,8 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"pays\"") != NULL) ||
       (strstr(LCentry_term, "-\"patch\"") != NULL) ||
       (strstr(LCentry_term, "-\"path\"") != NULL) ||
+      (strstr(LCentry_term, "-\"peering\"") != NULL) ||
+      (strstr(LCentry_term, "-\"peered\"") != NULL) ||
       (strstr(LCentry_term, "-\"pi\"") != NULL) ||
       (strstr(LCentry_term, "-\"pik\"") != NULL) ||
       (strstr(LCentry_term, "-\"pit\"") != NULL) ||
@@ -7743,6 +7811,9 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"possession\"") != NULL) ||
       (strstr(LCentry_term, "-\"positioning\"") != NULL) ||
       (strstr(LCentry_term, "-\"pressure\"") != NULL) ||
+      (strstr(LCentry_term, "-\"preventing\"") != NULL) ||
+      (strstr(LCentry_term, "-\"prevented\"") != NULL) ||
+      (strstr(LCentry_term, "-\"prevent\"") != NULL) ||
       (strstr(LCentry_term, "-\"prices\"") != NULL) ||
       (strstr(LCentry_term, "-\"price\"") != NULL) ||
       (strstr(LCentry_term, "-\"primary\"") != NULL) ||
@@ -7760,6 +7831,8 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"processing\"") != NULL) ||
       (strstr(LCentry_term, "-\"progenitors\"") != NULL) ||
       (strstr(LCentry_term, "-\"progenitor\"") != NULL) ||
+      (strstr(LCentry_term, "-\"proms\"") != NULL) ||
+      (strstr(LCentry_term, "-\"prom\"") != NULL) ||
       (strstr(LCentry_term, "-\"progression\"") != NULL) ||
       (strstr(LCentry_term, "-\"prosaposin\"") != NULL) ||
       (strstr(LCentry_term, "-\"protected\"") != NULL) ||
@@ -7778,6 +7851,8 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"recorder\"") != NULL) ||
       (strstr(LCentry_term, "-\"records\"") != NULL) ||
       (strstr(LCentry_term, "-\"record\"") != NULL) ||
+      (strstr(LCentry_term, "-\"recurrences\"") != NULL) ||
+      (strstr(LCentry_term, "-\"recurrence\"") != NULL) ||
       (strstr(LCentry_term, "-\"resources\"") != NULL) ||
       (strstr(LCentry_term, "-\"resource\"") != NULL) ||
       (strstr(LCentry_term, "-\"relating problems\"") != NULL) ||
@@ -7792,6 +7867,8 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"reported\"") != NULL) ||
       (strstr(LCentry_term, "-\"respiring\"") != NULL) ||
       (strstr(LCentry_term, "-\"reversal\"") != NULL) ||
+      (strstr(LCentry_term, "-\"rhythms\"") != NULL) ||
+      (strstr(LCentry_term, "-\"rhythm\"") != NULL) ||
       (strstr(LCentry_term, "-\"rigid\"") != NULL) ||
       (strstr(LCentry_term, "-\"rigidity\"") != NULL) ||
       (strstr(LCentry_term, "-\"rigor\"") != NULL) ||
@@ -7808,6 +7885,8 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"sagged\"") != NULL) ||
       (strstr(LCentry_term, "-\"sagging\"") != NULL) ||
       (strstr(LCentry_term, "-\"sake\"") != NULL) ||
+      (strstr(LCentry_term, "-\"satellites\"") != NULL) ||
+      (strstr(LCentry_term, "-\"satellite\"") != NULL) ||
       (strstr(LCentry_term, "-\"savoury\"") != NULL) ||
       (strstr(LCentry_term, "-\"savory\"") != NULL) ||
       (strstr(LCentry_term, "-\"self\"") != NULL) ||
@@ -7867,6 +7946,10 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
       (strstr(LCentry_term, "-\"tank\"") != NULL) ||
       (strstr(LCentry_term, "-\"teas\"") != NULL) ||
       (strstr(LCentry_term, "-\"teasing\"") != NULL) ||
+      (strstr(LCentry_term, "-\"temperature increasing\"") != NULL) ||
+      (strstr(LCentry_term, "-\"temperature increases\"") != NULL) ||
+      (strstr(LCentry_term, "-\"temperature increased\"") != NULL) ||
+      (strstr(LCentry_term, "-\"temperature increase\"") != NULL) ||
       (strstr(LCentry_term, "-\"terms\"") != NULL) ||
       (strstr(LCentry_term, "-\"term\"") != NULL) ||
       (strstr(LCentry_term, "-\"thoughts\"") != NULL) ||
@@ -8668,39 +8751,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
          foundInText("scallops", FALSE, FALSE))
         rtn = FALSE;
 
-      if(foundInText("sea lions", FALSE, FALSE) ||
-         foundInText("sea lion", FALSE, FALSE) ||
-         foundInText("lion city", FALSE, FALSE) ||
-         foundInText("gulf of lions", FALSE, FALSE) ||
-         foundInText("gulf of lion", FALSE, FALSE) ||
-         foundInText("lion's share", FALSE, FALSE) ||
-         foundInText("lions share", FALSE, FALSE) ||
-         foundInText("lion share", FALSE, FALSE) ||
-         foundInText("lions eye institute", FALSE, FALSE) ||
-         foundInText("lions clubs", FALSE, FALSE) ||
-         foundInText("lions club", FALSE, FALSE) ||
-         foundInText("lion rouge", FALSE, FALSE) ||
-         foundInText("lions-paw scallop", FALSE, FALSE) ||
-         foundInText("lions paw scallop", FALSE, FALSE) ||
-         foundInText("lion-paw scallop", FALSE, FALSE) ||
-         foundInText("lion paw scallop", FALSE, FALSE) ||
-         foundInText("lion-tailed", FALSE, FALSE) ||
-         foundInText("lion tailed", FALSE, FALSE) ||
-         foundInText("lion tamarin", FALSE, FALSE) ||
-         foundInText("lion heart", FALSE, FALSE) ||
-         foundInText("lion hearted", FALSE, FALSE) ||
-         foundInText("lion-heart", FALSE, FALSE) ||
-         foundInText("lion-hearted", FALSE, FALSE) ||
-         foundInText("lion and the mouse", FALSE, FALSE) ||
-         foundInText("LION", TRUE, FALSE) ||
-         foundInText("lions new south wales", FALSE, FALSE) ||
-         foundInText("lions outback", FALSE, FALSE) ||
-         foundInText("lions sight", FALSE, FALSE) ||
-         foundInText("lions and tigers", FALSE, FALSE) ||
-         foundInText("lions, tigers", FALSE, FALSE) ||
-         foundInText("mountain lions", FALSE, FALSE) ||
-         foundInText("ant lions", FALSE, FALSE) ||
-         foundInText("ant lion", FALSE, FALSE))
+         if(!isLookForOK("lions"))
         rtn = FALSE;
    } /* else fi */
 
@@ -9733,10 +9784,13 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
        if(!isLookForOK("cattle"))
          rtn = FALSE;
 
-       if(!isLookForOK("bull"))
+       else if(!isLookForOK("bull"))
         rtn = FALSE;
 
-       if(!isLookForOK("cow"))
+       else if(!isLookForOK("bovine"))
+        rtn = FALSE;
+
+       else if(!isLookForOK("cow"))
         rtn = FALSE;
    } /* else fi */
 
@@ -11832,13 +11886,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    else if((strcmp(cui, special_list[Special_CANARYISL].CUI) == 0) ||
            (strcmp(cui, special_list[Special_ISLAND].CUI) == 0))
    {
-      if((foundInText("island canaries", FALSE, FALSE)) ||
-         (foundInText("island canary", FALSE, FALSE)) ||
-         (foundInText("gene island", FALSE, FALSE)) ||
-         (foundInText("gene islands", FALSE, FALSE)) ||
-         (foundInText("genomic island", FALSE, FALSE)) ||
-         (foundInText("serinus canaria", FALSE, FALSE)) ||
-         (foundInText("serinus", FALSE, FALSE)))
+      if(!isLookForOK("islands"))
         rtn = FALSE;
 
       else if((strstr(LCentry_term, "-\"insular\"") != NULL) ||
@@ -13527,6 +13575,9 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
             if(!foundInText("drinking water", FALSE, TRUE))
               rtn = FALSE;
         } /* fi */
+
+       if(!isLookForOK("water"))
+         rtn = FALSE;
    } /* else fi */
 
    /* swine -> Sus scrofa
@@ -14063,13 +14114,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
            (strstr(LCentry_term, "-\"rater's\"") != NULL))
           rtn = FALSE;
 
-        else if(foundInText("kangaroo rat", FALSE, FALSE) || 
-                foundInText("kangaroo rats", FALSE, FALSE) ||
-                foundInText("mole rat", FALSE, FALSE) ||
-                foundInText("mole-rat", FALSE, FALSE) ||
-                foundInText("RAT", TRUE, FALSE) ||
-                foundInText("RATS", TRUE, FALSE) ||
-                foundInText("RATs", TRUE, FALSE))
+        if(!isLookForOK("rats"))
           rtn = FALSE;
    } /* else fi */
 
@@ -17222,13 +17267,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
 
    else if(strcmp(cui, special_list[Special_COBRA].CUI) == 0)
    {
-       if(foundInText("COBRA", TRUE, FALSE) ||
-          foundInText("cobra perilaryngeal", FALSE, FALSE) ||
-          foundInText("cobra pla", FALSE, FALSE) ||
-          foundInText("cobra therapy", FALSE, FALSE) ||
-          foundInText("cobra catheter", FALSE, FALSE) ||
-          foundInText("cobra trial", FALSE, FALSE) ||
-          foundInText("cobra fish", FALSE, FALSE))
+       if(!isLookForOK("cobra"))
          rtn = FALSE;
    } /* else fi */
 
@@ -17622,24 +17661,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
 
    else if(strcmp(cui, special_list[Special_BUFFALO].CUI) == 0)
    {
-       if(foundInText("buffalo river", FALSE, FALSE) ||
-          foundInText("buffalo national river", FALSE, FALSE) ||
-          foundInText("buffalo ny", FALSE, FALSE) ||
-          foundInText("buffalo, ny", FALSE, FALSE) ||
-          foundInText("buffalo fish", FALSE, FALSE) ||
-          foundInText("buffalo chest", FALSE, FALSE) ||
-          foundInText("shuffle of to buffalo", FALSE, FALSE) ||
-          foundInText("shuffle off to buffalo", FALSE, FALSE) ||
-          foundInText("university at buffalo", FALSE, FALSE) ||
-          foundInText("buffalo new york", FALSE, FALSE) ||
-          foundInText("buffalo risk assessment", FALSE, FALSE) ||
-          foundInText("buffalo osteoperio", FALSE, FALSE) ||
-          foundInText("buffalo model", FALSE, FALSE) ||
-          foundInText("buffalo rat", FALSE, FALSE) ||
-          foundInText("buffalo and albany", FALSE, FALSE) ||
-          foundInText("smallmouth buffalo", FALSE, FALSE) ||
-          foundInText("buffalo ictiobus", FALSE, FALSE) ||
-          foundInText("buffalo, new york", FALSE, FALSE))
+       if(!isLookForOK("buffalo"))
          rtn = FALSE;
    } /* else fi */
 
@@ -21088,39 +21110,7 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
 
    else if(strcmp(cui, special_list[Special_WALKING].CUI) == 0)
    {
-       if(foundInText("how far have we walked", FALSE, FALSE) ||
-          foundInText("value of distance walked", FALSE, FALSE) ||
-          foundInText("walked angles", FALSE, FALSE) ||
-          foundInText("walking dead", FALSE, FALSE) ||
-          foundInText("walking mutant", FALSE, FALSE) ||
-          foundInText("walking wounded", FALSE, FALSE) ||
-          foundInText("walking catfish", FALSE, FALSE) ||
-          foundInText("walking a tightrope", FALSE, FALSE) ||
-          foundInText("walking a fine line", FALSE, FALSE) ||
-          foundInText("tightrope walking", FALSE, FALSE) ||
-          foundInText("walking the tightrope", FALSE, FALSE) ||
-          foundInText("walking blood bank", FALSE, FALSE) ||
-          foundInText("walking the straight and narrow", FALSE, FALSE) ||
-          foundInText("walk the straight and narrow", FALSE, FALSE) ||
-          foundInText("dna walking", FALSE, FALSE) ||
-          foundInText("genome walking", FALSE, FALSE) ||
-          foundInText("walking the middle path", FALSE, FALSE) ||
-          foundInText("walking the line", FALSE, FALSE) ||
-          foundInText("walking the walk", FALSE, FALSE) ||
-          foundInText("walking in shoe", FALSE, FALSE) ||
-          foundInText("walk in shoe", FALSE, FALSE) ||
-          foundInText("walking on egg shell", FALSE, FALSE) ||
-          foundInText("walking on eggshell", FALSE, FALSE) ||
-          foundInText("walking the talk", FALSE, FALSE) ||
-          foundInText("walking the plank", FALSE, FALSE) ||
-          foundInText("walking horse", FALSE, FALSE) ||
-          foundInText("cross walk", FALSE, FALSE) ||
-          foundInText("cross-walk", FALSE, FALSE) ||
-          foundInText("cross walking", FALSE, FALSE) ||
-          foundInText("cross-walking", FALSE, FALSE) ||
-          foundInText("chain walking", FALSE, FALSE) ||
-          foundInText("chain-walking", FALSE, FALSE) ||
-          foundInText("walked away", FALSE, FALSE))
+       if(!isLookForOK("walking"))
          rtn = FALSE;
    } /* else fi */
 
@@ -22240,6 +22230,9 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    {
        if(strstr(LCentry_term, "waters") != NULL)
           rtn = FALSE;
+
+       if(!isLookForOK("water"))
+         rtn = FALSE;
    } /* else fi */
 
    /* cherry picking -> Prunus
@@ -22250,7 +22243,10 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
            (strcmp(cui, special_list[Special_CHERRY2].CUI) == 0) ||
            (strcmp(cui, special_list[Special_CHERRY3].CUI) == 0))
    {
-       if(foundInText("prunus", FALSE, FALSE) ||
+       if(!isLookForOK("cherry"))
+         rtn = FALSE;
+
+       else if(foundInText("prunus", FALSE, FALSE) ||
                foundInText("sweet cherry", FALSE, FALSE) ||
                foundInText("sour cherry", FALSE, FALSE) ||
                foundInText("cherry extract", FALSE, FALSE) ||
@@ -24866,6 +24862,9 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
    {
        if(strstr(LCentry_term, "-\"japanese\"") != NULL)
          rtn = FALSE;
+
+       if(!isLookForOK("japanese"))
+         rtn = FALSE;
    } /* else fi */
 
    /* long livers -> Liver
@@ -26943,6 +26942,36 @@ int okMMISpecialCase(char *cui, char *entry_term, char *term)
           rtn = FALSE;
    } /* else fi */
 
+   /* duck plague
+       JGM 10/26/2021
+    */
+
+   else if(strcmp(cui, special_list[Special_PLAGUE].CUI) == 0)
+   {
+       if(!isLookForOK("plague"))
+          rtn = FALSE;
+   } /* else fi */
+
+   /* bovine aortic -> Cattle
+       JGM 11/08/2021
+    */
+
+   else if(strcmp(cui, special_list[Special_BOVINE].CUI) == 0)
+   {
+       if(!isLookForOK("bovine"))
+          rtn = FALSE;
+   } /* else fi */
+
+   /* iron lady -> Iron
+       JGM 11/08/2021
+    */
+
+   else if(strcmp(cui, special_list[Special_IRON].CUI) == 0)
+   {
+       if(!isLookForOK("iron"))
+          rtn = FALSE;
+   } /* else fi */
+
    /* --------------------- ADD NEW FILTERS ABOVE HERE ---------------- */
 
    if(!rtn) /* If we are going to remove it, double check the Forced list */
@@ -28787,12 +28816,12 @@ void check_ForcedCombined()
          origForm[SMALL_LINE + 1], cmd[SMALL_LINE + 1], source[SMALL_LINE + 1],
          lastLookFor[SMALL_LINE + 1], limitLoc[25], SHlist[250];
     long i, index, index2, j, k, len, lenS, w, x, AApos, oLen, begincFC_time,
-         interimcFC_time, totLen, bucket, haveMice, haveRats;
+         interimcFC_time, totLen, bucket, haveMice, haveRats, numPIs, PIlen;
     float fScore, pct;
     int ok, whichFor, localType, found, flag, haveTransplantation, okABT, lastMH_Found,
         okForce, isLeaf, isSCR, foundI, ignore, leafAB, okAB, isAllUpper, hasSH,
         done, okIgnore, okAndLead, okByLead, okOfLead, okLead, addLead, contPT, isAmbig,
-        lastOk, lastOkAB, haveCT, z, foundPT, caseSensitiv, tiOnly, lastPTAdded;
+        lastOk, lastOkAB, haveCT, z, foundPT, caseSensitiv, tiOnly, lastPTAdded, saveFDOC;
     FILE *fp;
 
     time(&begincFC_time);
@@ -30529,7 +30558,7 @@ fprintf(fout, "AB: #%s#\n", fIAXObase);
                  if(!ignore)
                  {
                     lenS = (long)strlen(lookForSingular);
-                    ok = okABT = FALSE;
+                    ok = okABT = saveFDOC = FALSE;
 
                     strcpy(globalET, "[");
                     strcpy(globalPI, "");
@@ -30553,6 +30582,81 @@ fprintf(fout, "AB: #%s#\n", fIAXObase);
                     {
                         if(strcmp(lookFor, "clostridium acetobutylicum") == 0)
                           okABT = TRUE;
+
+                        /* Check on FDOC Inclusion - MTIR only currently
+                             2) Found in Abstract with 2 or more occurrences
+                        */
+
+                        else if(MTI_REVIEW)
+                        {
+                            numPIs = 0;
+                            PIlen = (long)strlen(globalPI);
+                            for(j = 0; j < PIlen; j++)
+                            {
+                                if(globalPI[j] == ';')
+                                  numPIs++;
+                            } /* for */
+                            if(PIlen > 0)
+                              numPIs++;
+
+                            if(isSCR && (numPIs > 1))
+                            {
+                                if(isFDOC_SCR(MHname))
+                                {
+                                    okABT = TRUE;
+                                    saveFDOC = TRUE;
+                                    if(RTM_Debug)
+                                    {
+                                        fprintf(fout, "okABT - allow FDOC SCR AB: #%s|%s#\n",
+                                                MHname, lookFor);
+                                        fflush(fout);
+                                    } /* fi */
+                                } /* fi */
+                            } /* fi */
+
+                            else if((numPIs > 1) && !isCT(DUI))
+                            {
+                                if(isModelOrganism(DUI))
+                                {
+                                    okABT = TRUE;
+                                    saveFDOC = TRUE;
+                                    if(RTM_Debug)
+                                    {
+                                        fprintf(fout, "okABT - allow Model Organism AB: #%s|%s#\n",
+                                                MHname, lookFor);
+                                        fflush(fout);
+                                    } /* fi */
+                                } /* fi */
+
+                                /* Disease Tree */
+
+                                else if((rest[0] == 'C') || (strstr(rest, ";C") != NULL))
+                                {
+                                    okABT = TRUE;
+                                    saveFDOC = TRUE;
+                                    if(RTM_Debug)
+                                    {
+                                        fprintf(fout, "okABT - allow Disease Tree AB: #%s|%s#\n",
+                                                MHname, lookFor);
+                                        fflush(fout);
+                                    } /* fi */
+                                } /* else fi */
+
+                                /* Chemical Tree */
+
+                                else if((rest[0] == 'D') || (strstr(rest, ";D") != NULL))
+                                {
+                                    okABT = TRUE;
+                                    saveFDOC = TRUE;
+                                    if(RTM_Debug)
+                                    {
+                                        fprintf(fout, "okABT - allow Chemical Tree AB: #%s|%s#\n",
+                                                MHname, lookFor);
+                                        fflush(fout);
+                                    } /* fi */
+                                } /* else fi */
+                            } /* else */
+                        } /* else */
 
                         /* If ok (in title) is not set, check to see if
                            maybe something else already triggered this concept
@@ -30731,6 +30835,14 @@ fprintf(fout, "AB: #%s#\n", fIAXObase);
                             else if(!leafAB)
                                sprintf(from, "Forced Leaf Node Lookup:%s\0", lookFor);
 
+                            if(saveFDOC && !isCT(DUI))
+                            {
+                                if(strlen(from) > 0)
+                                  strcat(from, ";");
+                                strcat(from, "Forced Disease, Organism, Chemical leafNode:");
+                                strcat(from, lookFor);
+                            } /* fi */
+
                             if(isCT(DUI))
                               process_mterm(isAmbig, ambigTrigger, MHname, MMI, fScore, CT, loc,
                                     globalET, from, DUI, "", globalPI, okForce);
@@ -30761,8 +30873,7 @@ fprintf(fout, "AB: #%s#\n", fIAXObase);
                         {
                             if(RTM_Debug)
                             {
-                                fprintf(fout,
-                                   "Non-Leaf found: #%s|%s|%s|%s|%s#\n",
+                                fprintf(fout, "Non-Leaf found: #%s|%s|%s|%s|%s#\n",
                                         lookFor, MHname, DUI, globalET, globalPI);
                                 fflush(fout);
                             } /* fi */
@@ -30775,8 +30886,17 @@ fprintf(fout, "AB: #%s#\n", fIAXObase);
                                     nonLeafs[numNL].trigger = strdup(tmp);
                                 } /* fi */
 
+                                else if(saveFDOC)
+                                {
+                                    sprintf(tmp,
+                                       "%s;Forced Disease, Organism, Chemical non-leafNode AB\0",
+                                       lookFor);
+                                    nonLeafs[numNL].trigger = strdup(tmp);
+                                } /* else fi */
+
                                 else
                                   nonLeafs[numNL].trigger = strdup(lookFor);
+
                                 nonLeafs[numNL].MHname = strdup(MHname);
                                 nonLeafs[numNL].DUI = strdup(DUI);
                                 if(hasSH)
@@ -30799,9 +30919,13 @@ fprintf(fout, "AB: #%s#\n", fIAXObase);
                     {
                         if(RTM_Debug)
                         {
-                            fprintf(fout, "leafNode in AB ignored: #%s|%s|%s|%s|%s#\n",
-                              lookFor, MHname, DUI, globalET,
-                               globalPI);
+                            if(isLeaf)
+                              fprintf(fout, "leafNode in AB ignored: #%s|%s|%s|%s|%s#\n",
+                                      lookFor, MHname, DUI, globalET, globalPI);
+
+                            else
+                              fprintf(fout, "Non-leafNode in AB ignored: #%s|%s|%s|%s|%s#\n",
+                                      lookFor, MHname, DUI, globalET, globalPI);
                             fflush(fout);
                         } /* fi */
                     } /* else fi */
@@ -34168,7 +34292,8 @@ void checkBeforeDisplay()
         foundGeorgiaRepublic, foundBraces, foundOrthoBrack, foundProstImplnt,
         foundDentalImpnt, haveSinging, foundEcology, foundPracticePP, foundPracticePD,
         haveCOVID19, foundCOVID19Remove, foundStalking, foundNursingCare, foundNurses,
-        foundAnemiaID, foundPuncture, foundFemale, foundMale, foundPedigree, foundBayes;
+        foundAnemiaID, foundPuncture, foundFemale, foundMale, foundPedigree, foundBayes,
+        foundMedicare, foundUSA;
 
     long i, k, sporesPos, leukocytesPos, chemotaxisPos, index, ctr, reticPos,
          cPancreatitisPos, GerminationPos, OrganogenesisPos,
@@ -34189,7 +34314,7 @@ void checkBeforeDisplay()
          georgiaRepublicPos, bracesPos, orthBrackPos, dimplntPos, prosImplntPos,
          singingPos, ecologyPos, parrotPos, practicePPPos, practicePDPos, anemiaIDPos,
          pnvPos, cviPos, cvPos, pandamicPos, betacPos, stalkingPos, nursesPos, puncturePos,
-         malePos, femalePos, pedigreePos, bayesPos;
+         malePos, femalePos, pedigreePos, bayesPos, medicarePos, USApos;
 
     char from[SMALL_LINE + 1], CUI[25], mh[SMALL_LINE + 1], DUI[25];
 
@@ -34322,7 +34447,7 @@ void checkBeforeDisplay()
     foundProstImplnt = foundDentalImpnt =  haveSinging = foundNurses = FALSE;
     foundEcology = foundParrot = foundAmazona = foundPracticePP = foundPracticePD = FALSE;
     haveCOVID19 = foundCOVID19Remove = foundStalking = foundAnemiaID = foundPuncture = FALSE;
-    foundFemale = foundMale = foundPedigree = foundBayes = FALSE;
+    foundFemale = foundMale = foundPedigree = foundBayes = foundMedicare = foundUSA = FALSE;
 
     sporesPos = leukocytesPos = chemotaxisPos = reticPos = angioCardioPos = -1;
     cPancreatitisPos = GerminationPos = OrganogenesisPos = -1;
@@ -34344,7 +34469,7 @@ void checkBeforeDisplay()
     orthBrackPos = dimplntPos = prosImplntPos = singingPos = ecologyPos = -1;
     parrotPos = practicePPPos = practicePDPos = nursesPos = anemiaIDPos = -1;
     pnvPos = cviPos = cvPos = pandamicPos = betacPos = stalkingPos = puncturePos = -1;
-    malePos = femalePos = pedigreePos = bayesPos = -1;
+    malePos = femalePos = pedigreePos = bayesPos = medicarePos = USApos = -1;
 
 
     ctr = 0;
@@ -34790,6 +34915,12 @@ void checkBeforeDisplay()
                     malePos = i;
                 } /* else fi */
 
+                else if(strcmp(mh, "Medicare") == 0)
+                {
+                    foundMedicare = TRUE;
+                    medicarePos = i;
+                } /* else fi */
+
                 else if(strcmp(mh, "Mental Process") == 0)
                 {
                     foundMentalProcess = TRUE;
@@ -35051,6 +35182,15 @@ void checkBeforeDisplay()
                 else if(strcmp(mh, "Tumor Burden") == 0)
                   haveOtherBurden = TRUE;
             } /* else fi "T" */
+
+            else if(mh[0] == 'U')
+            {
+                if(strcmp(mh, "United States") == 0)
+                {
+                    foundUSA = TRUE;
+                    USApos = i;
+                } /* fi */
+            } /* else fi "U" */
 
             else if(mh[0] == 'V')
             {
@@ -35411,6 +35551,56 @@ void checkBeforeDisplay()
         mt_table[index].score += mt_table[adhesivePos].score;
         mt_table[adhesivePos].score = 0;
     } /* fi */
+
+    /* If have Medicare being recommended but article talking about Canada or Australia
+       change to National Health Programs
+       October 21, 2021.
+    */
+
+    if(foundMedicare && (medicarePos > -1))
+    {
+        if(foundInText("australia", FALSE, FALSE) || foundInText("australian", FALSE, FALSE) ||
+           foundInText("canada", FALSE, FALSE) || foundInText("canadian", FALSE, FALSE))
+        {
+            if(RTM_Debug)
+            {
+                fprintf(fout, "Replacing Medicare with National Health Programs\n");
+                fflush(fout);
+            } /* fi */
+
+            mt_table[medicarePos].oktoprint = FALSE;
+            mt_table[medicarePos].safe = FALSE;
+            mt_table[medicarePos].forcePrint = FALSE;
+
+            strcpy(from, "Replacement of Medicare, Canada/Australia");
+            strcpy(DUI, "D009313");
+            process_mterm(FALSE, "", "National Health Programs", MMI, 1000.0, 
+                          MH, "", "", from, DUI, "", "", TRUE);
+
+            index = search_index(DUI);
+            if(index >= 0)
+              mt_table[index].score += 1000;
+
+            mt_table[index].score += mt_table[medicarePos].score;
+            mt_table[medicarePos].score = 0;
+
+            /* We likely already added United States for Medicare, so remove it also */
+
+            if(foundUSA && (USApos > -1))
+            {
+                if(RTM_Debug)
+                {
+                fprintf(fout, "Removing United States Canada/Australia National Health Programs\n");
+                fflush(fout);
+                } /* fi */
+
+                mt_table[USApos].oktoprint = FALSE;
+                mt_table[USApos].safe = FALSE;
+                mt_table[USApos].forcePrint = FALSE;
+                mt_table[USApos].score = 0;
+            } /* fi */
+        } /* fi Canada or Australia */
+    } /* fi Medicare */
 
     /* If have Puncture being recommended but have "spinal" or "lumbar" in Title
        then change to Spinal Puncture.
@@ -38641,6 +38831,57 @@ void process_PRC(char *line, int count, long PRCpos)
                           } /* fi */
                      } /* fi */
 
+                     /* Don't want "Global Temperature increasing" to trigger Fever
+                     */
+
+                     if(ok && !doNoAddForced && (strcmp(MHname, "Fever") == 0))
+                     {
+                          if(foundInText("global temperature", FALSE, TRUE))
+                          {
+                              ok = FALSE;
+                              if(PRC_Debug || RTM_Debug)
+                              {
+                                   fprintf(fout,
+                                       "Removing MHs (Fever): #%s#\n",
+                                       globalTitle);
+                                   fflush(fout);
+                              } /* fi */
+                          } /* fi */
+                     } /* fi */
+
+                     /* Don't want "emergency action" to trigger Emergency Service, Hospital
+                     */
+
+                     if(ok && !doNoAddForced && 
+                           (strcmp(MHname, "Emergency Service, Hospital") == 0))
+                     {
+                          if(foundInText("emergency action", FALSE, TRUE))
+                          {
+                              ok = FALSE;
+                              if(PRC_Debug || RTM_Debug)
+                              {
+                                   fprintf(fout,
+                                       "Removing MHs (Emergency Service, Hospital): #%s#\n",
+                                       globalTitle);
+                                   fflush(fout);
+                              } /* fi */
+                          } /* fi */
+                     } /* fi */
+
+                     /* Don't want "cherry" in title triggering either Prunus avium or Prunus
+                     */
+
+                     if(ok && !doNoAddForced && 
+                         ((strcmp(MHname, "Prunus avium") == 0) ||
+                          (strcmp(MHname, "Prunus") == 0)))
+                     {
+                          if(foundInText("cherry", FALSE, TRUE))
+                          {
+                              if(!isLookForOK("cherry"))
+                                ok = FALSE;
+                          } /* fi */
+                     } /* fi */
+
                      /* Don't want "fighting" in title triggering both
                         violence and aggression
                      */
@@ -40327,9 +40568,8 @@ void addVocabTops()
 
                        if((factor > CTcheck) || ((setSize - count) < 5))
                        {
-                           process_checktags(mh, MMI, DUI,
-                                     "Forced - Vocab Density",
-                                     "Forced - Vocab Density");
+                           process_checktags(mh, MMI, DUI, "Forced - Vocab Density",
+                                             "Forced - Vocab Density");
 
                            index = search_index(DUI);
                            if(index >= 0)
@@ -40338,7 +40578,7 @@ void addVocabTops()
                                mt_table[index].oktoprint = TRUE;
                                mt_table[index].forcePrint = TRUE;
                            } /* fi */
-                       } /* fi */
+                       } /* fi factor */
 
                        else
                          ok = FALSE;
@@ -40346,15 +40586,44 @@ void addVocabTops()
 
                    else
                    {
-                       process_mterm(FALSE, "", mh, MMI, 1000.0, MH, "", "",
-                            "Forced - Vocab Density", DUI, "", "", TRUE);
+                       /* Verify that we really want the term -
+                             Dog Diseases when Dog/Dogs/Canine/K9 are not mentioned.
+                       */
 
-                       index = search_index(DUI);
-                       if(index >= 0)
+                       if(strcmp(mh, "Dog Diseases") == 0)
                        {
-                           mt_table[index].score += 1000;
-                           mt_table[index].oktoprint = TRUE;
-                           mt_table[index].forcePrint = TRUE;
+                           if(foundInText("dogs", FALSE, FALSE) ||
+                              foundInText("dog", FALSE, FALSE) ||
+                              foundInText("canine", FALSE, FALSE) ||
+                              foundInText("k9", FALSE, FALSE))
+                             ok = TRUE;
+                           else
+                             ok = FALSE;
+                       } /* fi */
+
+                       else if(strcmp(mh, "Cat Diseases") == 0)
+                       {
+                           if(foundInText("cats", FALSE, FALSE) ||
+                              foundInText("cat", FALSE, FALSE) ||
+                              foundInText("feline", FALSE, FALSE) ||
+                              foundInText("felis", FALSE, FALSE))
+                             ok = TRUE;
+                           else
+                             ok = FALSE;
+                       } /* else fi */
+
+                       if(ok)
+                       {
+                           process_mterm(FALSE, "", mh, MMI, 1000.0, MH, "", "",
+                                         "Forced - Vocab Density", DUI, "", "", TRUE);
+
+                           index = search_index(DUI);
+                           if(index >= 0)
+                           {
+                               mt_table[index].score += 1000;
+                               mt_table[index].oktoprint = TRUE;
+                               mt_table[index].forcePrint = TRUE;
+                           } /* fi */
                        } /* fi */
                    } /* else */
 
@@ -41290,11 +41559,14 @@ int isLookForOK(char *lookFor)
                foundInText2("robotic arm", FALSE, FALSE) ||
                foundInText2("research arm", FALSE, FALSE) ||
                foundInText2("power arm", FALSE, FALSE) ||
+               foundInText2("instrument arm", FALSE, FALSE) ||
                foundInText2("invisible arm", FALSE, FALSE) ||
                foundInText2("articulated arm", FALSE, FALSE) ||
                foundInText2("arm backscatter", FALSE, FALSE) ||
                foundInText2("shot in the arm", FALSE, FALSE) ||
                foundInText2("arms race", FALSE, FALSE) ||
+               foundInText2("arm function and design", FALSE, FALSE) ||
+               foundInText2("arm design", FALSE, FALSE) ||
                foundInText2("perk arm", FALSE, FALSE) ||
                foundInText2("c-arm", FALSE, FALSE) ||
                foundInText2("o-arm", FALSE, FALSE) ||
@@ -41386,12 +41658,60 @@ int isLookForOK(char *lookFor)
 
         else if(strcmp(lookFor, "ai") == 0)
         {
-            if(foundInText2("deep learning", FALSE, FALSE) ||
+            if(foundInText2("ai-based", FALSE, FALSE) ||
+               foundInText2("ai-driven", FALSE, FALSE) ||
+               foundInText2("ai-enabled", FALSE, FALSE) ||
+               foundInText2("ai-assisted", FALSE, FALSE) ||
+               foundInText2("ai-enhanced", FALSE, FALSE) ||
+               foundInText2("ai-empowered", FALSE, FALSE) ||
+               foundInText2("ai-powered", FALSE, FALSE) ||
+               foundInText2("ai-ecg", FALSE, FALSE) ||
+               foundInText2("ai-augmented", FALSE, FALSE) ||
+               foundInText2("algorithm", FALSE, FALSE) ||
+               foundInText2("artificial intelligence", FALSE, FALSE) ||
+               foundInText2("ai based", FALSE, FALSE) ||
+               foundInText2("ai driven", FALSE, FALSE) ||
+               foundInText2("ai enabled", FALSE, FALSE) ||
+               foundInText2("ai assisted", FALSE, FALSE) ||
+               foundInText2("ai enhanced", FALSE, FALSE) ||
+               foundInText2("ai empowered", FALSE, FALSE) ||
+               foundInText2("ai powered", FALSE, FALSE) ||
+               foundInText2("ai ecg", FALSE, FALSE) ||
+               foundInText2("ai augmented", FALSE, FALSE))
+            {
+               if(foundInText2("aromatase inhibitors", FALSE, FALSE) ||
+                  foundInText2("aromatase inhibitor", FALSE, FALSE) ||
+                  foundInText2("adaptive interface", FALSE, FALSE) ||
+                  foundInText2("artificial insemination", FALSE, FALSE) ||
+                  foundInText2("adrenal insufficiency", FALSE, FALSE) ||
+                  foundInText2("adequate intake", FALSE, FALSE) ||
+                  foundInText2("avian influenza", FALSE, FALSE) ||
+                  foundInText2("acne inversa", FALSE, FALSE) ||
+                  foundInText2("anal injection", FALSE, FALSE) ||
+                  foundInText2("dairy", FALSE, FALSE) ||
+                  foundInText2("cow", FALSE, FALSE) ||
+                  foundInText2("cattle", FALSE, FALSE) ||
+                  foundInText2("bull", FALSE, FALSE) ||
+                  foundInText2("pig", FALSE, FALSE) ||
+                  foundInText2("boar", FALSE, FALSE) ||
+                  foundInText2("sheep", FALSE, FALSE) ||
+                  foundInText2("ewe", FALSE, FALSE) ||
+                  foundInText2("mare", FALSE, FALSE) ||
+                  foundInText2("horse", FALSE, FALSE))
+                   ok = FALSE;
+               else
+                   ok = TRUE;
+            } /* fi */
+
+            else if(foundInText2("deep learning", FALSE, FALSE) ||
                foundInText2("ai symposium", FALSE, FALSE) ||
                foundInText2("ai-2", FALSE, FALSE) ||
                foundInText2("s2-ai", FALSE, FALSE) ||
                foundInText2("s2 ai", FALSE, FALSE) ||
                foundInText2("leptin-ai", FALSE, FALSE) ||
+               foundInText2("aromatase inhibitors", FALSE, FALSE) ||
+               foundInText2("aromatase inhibitor", FALSE, FALSE) ||
+               foundInText2("tai", FALSE, FALSE) ||
                foundInText2("timed-ai", FALSE, FALSE) ||
                foundInText2("timed ai", FALSE, FALSE) ||
                foundInText2("time-ai", FALSE, FALSE) ||
@@ -41436,7 +41756,6 @@ int isLookForOK(char *lookFor)
                foundInText2("avian influenza", FALSE, FALSE) ||
                foundInText2("acne inversa", FALSE, FALSE) ||
                foundInText2("anal injection", FALSE, FALSE) ||
-               foundInText2("(ai)", FALSE, FALSE) ||
                foundInText2("dairy", FALSE, FALSE) ||
                foundInText2("cow", FALSE, FALSE) ||
                foundInText2("cattle", FALSE, FALSE) ||
@@ -41569,13 +41888,45 @@ int isLookForOK(char *lookFor)
 
         else if(strcmp(lookFor, "als") == 0)
         {
-            if(foundInText2("als-l1023", FALSE, FALSE) ||
+            if(!foundInText2("ALS", TRUE, FALSE) ||
+               foundInText2("AHAS", TRUE, FALSE) ||
+               foundInText2("als-l1023", FALSE, FALSE) ||
                foundInText2("als l1023", FALSE, FALSE) ||
                foundInText2("alsl1023", FALSE, FALSE) ||
                foundInText2("als-008176", FALSE, FALSE) ||
                foundInText2("als 008176", FALSE, FALSE) ||
+               foundInText2("als 022227", FALSE, FALSE) ||
+               foundInText2("als 022399", FALSE, FALSE) ||
+               foundInText2("als-022227", FALSE, FALSE) ||
+               foundInText2("als-022399", FALSE, FALSE) ||
                foundInText2("mcr-als", FALSE, FALSE) ||
-               foundInText2("mcr als", FALSE, FALSE))
+               foundInText2("mcr als", FALSE, FALSE) ||
+               foundInText2("ups-als", FALSE, FALSE) ||
+               foundInText2("ups als", FALSE, FALSE) ||
+               foundInText2("over als", FALSE, FALSE) ||
+               foundInText2("transport als", FALSE, FALSE) ||
+               foundInText2("als dipeptide", FALSE, FALSE) ||
+               foundInText2("als deficiency", FALSE, FALSE) ||
+               foundInText2("als response", FALSE, FALSE) ||
+               foundInText2("als provider", FALSE, FALSE) ||
+               foundInText2("als concentration", FALSE, FALSE) ||
+               foundInText2("als inhibitor", FALSE, FALSE) ||
+               foundInText2("als inhibiting", FALSE, FALSE) ||
+               foundInText2("als-inhibiting", FALSE, FALSE) ||
+               foundInText2("landsat", FALSE, FALSE) ||
+               foundInText2("maize", FALSE, FALSE) ||
+               foundInText2("als gene", FALSE, FALSE) ||
+               foundInText2("als-like gene", FALSE, FALSE) ||
+               foundInText2("als like gene", FALSE, FALSE) ||
+               foundInText2("acid-labile subunit", FALSE, FALSE) ||
+               foundInText2("acid labile subunit", FALSE, FALSE) ||
+               foundInText2("agglutinin-like sequence", FALSE, FALSE) ||
+               foundInText2("agglutinin like sequence", FALSE, FALSE) ||
+               foundInText2("alvarado lagoon system", FALSE, FALSE) ||
+               foundInText2("airborne laser scanning", FALSE, FALSE) ||
+               foundInText2("approved landing site", FALSE, FALSE) ||
+               foundInText2("alternate light source", FALSE, FALSE) ||
+               foundInText2("acetolactate synthase", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
 
@@ -41606,6 +41957,21 @@ int isLookForOK(char *lookFor)
                foundInText2("school", FALSE, FALSE) ||
                foundInText2("physical activity", FALSE, FALSE) ||
                foundInText2("physical inactivity", FALSE, FALSE))
+             ok = FALSE;
+        } /* else fi */
+
+        else if((strcmp(lookFor, "antlers") == 0) || (strcmp(lookFor, "antler") == 0))
+        {
+            if(foundInText2("ANTLER", TRUE, FALSE) ||
+               foundInText2("ANTLERS", TRUE, FALSE) ||
+               foundInText2("ANTLERs", TRUE, FALSE) ||
+               foundInText2("antler-like", FALSE, FALSE) ||
+               foundInText2("antler like", FALSE, FALSE) ||
+               foundInText2("antler-type", FALSE, FALSE) ||
+               foundInText2("antler type", FALSE, FALSE) ||
+               foundInText2("antler flies", FALSE, FALSE) ||
+               foundInText2("antler fly", FALSE, FALSE) ||
+               foundInText2("pilose antler", FALSE, FALSE))
              ok = FALSE;
         } /* else fi */
 
@@ -41966,6 +42332,8 @@ int isLookForOK(char *lookFor)
                foundInText2("early worm", FALSE, FALSE) ||
                foundInText2("big bird", FALSE, FALSE) ||
                foundInText2("cape bird", FALSE, FALSE) ||
+               foundInText2("bird swarm", FALSE, FALSE) ||
+               foundInText2("algorithm", FALSE, FALSE) ||
                foundInText2("bird-feather mite", FALSE, FALSE) ||
                foundInText2("bird feather mite", FALSE, FALSE) ||
                foundInText2("bird fancier's", FALSE, FALSE) ||
@@ -42448,6 +42816,7 @@ int isLookForOK(char *lookFor)
                foundInText2("bovine papular stomatitis virus", FALSE, FALSE) ||
                foundInText2("bovine arch", FALSE, FALSE) ||
                foundInText2("bovine aortic arch", FALSE, FALSE) ||
+               foundInText2("bovine pulmonary surfactant", FALSE, FALSE) ||
                foundInText2("bovine milk", FALSE, FALSE) ||
                foundInText2("bovine milkfat", FALSE, FALSE) ||
                foundInText2("bovine lactoferricin", FALSE, FALSE) ||
@@ -42590,6 +42959,10 @@ int isLookForOK(char *lookFor)
                 (strcmp(lookFor, "bulls") == 0))
         {
             if(foundInText2("(bull.", FALSE, FALSE) ||
+               (strstr(globalTitle, "'s bull") != NULL) ||
+               (strstr(globalAbstract, "'s bull") != NULL) ||
+               (strstr(globalTitle, "s' bull") != NULL) ||
+               (strstr(globalAbstract, "s' bull") != NULL) ||
                foundInText2("bison bull", FALSE, FALSE) ||
                foundInText2("bison", FALSE, FALSE) ||
                foundInText2("buffalo bull", FALSE, FALSE) ||
@@ -42742,6 +43115,8 @@ int isLookForOK(char *lookFor)
                foundInText2("spelling bee", FALSE, FALSE) ||
                foundInText2("spelling bees", FALSE, FALSE) ||
                foundInText2("propolis", FALSE, FALSE) ||
+               foundInText2("has bee", FALSE, FALSE) ||
+               foundInText2("had bee", FALSE, FALSE) ||
                foundInText2("BEES", TRUE, FALSE) ||
                foundInText2("BEEs", TRUE, FALSE) ||
                foundInText2("BEE", TRUE, FALSE))
@@ -42755,6 +43130,9 @@ int isLookForOK(char *lookFor)
                foundInText2("bears load", FALSE, FALSE) ||
                foundInText2("bears burden", FALSE, FALSE) ||
                foundInText2("bears little", FALSE, FALSE) ||
+               foundInText2("three bears", FALSE, FALSE) ||
+               foundInText2("goldilocks", FALSE, FALSE) ||
+               foundInText2("goldilock", FALSE, FALSE) ||
                foundInText2("bears overexpression", FALSE, FALSE) ||
                foundInText2("bears significant", FALSE, FALSE) ||
                foundInText2("bears striking", FALSE, FALSE) ||
@@ -42816,6 +43194,7 @@ int isLookForOK(char *lookFor)
                foundInText2("bipolar coagulation", FALSE, FALSE) ||
                foundInText2("bipolar configuration", FALSE, FALSE) ||
                foundInText2("bipolar diathermy", FALSE, FALSE) ||
+               foundInText2("bipolar device", FALSE, FALSE) ||
                foundInText2("bipolar electrical", FALSE, FALSE) ||
                foundInText2("bipolar electrocautery", FALSE, FALSE) ||
                foundInText2("bipolar electrocoagulation", FALSE, FALSE) ||
@@ -42824,6 +43203,7 @@ int isLookForOK(char *lookFor)
                foundInText2("bipolar electrogram", FALSE, FALSE) ||
                foundInText2("bipolar electrograms", FALSE, FALSE) ||
                foundInText2("bipolar electroenucleation", FALSE, FALSE) ||
+               foundInText2("bipolar electrochemistry", FALSE, FALSE) ||
                foundInText2("bipolar filament", FALSE, FALSE) ||
                foundInText2("bipolar filaments", FALSE, FALSE) ||
                foundInText2("bipolar fractures", FALSE, FALSE) ||
@@ -42855,6 +43235,7 @@ int isLookForOK(char *lookFor)
                foundInText2("bipolar scissors", FALSE, FALSE) ||
                foundInText2("bipolar sealing", FALSE, FALSE) ||
                foundInText2("bipolar sensing", FALSE, FALSE) ||
+               foundInText2("bipolar snare", FALSE, FALSE) ||
                foundInText2("bipolar shape", FALSE, FALSE) ||
                foundInText2("bipolar spindle", FALSE, FALSE) ||
                foundInText2("bipolar stimulating", FALSE, FALSE) ||
@@ -42862,6 +43243,7 @@ int isLookForOK(char *lookFor)
                foundInText2("bipolar system", FALSE, FALSE) ||
                foundInText2("bipolar terminal", FALSE, FALSE) ||
                foundInText2("bipolar terminals", FALSE, FALSE) ||
+               foundInText2("bipolar transistor", FALSE, FALSE) ||
                foundInText2("bipolar transurethral", FALSE, FALSE) ||
                foundInText2("bipolar vessel", FALSE, FALSE) ||
                foundInText2("bipolar vessels", FALSE, FALSE) ||
@@ -42953,6 +43335,12 @@ int isLookForOK(char *lookFor)
                foundInText2("bio bankruptcy", FALSE, FALSE) ||
                foundInText2("bio-bankruptcy", FALSE, FALSE) ||
                foundInText2("metabolic bankruptcy", FALSE, FALSE))
+             ok = FALSE;
+        } /* else fi */
+
+        else if(strcmp(lookFor, "bald eagle") == 0)
+        {
+            if(foundInText2("search optimization", FALSE, FALSE))
              ok = FALSE;
         } /* else fi */
 
@@ -43201,6 +43589,23 @@ int isLookForOK(char *lookFor)
                foundInText2("cactus aorta", FALSE, FALSE) ||
                foundInText2("opuntia", FALSE, FALSE) ||
                foundInText2("squeezing a cactus", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
+        else if((strcmp(lookFor, "caiman") == 0) || (strcmp(lookFor, "caimans") == 0))
+        {
+            if(foundInText2("caiman crocodilus", FALSE, FALSE) ||
+               foundInText2("caiman latirostris", FALSE, FALSE) ||
+               foundInText2("caiman meat", FALSE, FALSE) ||
+               foundInText2("extinct caiman", FALSE, FALSE) ||
+               foundInText2("caimans", FALSE, FALSE) ||
+               foundInText2("paleosuchus trigonatus", FALSE, FALSE) ||
+               foundInText2("alligatoridae", FALSE, FALSE) ||
+               foundInText2("crocodylia", FALSE, FALSE) ||
+               foundInText2("caiman purussaurus", FALSE, FALSE) ||
+               foundInText2("caiman yacare", FALSE, FALSE))
+              ok = TRUE;
+            else
               ok = FALSE;
         } /* else fi */
 
@@ -43632,6 +44037,8 @@ int isLookForOK(char *lookFor)
                foundInText2("cross sectional imaging", FALSE, FALSE) ||
                foundInText2("cross-sectional image", FALSE, FALSE) ||
                foundInText2("cross sectional image", FALSE, FALSE) ||
+               foundInText2("were cross-sectional", FALSE, FALSE) ||
+               foundInText2("were cross sectional", FALSE, FALSE) ||
                foundInText2("cross-sectional ct", FALSE, FALSE) ||
                foundInText2("cross sectional ct", FALSE, FALSE) ||
                foundInText2("cross-sectional pqct", FALSE, FALSE) ||
@@ -43642,6 +44049,10 @@ int isLookForOK(char *lookFor)
                foundInText2("cross sectional diameter", FALSE, FALSE) ||
                foundInText2("cross-sectional relationship", FALSE, FALSE) ||
                foundInText2("cross sectional relationship", FALSE, FALSE) ||
+               foundInText2("cross-sectional segmentation", FALSE, FALSE) ||
+               foundInText2("cross sectional segmentation", FALSE, FALSE) ||
+               foundInText2("cross-sectional shape", FALSE, FALSE) ||
+               foundInText2("cross sectional shape", FALSE, FALSE) ||
                foundInText2("cross-sectional microhardness", FALSE, FALSE) ||
                foundInText2("cross-sectional microhardness", FALSE, FALSE) ||
                foundInText2("cross-sectional micro hardness", FALSE, FALSE) ||
@@ -43735,11 +44146,23 @@ int isLookForOK(char *lookFor)
         else if(strcmp(lookFor, "cobra") == 0)
         {
             if(foundInText2("COBRA", TRUE, FALSE) ||
+               foundInText2("COBra", TRUE, FALSE) ||
+               foundInText2("CoBRA", TRUE, FALSE) ||
                foundInText2("cobra perilaryngeal", FALSE, FALSE) ||
                foundInText2("cobra pla", FALSE, FALSE) ||
                foundInText2("cobra therapy", FALSE, FALSE) ||
                foundInText2("cobra catheter", FALSE, FALSE) ||
                foundInText2("cobra trial", FALSE, FALSE) ||
+               foundInText2("cobra pzf", FALSE, FALSE) ||
+               foundInText2("cobra-effect", FALSE, FALSE) ||
+               foundInText2("cobra effect", FALSE, FALSE) ||
+               foundInText2("pseudo-cobra", FALSE, FALSE) ||
+               foundInText2("pseudo cobra", FALSE, FALSE) ||
+               foundInText2("cobra-head", FALSE, FALSE) ||
+               foundInText2("cobra-head cuff", FALSE, FALSE) ||
+               foundInText2("cobra head cuff", FALSE, FALSE) ||
+               foundInText2("coronary stent", FALSE, FALSE) ||
+               foundInText2("e-cobra", FALSE, FALSE) ||
                foundInText2("cobra fish", FALSE, FALSE))
              ok = FALSE;
         } /* else fi */
@@ -43796,7 +44219,7 @@ int isLookForOK(char *lookFor)
                foundInText2("cat #.", FALSE, FALSE) ||
                foundInText2("cat #", FALSE, FALSE) ||
                foundInText2("cat#", FALSE, FALSE) ||
-               foundInText2("cat.", FALSE, FALSE) ||
+               foundInText2("cat. ", FALSE, FALSE) ||
                foundInText2("cat.&.", FALSE, FALSE) ||
                foundInText2("cat &.", FALSE, FALSE) ||
                foundInText2("cat &", FALSE, FALSE) ||
@@ -44422,6 +44845,30 @@ int isLookForOK(char *lookFor)
              ok = TRUE;
 
             else if(foundInText2("short communication", FALSE, FALSE) ||
+                    foundInText2("vein communication", FALSE, FALSE) ||
+                    foundInText2("interorganelle communication", FALSE, FALSE) ||
+                    foundInText2("inter-organelle communication", FALSE, FALSE) ||
+                    foundInText2("inter organelle communication", FALSE, FALSE) ||
+                    foundInText2("interorganellar communication", FALSE, FALSE) ||
+                    foundInText2("inter-organellar communication", FALSE, FALSE) ||
+                    foundInText2("inter organellar communication", FALSE, FALSE) ||
+                    foundInText2("organ communication", FALSE, FALSE) ||
+                    foundInText2("gut communication", FALSE, FALSE) ||
+                    foundInText2("organelle communication", FALSE, FALSE) ||
+                    foundInText2("organellar communication", FALSE, FALSE) ||
+                    foundInText2("paravalvular communication", FALSE, FALSE) ||
+                    foundInText2("aortopulmonary communication", FALSE, FALSE) ||
+                    foundInText2("parasite communication", FALSE, FALSE) ||
+                    foundInText2("fish communication", FALSE, FALSE) ||
+                    foundInText2("plant communication", FALSE, FALSE) ||
+                    foundInText2("rhizobial communication", FALSE, FALSE) ||
+                    foundInText2("animal communication", FALSE, FALSE) ||
+                    foundInText2("cricket communication", FALSE, FALSE) ||
+                    foundInText2("chemical communication", FALSE, FALSE) ||
+                    foundInText2("cytokine communication", FALSE, FALSE) ||
+                    foundInText2("neuron communication", FALSE, FALSE) ||
+                    foundInText2("nerve communication", FALSE, FALSE) ||
+                    foundInText2("fistulous communication", FALSE, FALSE) ||
                     foundInText2("intercellular communication", FALSE, FALSE) ||
                     foundInText2("inter-cellular communication", FALSE, FALSE) ||
                     foundInText2("inter -cellular communication", FALSE, FALSE) ||
@@ -44431,9 +44878,14 @@ int isLookForOK(char *lookFor)
                     foundInText2("cell-cell communication", FALSE, FALSE) ||
                     foundInText2("cell cell communication", FALSE, FALSE) ||
                     foundInText2("cell communication", FALSE, FALSE) ||
+                    foundInText2("cell's communication", FALSE, FALSE) ||
+                    foundInText2("cells' communication", FALSE, FALSE) ||
+                    foundInText2("cells communication", FALSE, FALSE) ||
                     foundInText2("peptide communication", FALSE, FALSE) ||
                     foundInText2("mitocellular communication", FALSE, FALSE) ||
                     foundInText2("microbial communication", FALSE, FALSE) ||
+                    foundInText2("communication network", FALSE, FALSE) ||
+                    foundInText2("communication platform", FALSE, FALSE) ||
                     foundInText2("gut-brain communication", FALSE, FALSE) ||
                     foundInText2("gut brain communication", FALSE, FALSE) ||
                     foundInText2("oroantral communication", FALSE, FALSE) ||
@@ -44460,7 +44912,8 @@ int isLookForOK(char *lookFor)
 
         else if(strcmp(lookFor, "copper") == 0)
         {
-            if(foundInText2("copper oxidase", FALSE, FALSE) ||
+            if(foundInText2("COPPER", TRUE, FALSE) ||
+               foundInText2("copper oxidase", FALSE, FALSE) ||
                foundInText2("copper-oxidase", FALSE, FALSE) ||
                foundInText2("copper free", FALSE, FALSE) ||
                foundInText2("copper-free", FALSE, FALSE) ||
@@ -44478,6 +44931,35 @@ int isLookForOK(char *lookFor)
              ok = FALSE;
         } /* else fi */
 
+        else if(strcmp(lookFor, "coconut") == 0)
+        {
+            if(foundInText2("COCONUT", TRUE, FALSE) ||
+               foundInText2("CoCoNut", TRUE, FALSE) ||
+               foundInText2("coconut octopus", FALSE, FALSE) ||
+               foundInText2("coconut crab", FALSE, FALSE) ||
+               foundInText2("coconut mite", FALSE, FALSE) ||
+               foundInText2("coconut rhinoceros", FALSE, FALSE) ||
+               foundInText2("coconut beetle", FALSE, FALSE) ||
+               foundInText2("coconut lorikeets", FALSE, FALSE) ||
+               foundInText2("coconut lorikeet", FALSE, FALSE) ||
+               foundInText2("coconut leaf beetle", FALSE, FALSE) ||
+               foundInText2("coconut hispine beetle", FALSE, FALSE) ||
+               foundInText2("coconut hispine", FALSE, FALSE) ||
+               foundInText2("coconut hispid", FALSE, FALSE) ||
+               foundInText2("coconut moth", FALSE, FALSE) ||
+               foundInText2("coconut oils", FALSE, FALSE) ||
+               foundInText2("coconut oil", FALSE, FALSE) ||
+               foundInText2("coconut essential oils", FALSE, FALSE) ||
+               foundInText2("coconut essential oil", FALSE, FALSE) ||
+               foundInText2("coconut shell left atrium", FALSE, FALSE) ||
+               foundInText2("coconut left atrium", FALSE, FALSE) ||
+               foundInText2("coconut shell atrium", FALSE, FALSE) ||
+               foundInText2("coconut atrium", FALSE, FALSE) ||
+               foundInText2("lyme in the coconut", FALSE, FALSE) ||
+               foundInText2("shaking the coconut", FALSE, FALSE))
+             ok = FALSE;
+        } /* else fi */
+
         else if(strcmp(lookFor, "colony collapse") == 0)
         {
             if(foundInText2("bee", FALSE, FALSE) ||
@@ -44486,6 +44968,60 @@ int isLookForOK(char *lookFor)
                foundInText2("honeybees", FALSE, FALSE))
              ok = TRUE;
             else
+             ok = FALSE;
+        } /* else fi */
+
+        else if((strcmp(lookFor, "cherries") == 0) || (strcmp(lookFor, "cherry") == 0))
+        {
+            if(foundInText2("cornelian cherry", FALSE, FALSE) ||
+               foundInText2("acerola cherry", FALSE, FALSE) ||
+               foundInText2("cherry-picking", FALSE, FALSE) ||
+               foundInText2("cherry picking", FALSE, FALSE) ||
+               foundInText2("cherry-picked", FALSE, FALSE) ||
+               foundInText2("cherry picked", FALSE, FALSE) ||
+               foundInText2("cherry-pick", FALSE, FALSE) ||
+               foundInText2("cherry pick", FALSE, FALSE) ||
+               foundInText2("cherry-red", FALSE, FALSE) ||
+               foundInText2("cherry red", FALSE, FALSE) ||
+               foundInText2("cherry ames", FALSE, FALSE) ||
+               foundInText2("simon cherry", FALSE, FALSE) ||
+               foundInText2("robert n. cherry", FALSE, FALSE) ||
+               foundInText2("cherry effect", FALSE, FALSE) ||
+               foundInText2("cherry eye", FALSE, FALSE) ||
+               foundInText2("cherry barrel", FALSE, FALSE) ||
+               foundInText2("cherry fruit fly", FALSE, FALSE) ||
+               foundInText2("cherry fruit-fly", FALSE, FALSE) ||
+               foundInText2("cherry kernel", FALSE, FALSE) ||
+               foundInText2("cherry, ripe for picking", FALSE, FALSE) ||
+               foundInText2("cherry belle", FALSE, FALSE) ||
+               foundInText2("cherry shrimp", FALSE, FALSE) ||
+               foundInText2("cherry angiomas", FALSE, FALSE) ||
+               foundInText2("cherry angioma", FALSE, FALSE) ||
+               foundInText2("cherry hemangiomas", FALSE, FALSE) ||
+               foundInText2("cherry hemangiomas", FALSE, FALSE) ||
+               foundInText2("cherry laurel", FALSE, FALSE) ||
+               foundInText2("cherry oat", FALSE, FALSE) ||
+               foundInText2("cherry-oat", FALSE, FALSE) ||
+               foundInText2("cherry skin lesion", FALSE, FALSE) ||
+               foundInText2("cherry on top", FALSE, FALSE) ||
+               foundInText2("cherry radish", FALSE, FALSE) ||
+               foundInText2("cherry blossom", FALSE, FALSE) ||
+               foundInText2("cherry tomato", FALSE, FALSE) ||
+               foundInText2("cherry tomatoe", FALSE, FALSE) ||
+               foundInText2("cherry tomatoes", FALSE, FALSE) ||
+               foundInText2("cherry valley", FALSE, FALSE) ||
+               foundInText2("cherry wood", FALSE, FALSE) ||
+               foundInText2("cherry bark", FALSE, FALSE) ||
+               foundInText2("cherry reporter", FALSE, FALSE) ||
+               foundInText2("cherry supplement", FALSE, FALSE) ||
+               foundInText2("cherry robigovirus", FALSE, FALSE) ||
+               foundInText2("cherry silverberry", FALSE, FALSE) ||
+               foundInText2("little cherry virus", FALSE, FALSE) ||
+               foundInText2("cherry green ring mottle virus", FALSE, FALSE) ||
+               foundInText2("cherry necrotic rusty mottle virus", FALSE, FALSE) ||
+               foundInText2("cherry virus a", FALSE, FALSE) ||
+               foundInText2("insulin-h2b-cherry", FALSE, FALSE) ||
+               foundInText2("cherry 6k", FALSE, FALSE))
              ok = FALSE;
         } /* else fi */
 
@@ -44740,89 +45276,17 @@ int isLookForOK(char *lookFor)
 
         else if(strcmp(lookFor, "doping") == 0)
         {
-            if(foundInText2("citation doping", FALSE, FALSE) ||
-               foundInText2("cation doping", FALSE, FALSE) ||
-               foundInText2("ion doping", FALSE, FALSE) ||
-               foundInText2("doping ion", FALSE, FALSE) ||
-               foundInText2("co-doping", FALSE, FALSE) ||
-               foundInText2("mono-doping", FALSE, FALSE) ||
-               foundInText2("dual-doping", FALSE, FALSE) ||
-               foundInText2("m2+ doping", FALSE, FALSE) ||
-               foundInText2("mg2+ doping", FALSE, FALSE) ||
-               foundInText2("gd3+ doping", FALSE, FALSE) ||
-               foundInText2("mg doping", FALSE, FALSE) ||
-               foundInText2("mg-doping", FALSE, FALSE) ||
-               foundInText2("ag doping", FALSE, FALSE) ||
-               foundInText2("ag-doping", FALSE, FALSE) ||
-               foundInText2("au-doping", FALSE, FALSE) ||
-               foundInText2("au doping", FALSE, FALSE) ||
-               foundInText2("de-doping", FALSE, FALSE) ||
-               foundInText2("de doping", FALSE, FALSE) ||
-               foundInText2("fe-doping", FALSE, FALSE) ||
-               foundInText2("fe doping", FALSE, FALSE) ||
-               foundInText2("doping au", FALSE, FALSE) ||
-               foundInText2("doping steps", FALSE, FALSE) ||
-               foundInText2("doping hepta", FALSE, FALSE) ||
-               foundInText2("doping platinum", FALSE, FALSE) ||
-               foundInText2("doping sio2", FALSE, FALSE) ||
-               foundInText2("doping cu", FALSE, FALSE) ||
-               foundInText2("doping polydopamine", FALSE, FALSE) ||
-               foundInText2("doping of silver", FALSE, FALSE) ||
-               foundInText2("doping of copper", FALSE, FALSE) ||
-               foundInText2("doping ag", FALSE, FALSE) ||
-               foundInText2("doping metal", FALSE, FALSE) ||
-               foundInText2("cuo doping", FALSE, FALSE) ||
-               foundInText2("cu-doped", FALSE, FALSE) ||
-               foundInText2("gd-doping", FALSE, FALSE) ||
-               foundInText2("si-doping", FALSE, FALSE) ||
-               foundInText2("si doping", FALSE, FALSE) ||
-               foundInText2("oxide doping", FALSE, FALSE) ||
-               foundInText2("oxide-doping", FALSE, FALSE) ||
-               foundInText2("c doping", FALSE, FALSE) ||
-               foundInText2("c-doping", FALSE, FALSE) ||
-               foundInText2("nb doping", FALSE, FALSE) ||
-               foundInText2("nb-doping", FALSE, FALSE) ||
-               foundInText2("n doping", FALSE, FALSE) ||
-               foundInText2("n-doping", FALSE, FALSE) ||
-               foundInText2("n doped", FALSE, FALSE) ||
-               foundInText2("n-doped", FALSE, FALSE) ||
-               foundInText2("rare-earth doping", FALSE, FALSE) ||
-               foundInText2("nitrogen doping", FALSE, FALSE) ||
-               foundInText2("nitrogen-doping", FALSE, FALSE) ||
-               foundInText2("v(v)-doping", FALSE, FALSE) ||
-               foundInText2("silver doping", FALSE, FALSE) ||
-               foundInText2("gadolinium doping", FALSE, FALSE) ||
-               foundInText2("strontium doping", FALSE, FALSE) ||
-               foundInText2("zn doping", FALSE, FALSE) ||
-               foundInText2("zn-doping", FALSE, FALSE) ||
-               foundInText2("zinc doping", FALSE, FALSE) ||
-               foundInText2("zinc-doping", FALSE, FALSE) ||
-               foundInText2("copper doping", FALSE, FALSE) ||
-               foundInText2("iron doping", FALSE, FALSE) ||
-               foundInText2("lithium doping", FALSE, FALSE) ||
-               foundInText2("sulfur doping", FALSE, FALSE) ||
-               foundInText2("silver doping", FALSE, FALSE) ||
-               foundInText2("zirconium doping", FALSE, FALSE) ||
-               foundInText2("europium doping", FALSE, FALSE) ||
-               foundInText2("nickel doping", FALSE, FALSE) ||
-               foundInText2("lead doping", FALSE, FALSE) ||
-               foundInText2("budesonide", FALSE, FALSE) ||
-               foundInText2("bismuth", FALSE, FALSE) ||
-               foundInText2("carbon nanodots", FALSE, FALSE) ||
-               foundInText2("metal doping", FALSE, FALSE) ||
-               foundInText2("silicon doping", FALSE, FALSE) ||
-               foundInText2("mullite-doping", FALSE, FALSE) ||
-               foundInText2("heteroatom doping", FALSE, FALSE) ||
-               foundInText2("carbonate-doping", FALSE, FALSE) ||
-               foundInText2("doping control analysis", FALSE, FALSE) ||
-               foundInText2("niobium doping", FALSE, FALSE) ||
-               foundInText2("molybdenum doping", FALSE, FALSE) ||
-               foundInText2("strontium doping", FALSE, FALSE) ||
-               foundInText2("lanthanide doping", FALSE, FALSE) ||
-               foundInText2("magnesium doping", FALSE, FALSE) ||
-               foundInText2("surface doping", FALSE, FALSE) ||
-               foundInText2("quantum dot doping", FALSE, FALSE) ||
-               foundInText2("pocket doping", FALSE, FALSE))
+            if(foundInText2("sports", FALSE, FALSE) ||
+               foundInText2("sport", FALSE, FALSE) ||
+               foundInText2("athletes", FALSE, FALSE) ||
+               foundInText2("athlete", FALSE, FALSE) ||
+               foundInText2("olympics", FALSE, FALSE) ||
+               foundInText2("olympic", FALSE, FALSE) ||
+               foundInText2("anti-doping", FALSE, FALSE) ||
+               foundInText2("anti doping", FALSE, FALSE))
+              ok = TRUE;
+
+            else
               ok = FALSE;
         } /* else fi */
 
@@ -44993,6 +45457,22 @@ int isLookForOK(char *lookFor)
               ok = FALSE;
         } /* else fi */
 
+        else if(strcmp(lookFor, "dhh") == 0)
+        {
+            if(foundInText2("deaf or hard-of-hearing", FALSE, FALSE) ||
+               foundInText2("deaf or hard of hearing", FALSE, FALSE) ||
+               foundInText2("hard of hearing", FALSE, FALSE) ||
+               foundInText2("hard-of-hearing", FALSE, FALSE) ||
+               foundInText2("deafness", FALSE, FALSE) ||
+               foundInText2("deaf", FALSE, FALSE) ||
+               foundInText2("sign language", FALSE, FALSE) ||
+               foundInText2("dhh learner", FALSE, FALSE) ||
+               foundInText2("dhh student", FALSE, FALSE) ||
+               foundInText2("dhh children", FALSE, FALSE) ||
+               foundInText2("dhh child", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
         else if(strcmp(lookFor, "drive") == 0)
         {
             if(foundInText2("drive for", FALSE, FALSE))
@@ -45037,6 +45517,7 @@ int isLookForOK(char *lookFor)
             if(foundInText2("DOG", TRUE, FALSE) ||
                foundInText2("DOGS", TRUE, FALSE) ||
                foundInText2("DoGs", TRUE, FALSE) ||
+               foundInText2("DoG", TRUE, FALSE) ||
                foundInText2("who let the dogs out", FALSE, FALSE) ||
                foundInText2("who let the dog out", FALSE, FALSE) ||
                foundInText2("prairie dog", FALSE, FALSE) ||
@@ -45049,6 +45530,8 @@ int isLookForOK(char *lookFor)
                foundInText2("dog eared", FALSE, FALSE) ||
                foundInText2("dog-faced", FALSE, FALSE) ||
                foundInText2("dog faced", FALSE, FALSE) ||
+               foundInText2("quick brown fox", FALSE, FALSE) ||
+               foundInText2("over the lazy dog", FALSE, FALSE) ||
                foundInText2("dog-fish", FALSE, FALSE) ||
                foundInText2("dog fish", FALSE, FALSE) ||
                foundInText2("dog days", FALSE, FALSE) ||
@@ -45074,6 +45557,7 @@ int isLookForOK(char *lookFor)
                foundInText2("coon dog", FALSE, FALSE) ||
                foundInText2("dog, ny", FALSE, FALSE) ||
                foundInText2("dog, new york", FALSE, FALSE) ||
+               foundInText2("hot-dog", FALSE, FALSE) ||
                foundInText2("hot dog", FALSE, FALSE))
               ok = FALSE;
 
@@ -45082,7 +45566,6 @@ int isLookForOK(char *lookFor)
                 if(foundInText2("old trick", FALSE, FALSE) ||
                    foundInText2("new trick", FALSE, FALSE) ||
                    foundInText2("more trick", FALSE, FALSE) ||
-                   foundInText2("old trick", FALSE, FALSE) ||
                    foundInText2("life in the old dog", FALSE, FALSE))
                   ok = FALSE;
             } /* else fi */
@@ -45177,6 +45660,33 @@ int isLookForOK(char *lookFor)
         else if(strcmp(lookFor, "deception") == 0)
         {
             if(environmentalHealthJournal)
+              ok = FALSE;
+        } /* else fi */
+    
+        else if(strcmp(lookFor, "distillation") == 0)
+        {
+            if(foundInText2("knowledge distillation", FALSE, FALSE) ||
+               foundInText2("knowledge reserved distillation", FALSE, FALSE) ||
+               foundInText2("knowledge-reserved distillation", FALSE, FALSE) ||
+               foundInText2("information distillation", FALSE, FALSE) ||
+               foundInText2("modality distillation", FALSE, FALSE) ||
+               foundInText2("resolution-based distillation", FALSE, FALSE) ||
+               foundInText2("resolution based distillation", FALSE, FALSE) ||
+               foundInText2("distillation learning", FALSE, FALSE) ||
+               foundInText2("distillation time", FALSE, FALSE) ||
+               foundInText2("distillation lens", FALSE, FALSE) ||
+               foundInText2("distillation of posterior", FALSE, FALSE) ||
+               foundInText2("a distillation for", FALSE, FALSE) ||
+               foundInText2("imaging", FALSE, FALSE) ||
+               foundInText2("a distillation of", FALSE, FALSE) ||
+               foundInText2("distillation of", FALSE, FALSE) ||
+               foundInText2("distillation precipitation", FALSE, FALSE) ||
+               foundInText2("distillation-precipitation", FALSE, FALSE) ||
+               foundInText2("rule distillation", FALSE, FALSE) ||
+               foundInText2("reactive distillation", FALSE, FALSE) ||
+               foundInText2("dry distillation", FALSE, FALSE) ||
+               foundInText2("oxygen distillation", FALSE, FALSE) ||
+               foundInText2("fusion distillation", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
 
@@ -45536,6 +46046,12 @@ int isLookForOK(char *lookFor)
                foundInText2("deer mouse", FALSE, FALSE) ||
                foundInText2("deer mice", FALSE, FALSE) ||
                foundInText2("deer truffle", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
+        else if(strcmp(lookFor, "dgmp") == 0)
+        {
+            if(!foundInText2("dGMP", TRUE, FALSE))
               ok = FALSE;
         } /* else fi */
 
@@ -45939,6 +46455,8 @@ int isLookForOK(char *lookFor)
                foundInText2("lipid extract", FALSE, FALSE) ||
                foundInText2("liver extract", FALSE, FALSE) ||
                foundInText2("mite extract", FALSE, FALSE) ||
+               foundInText2("polysaccharide extract", FALSE, FALSE) ||
+               foundInText2("ganoderma lucidum", FALSE, FALSE) ||
                foundInText2("mushroom", FALSE, FALSE) ||
                foundInText2("mushrooms", FALSE, FALSE) ||
                foundInText2("particulate matter", FALSE, FALSE) ||
@@ -45960,7 +46478,12 @@ int isLookForOK(char *lookFor)
                foundInText2("yeast extract", FALSE, FALSE))
               ok = FALSE;
 
-            if(strstr(citation, "extract-") !=NULL)
+            else if(strstr(citation, "extract-") !=NULL)
+              ok = FALSE;
+
+            /* Not in Mushrooms: Int J Med Mushrooms */
+
+            else if(strcmp(nlmID, "100886202") == 0)
               ok = FALSE;
         } /* else fi */
     
@@ -46238,13 +46761,49 @@ int isLookForOK(char *lookFor)
                foundInText2("forest while viewing the trees", FALSE, FALSE) ||
                foundInText2("forest through the trees", FALSE, FALSE) ||
                foundInText2("forest through the", FALSE, FALSE) ||
+               foundInText2("forest before the trees", FALSE, FALSE) ||
+               foundInText2("forest before the", FALSE, FALSE) ||
+               foundInText2("forest in the trees", FALSE, FALSE) ||
+               foundInText2("forest in the tree", FALSE, FALSE) ||
                foundInText2("forest for the trees", FALSE, FALSE) ||
+               foundInText2("forest for the tree", FALSE, FALSE) ||
                foundInText2("forest and the trees", FALSE, FALSE) ||
+               foundInText2("forest and the tree", FALSE, FALSE) ||
                foundInText2("trees for the forest", FALSE, FALSE) ||
+               foundInText2("tree for the forest", FALSE, FALSE) ||
+               foundInText2("trees from the forest", FALSE, FALSE) ||
+               foundInText2("tree from the forest", FALSE, FALSE) ||
+               foundInText2("the forest, the trees", FALSE, FALSE) ||
+               foundInText2("the forest, the tree", FALSE, FALSE) ||
+               foundInText2("separating the forest", FALSE, FALSE) ||
+               foundInText2("considering the forest", FALSE, FALSE) ||
+               foundInText2("falls in the forest", FALSE, FALSE) ||
+               foundInText2("falls in a forest", FALSE, FALSE) ||
+               foundInText2("for the forest", FALSE, FALSE) ||
+               foundInText2("wrong forest", FALSE, FALSE) ||
+               foundInText2("right forest", FALSE, FALSE) ||
+               foundInText2("of forests and trees", FALSE, FALSE) ||
+               foundInText2("finding forests", FALSE, FALSE) ||
+               foundInText2("finding a forest", FALSE, FALSE) ||
+               foundInText2("finding the forest", FALSE, FALSE) ||
+               foundInText2("mistaking a forest", FALSE, FALSE) ||
+               foundInText2("mistaking the forest", FALSE, FALSE) ||
+               foundInText2("seeing a forest", FALSE, FALSE) ||
+               foundInText2("seeing the forest", FALSE, FALSE) ||
+               foundInText2("seeing a tree through the forest", FALSE, FALSE) ||
+               foundInText2("seeing the tree through the forest", FALSE, FALSE) ||
+               foundInText2("visualizing a forest", FALSE, FALSE) ||
+               foundInText2("visualizing the forest", FALSE, FALSE) ||
+               foundInText2("forest for the", FALSE, FALSE) ||
+               foundInText2("tree falls in a forest", FALSE, FALSE) ||
                foundInText2("survival forest", FALSE, FALSE) ||
                foundInText2("forest service", FALSE, FALSE) ||
+               foundInText2("cascade forest model", FALSE, FALSE) ||
+               foundInText2("forest model", FALSE, FALSE) ||
                foundInText2("random forests", FALSE, FALSE) ||
                foundInText2("random forest", FALSE, FALSE) ||
+               foundInText2("random-forests", FALSE, FALSE) ||
+               foundInText2("random-forest", FALSE, FALSE) ||
                foundInText2("randomized forests", FALSE, FALSE) ||
                foundInText2("randomized forest", FALSE, FALSE) ||
                foundInText2("forest disease", FALSE, FALSE) ||
@@ -46460,7 +47019,11 @@ int isLookForOK(char *lookFor)
                foundInText2("pompilidae", FALSE, FALSE) ||
                foundInText2("pepsinae", FALSE, FALSE) ||
                foundInText2("fox river", FALSE, FALSE) ||
+               foundInText2("quick brown fox", FALSE, FALSE) ||
+               foundInText2("over the lazy dog", FALSE, FALSE) ||
                foundInText2("fox squirrel", FALSE, FALSE) ||
+               foundInText2("fox trotter", FALSE, FALSE) ||
+               foundInText2("fox stallion", FALSE, FALSE) ||
                foundInText2("fox and the cat", FALSE, FALSE) ||
                foundInText2("fox and the hedgehog", FALSE, FALSE) ||
                foundInText2("fox and the", FALSE, FALSE) ||
@@ -46477,6 +47040,7 @@ int isLookForOK(char *lookFor)
                foundInText2("fox pentagon", FALSE, FALSE) ||
                foundInText2("fox proteins", FALSE, FALSE) ||
                foundInText2("fox transcription", FALSE, FALSE) ||
+               foundInText2("fox optimization", FALSE, FALSE) ||
                foundInText2("fox syndrome", FALSE, FALSE) ||
                foundInText2("goldman-fox", FALSE, FALSE) ||
                foundInText2("goldman fox", FALSE, FALSE) ||
@@ -46651,6 +47215,8 @@ int isLookForOK(char *lookFor)
                 foundInText2("falling out", FALSE, FALSE) ||
                 foundInText2("falling apart", FALSE, FALSE) ||
                 foundInText2("falling behind", FALSE, FALSE) ||
+                foundInText2("falling objects", FALSE, FALSE) ||
+                foundInText2("falling object", FALSE, FALSE) ||
                 foundInText2("falling birth", FALSE, FALSE) ||
                 foundInText2("falling light", FALSE, FALSE) ||
                 foundInText2("falling numbers", FALSE, FALSE) ||
@@ -47512,6 +48078,8 @@ int isLookForOK(char *lookFor)
                foundInText2("grass puffer", FALSE, FALSE) ||
                foundInText2("grass-roots", FALSE, FALSE) ||
                foundInText2("grass roots", FALSE, FALSE) ||
+               foundInText2("grass-root", FALSE, FALSE) ||
+               foundInText2("grass root", FALSE, FALSE) ||
                foundInText2("grass snake", FALSE, FALSE) ||
                foundInText2("grass rat", FALSE, FALSE) ||
                foundInText2("grass mice", FALSE, FALSE) ||
@@ -48054,6 +48622,13 @@ int isLookForOK(char *lookFor)
                foundInText2("haematopoietic growth", FALSE, FALSE) ||
                foundInText2("haematopoietic syndrome", FALSE, FALSE))
              ok = FALSE;
+
+            else if(foundInText2("transplantation", FALSE, FALSE) ||
+               foundInText2("transplant", FALSE, FALSE))
+             ok = TRUE;
+
+            else
+             ok = FALSE;
         } /* else fi */
 
         else if((strcmp(lookFor, "hair") == 0) ||
@@ -48193,6 +48768,9 @@ int isLookForOK(char *lookFor)
                foundInText2("white horse", FALSE, FALSE) ||
                foundInText2("flogging the horse", FALSE, FALSE) ||
                foundInText2("a horse in the race", FALSE, FALSE) ||
+               foundInText2("after the horse", FALSE, FALSE) ||
+               foundInText2("before the horse", FALSE, FALSE) ||
+               foundInText2("horse has bolted", FALSE, FALSE) ||
                foundInText2("horse to water", FALSE, FALSE) ||
                foundInText2("horse before the cart", FALSE, FALSE) ||
                foundInText2("cart before the horse", FALSE, FALSE) ||
@@ -48484,29 +49062,48 @@ int isLookForOK(char *lookFor)
               ok = FALSE;
         } /* else fi */
         
-        else if(strcmp(lookFor, "island") == 0)
+        else if((strcmp(lookFor, "islands") == 0) || (strcmp(lookFor, "island") == 0))
         {
             if(foundInText2("ISLAND", TRUE, FALSE) ||
                foundInText2("cartilage island", FALSE, FALSE) ||
                foundInText2("islands of", FALSE, FALSE) ||
                foundInText2("island radiation", FALSE, FALSE) ||
-               foundInText2("greek islands", FALSE, FALSE) ||
-               foundInText2("hawaiian islands", FALSE, FALSE) ||
+               foundInText2("greek island", FALSE, FALSE) ||
+               foundInText2("hawaiian island", FALSE, FALSE) ||
+               foundInText2("cpg-island", FALSE, FALSE) ||
                foundInText2("cpg island", FALSE, FALSE) ||
                foundInText2("(cpg) island", FALSE, FALSE) ||
                foundInText2("azorean islands", FALSE, FALSE) ||
                foundInText2("integrin islands", FALSE, FALSE) ||
                foundInText2("cardos islands", FALSE, FALSE) ||
                foundInText2("erythroblastic island", FALSE, FALSE) ||
+               foundInText2("pathogenicity island", FALSE, FALSE) ||
+               foundInText2("fasciocutaneous island", FALSE, FALSE) ||
+               foundInText2("immunization island", FALSE, FALSE) ||
+               foundInText2("resistance island", FALSE, FALSE) ||
+               foundInText2("island flap", FALSE, FALSE) ||
                foundInText2("heterotopic island", FALSE, FALSE) ||
                foundInText2("symbiosis island", FALSE, FALSE) ||
+               foundInText2("floating island", FALSE, FALSE) ||
                foundInText2("heat island", FALSE, FALSE) ||
+               foundInText2("island of hope", FALSE, FALSE) ||
                foundInText2("rhode island", FALSE, FALSE) ||
                foundInText2("genomic island", FALSE, FALSE) ||
+               foundInText2("signaling islands", FALSE, FALSE) ||
+               foundInText2("signaling island", FALSE, FALSE) ||
+               foundInText2("island shaped", FALSE, FALSE) ||
+               foundInText2("island-shaped", FALSE, FALSE) ||
+               foundInText2("island canaries", FALSE, FALSE) ||
+               foundInText2("island canary", FALSE, FALSE) ||
+               foundInText2("gene island", FALSE, FALSE) ||
+               foundInText2("gene islands", FALSE, FALSE) ||
+               foundInText2("serinus canaria", FALSE, FALSE) ||
+               foundInText2("serinus", FALSE, FALSE) ||
                foundInText2("island pedicle flap", FALSE, FALSE) ||
                foundInText2("island flap", FALSE, FALSE) ||
                foundInText2("not an island", FALSE, FALSE) ||
                foundInText2("is an island", FALSE, FALSE) ||
+               foundInText2("islands in the spinal", FALSE, FALSE) ||
                foundInText2("island macrophage", FALSE, FALSE) ||
                foundInText2("island countries", FALSE, FALSE) ||
                foundInText2("island country", FALSE, FALSE) ||
@@ -48536,9 +49133,11 @@ int isLookForOK(char *lookFor)
             if(foundInText2("iron age", FALSE, FALSE) ||
                 foundInText2("IRON", TRUE, FALSE) ||
                 foundInText2("iron-age", FALSE, FALSE) ||
-                foundInText2("ferrous iron", FALSE, FALSE) ||
                 foundInText2("iron rule", FALSE, FALSE) ||
                 foundInText2("iron it out", FALSE, FALSE) ||
+                foundInText2("iron lady(r)", FALSE, FALSE) ||
+                foundInText2("iron lady", FALSE, FALSE) ||
+                foundInText2("iron lung", FALSE, FALSE) ||
                 foundInText2("iron out", FALSE, FALSE) ||
                 foundInText2("iron man", FALSE, FALSE) ||
                 foundInText2("iron-man", FALSE, FALSE) ||
@@ -49350,6 +49949,7 @@ int isLookForOK(char *lookFor)
                foundInText2("japanese hondo macaque", FALSE, FALSE) ||
                foundInText2("japanese medaka", FALSE, FALSE) ||
                foundInText2("japanese green tea", FALSE, FALSE) ||
+               foundInText2("japanese chestnut", FALSE, FALSE) ||
                foundInText2("japanese pear", FALSE, FALSE) ||
                foundInText2("japanese plum", FALSE, FALSE) ||
                foundInText2("japanese grape", FALSE, FALSE) ||
@@ -49474,16 +50074,35 @@ int isLookForOK(char *lookFor)
             if(foundInText2("kampala trauma score", FALSE, TRUE))
               ok = FALSE;
         } /* else fi */
+
+        /* With & without syndrome are two different things */
+
+        else if((strcmp(lookFor, "keishi-bukuryo-gan") == 0) ||
+                (strcmp(lookFor, "keishi-bukuryo-gan") == 0))
+        {
+            if(foundInText2("kbg syndrome", FALSE, TRUE) ||
+               foundInText2("keishi-bukuryo-gan syndrome", FALSE, FALSE) ||
+               foundInText2("keishi bukuryo gan syndrome", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
     
-        else if(strcmp(lookFor, "kangaroo") == 0)
+        else if((strcmp(lookFor, "kangaroo") == 0) || (strcmp(lookFor, "kangaroos") == 0))
         {
             if(foundInText2("kangaroo mother", FALSE, FALSE) ||
                foundInText2("kangaroo-mother", FALSE, FALSE) ||
+               foundInText2("kangaroo-father", FALSE, FALSE) ||
+               foundInText2("kangaroo father", FALSE, FALSE) ||
                foundInText2("kangaroo position", FALSE, FALSE) ||
+               foundInText2("kangaroo family", FALSE, FALSE) ||
                foundInText2("kangaroo island", FALSE, FALSE) ||
                foundInText2("kangaroo-island", FALSE, FALSE) ||
                foundInText2("kangaroo care", FALSE, FALSE) ||
                foundInText2("kangaroo-care", FALSE, FALSE) ||
+               foundInText2("kangaroo method", FALSE, FALSE) ||
+               foundInText2("kangaroo soft tick", FALSE, FALSE) ||
+               foundInText2("kangaroo tick", FALSE, FALSE) ||
+               foundInText2("kangaroo iris", FALSE, FALSE) ||
+               foundInText2("kangaroo feeding tube", FALSE, FALSE) ||
                foundInText2("kangaroo rats", FALSE, FALSE) ||
                foundInText2("kangaroo rat", FALSE, FALSE))
               ok = FALSE;
@@ -49966,14 +50585,45 @@ int isLookForOK(char *lookFor)
         else if(strcmp(lookFor, "longevity") == 0)
         {
             if(foundInText2("column", FALSE, TRUE) ||
-               foundInText2("longevity of", FALSE, FALSE) ||
                foundInText2("longevity survey", FALSE, FALSE) ||
                foundInText2("battery longevity", FALSE, FALSE) ||
+               foundInText2("career longevity", FALSE, FALSE) ||
+               foundInText2("job longevity", FALSE, FALSE) ||
+               foundInText2("avf longevity", FALSE, FALSE) ||
                foundInText2("cell longevity", FALSE, FALSE) ||
-               foundInText2("seed longevity", FALSE, FALSE) ||
+               foundInText2("graft longevity", FALSE, FALSE) ||
+               foundInText2("viability longevity", FALSE, FALSE) ||
+               foundInText2("implant longevity", FALSE, FALSE) ||
+               foundInText2("device longevity", FALSE, FALSE) ||
+               foundInText2("practice longevity", FALSE, FALSE) ||
+               foundInText2("strength longevity", FALSE, FALSE) ||
+               foundInText2("sphincter longevity", FALSE, FALSE) ||
+               foundInText2("skin longevity", FALSE, FALSE) ||
+               foundInText2("generator longevity", FALSE, FALSE) ||
+               foundInText2("automated longevity", FALSE, FALSE) ||
                foundInText2("floral longevity", FALSE, FALSE) ||
-               foundInText2("flower longevity", FALSE, FALSE) ||
+               foundInText2("filler longevity", FALSE, FALSE) ||
+               foundInText2("joint longevity", FALSE, FALSE) ||
+               foundInText2("project longevity", FALSE, FALSE) ||
+               foundInText2("postharvest longevity", FALSE, FALSE) ||
+               foundInText2("post-harvest longevity", FALSE, FALSE) ||
+               foundInText2("post harvest longevity", FALSE, FALSE) ||
+               foundInText2("in longevity", FALSE, FALSE) ||
+               foundInText2("longevity of", FALSE, FALSE) ||
+               foundInText2("longevity study", FALSE, FALSE) ||
+               foundInText2("antibodies", FALSE, FALSE) ||
+               foundInText2("antibody", FALSE, FALSE) ||
+               foundInText2("blood cell", FALSE, FALSE) ||
+               foundInText2("longevity of teeth", FALSE, FALSE) ||
+               foundInText2("longevity gene", FALSE, FALSE) ||
+               foundInText2("longevity effect", FALSE, FALSE) ||
+               foundInText2("longevity mechanism", FALSE, FALSE) ||
+               foundInText2("longevity model", FALSE, FALSE) ||
+               foundInText2("longevity method", FALSE, FALSE) ||
+               foundInText2("longevity area", FALSE, FALSE) ||
+               foundInText2("immune response", FALSE, FALSE) ||
                foundInText2("leaf longevity", FALSE, FALSE) ||
+               foundInText2("restorations longevity", FALSE, FALSE) ||
                foundInText2("restoration longevity", FALSE, FALSE) ||
                foundInText2("constrained cup", FALSE, FALSE) ||
                foundInText2("mount longevity", FALSE, FALSE) ||
@@ -50178,7 +50828,15 @@ int isLookForOK(char *lookFor)
         else if((strcmp(lookFor, "lions") == 0) ||
                 (strcmp(lookFor, "lion") == 0))
         {
-            if(foundInText2("sea lions", FALSE, FALSE) ||
+            if(foundInText2("african lion", FALSE, FALSE) ||
+               foundInText2("africa lion", FALSE, FALSE) ||
+               foundInText2("asiatic lion", FALSE, FALSE) ||
+               foundInText2("panthera leo", FALSE, FALSE) ||
+               foundInText2("lion population", FALSE, FALSE) ||
+               foundInText2("leopard", FALSE, FALSE))
+              ok = TRUE;
+
+            else if(foundInText2("sea lions", FALSE, FALSE) ||
                foundInText2("sea lion", FALSE, FALSE) ||
                foundInText2("lion city", FALSE, FALSE) ||
                foundInText2("gulf of lions", FALSE, FALSE) ||
@@ -50202,6 +50860,18 @@ int isLookForOK(char *lookFor)
                foundInText2("lion-heart", FALSE, FALSE) ||
                foundInText2("lion-hearted", FALSE, FALSE) ||
                foundInText2("lion and the mouse", FALSE, FALSE) ||
+               foundInText2("scallop", FALSE, FALSE) ||
+               foundInText2("hericium", FALSE, FALSE) ||
+               foundInText2("lion's mane medicinal muchroom", FALSE, FALSE) ||
+               foundInText2("lion's mane muchroom", FALSE, FALSE) ||
+               foundInText2("lions mane medicinal muchroom", FALSE, FALSE) ||
+               foundInText2("lions mane muchroom", FALSE, FALSE) ||
+               foundInText2("lion share", FALSE, FALSE) ||
+               foundInText2("lions share", FALSE, FALSE) ||
+               foundInText2("lion's share", FALSE, FALSE) ||
+               foundInText2("lion algorithm", FALSE, FALSE) ||
+               foundInText2("lion mating optimization", FALSE, FALSE) ||
+               foundInText2("routing protocol", FALSE, FALSE) ||
                foundInText2("LION", TRUE, FALSE) ||
                foundInText2("LIONs", TRUE, FALSE) ||
                foundInText2("LIONS", TRUE, FALSE) ||
@@ -51196,6 +51866,7 @@ int isLookForOK(char *lookFor)
                foundInText2("from man", FALSE, FALSE) ||
                foundInText2("no man", FALSE, FALSE) ||
                foundInText2("rich man", FALSE, FALSE) ||
+               foundInText2("poor man", FALSE, FALSE) ||
                foundInText2("man-up", FALSE, FALSE) ||
                foundInText2("man up", FALSE, FALSE) ||
                foundInText2("man-hour", FALSE, FALSE) ||
@@ -51290,30 +51961,58 @@ int isLookForOK(char *lookFor)
             if(environmentalHealthJournal)
              ok = FALSE;
 
-            else if(foundInText2("molecular structural mechanics", FALSE, FALSE) ||
-               foundInText2("pele-msm", FALSE, FALSE) ||
-               foundInText2("pele/msm", FALSE, FALSE) ||
-               foundInText2("pele msm", FALSE, FALSE) ||
-               foundInText2("nhbs-msm", FALSE, FALSE) ||
-               foundInText2("nhbs msm", FALSE, FALSE) ||
-               foundInText2("s4402 msm", FALSE, FALSE) ||
-               foundInText2("msm and wmp", FALSE, FALSE) ||
-               foundInText2("bacillus wiedmannii", FALSE, FALSE) ||
-               foundInText2("wiedmannii", FALSE, FALSE) ||
-               foundInText2("membrane support material", FALSE, FALSE) ||
-               foundInText2("mineral salt medium", FALSE, FALSE) ||
-               foundInText2("molasses salt medium", FALSE, FALSE) ||
-               foundInText2("male sterility mutant", FALSE, FALSE) ||
-               foundInText2("mesoporous silica micron", FALSE, FALSE) ||
-               foundInText2("monolayer of the silane on magnetite", FALSE, FALSE) ||
-               foundInText2("markov state model", FALSE, FALSE) ||
-               foundInText2("multimedia-self-management", FALSE, FALSE) ||
-               foundInText2("multimedia self-management", FALSE, FALSE) ||
-               foundInText2("multimedia self management", FALSE, FALSE) ||
-               foundInText2("methyl sulfonyl methane", FALSE, FALSE) ||
-               foundInText2("maxillary second molar", FALSE, FALSE) ||
-               foundInText2("methylsulfonylmethane", FALSE, FALSE))
-              ok = FALSE;
+            else if(foundInText2("men", FALSE, FALSE) ||
+               foundInText2("man", FALSE, FALSE) ||
+               foundInText2("male", FALSE, FALSE) ||
+               foundInText2("PrEP", TRUE, FALSE) ||
+               foundInText2("hpv", FALSE, FALSE) ||
+               foundInText2("hiv", FALSE, FALSE) ||
+               foundInText2("hiv/aids", FALSE, FALSE) ||
+               foundInText2("hiv-aids", FALSE, FALSE) ||
+               foundInText2("hiv+", FALSE, FALSE) ||
+               foundInText2("hiv-1", FALSE, FALSE) ||
+               foundInText2("hiv-positive", FALSE, FALSE) ||
+               foundInText2("hiv positive", FALSE, FALSE) ||
+               foundInText2("hiv-negative", FALSE, FALSE) ||
+               foundInText2("hiv negative", FALSE, FALSE) ||
+               foundInText2("hiv-uninfected", FALSE, FALSE) ||
+               foundInText2("hiv uninfected", FALSE, FALSE) ||
+               foundInText2("among msm", FALSE, FALSE) ||
+               foundInText2("young msm", FALSE, FALSE) ||
+               foundInText2("younger msm", FALSE, FALSE) ||
+               foundInText2("old msm", FALSE, FALSE) ||
+               foundInText2("older msm", FALSE, FALSE) ||
+               foundInText2("adult msm", FALSE, FALSE) ||
+               foundInText2("black msm", FALSE, FALSE) ||
+               foundInText2("african american msm", FALSE, FALSE) ||
+               foundInText2("white msm", FALSE, FALSE) ||
+               foundInText2("asian msm", FALSE, FALSE) ||
+               foundInText2("indonesian msm", FALSE, FALSE) ||
+               foundInText2("latinx msm", FALSE, FALSE) ||
+               foundInText2("latino msm", FALSE, FALSE) ||
+               foundInText2("student msm", FALSE, FALSE) ||
+               foundInText2("chinese msm", FALSE, FALSE) ||
+               foundInText2("norwegian msm", FALSE, FALSE) ||
+               foundInText2("cisgender msm", FALSE, FALSE) ||
+               foundInText2("minority msm", FALSE, FALSE) ||
+               foundInText2("msm population", FALSE, FALSE) ||
+               foundInText2("msm patient", FALSE, FALSE) ||
+               foundInText2("msm group", FALSE, FALSE) ||
+               foundInText2("population of msm", FALSE, FALSE) ||
+               foundInText2("msm living", FALSE, FALSE) ||
+               foundInText2("msm dating", FALSE, FALSE) ||
+               foundInText2("sexual health", FALSE, FALSE) ||
+               foundInText2("sexual behavior", FALSE, FALSE) ||
+               foundInText2("sexual behavioural", FALSE, FALSE) ||
+               foundInText2("sex life", FALSE, FALSE) ||
+               foundInText2("sex lives", FALSE, FALSE) ||
+               foundInText2("sexuality", FALSE, FALSE) ||
+               foundInText2("pre-exposure prophylaxis", FALSE, FALSE) ||
+               foundInText2("pre exposure prophylaxis", FALSE, FALSE))
+              ok = TRUE;
+
+            else
+             ok = FALSE;
         } /* else fi */
 
         else if(strcmp(lookFor, "mosquito") == 0)
@@ -51429,10 +52128,13 @@ int isLookForOK(char *lookFor)
                foundInText2("mother of public health", FALSE, FALSE) ||
                foundInText2("mother of nursing education", FALSE, FALSE) ||
                foundInText2("mother of", FALSE, FALSE) ||
+               foundInText2("founding mother", FALSE, FALSE) ||
                foundInText2("mother cell", FALSE, FALSE) ||
                foundInText2("mother cells", FALSE, FALSE) ||
                foundInText2("mother tongue", FALSE, FALSE) ||
                foundInText2("mother matters", FALSE, FALSE) ||
+               foundInText2("mother earth", FALSE, FALSE) ||
+               foundInText2("mother-earth", FALSE, FALSE) ||
                foundInText2("mother plant", FALSE, FALSE) ||
                foundInText2("mother plants", FALSE, FALSE) ||
                foundInText2("mother pairs", FALSE, FALSE) ||
@@ -51490,9 +52192,13 @@ int isLookForOK(char *lookFor)
                foundInText2("camera mouse", FALSE, FALSE) ||
                foundInText2("camera mice", FALSE, FALSE) ||
                foundInText2("computer mouse", FALSE, FALSE) ||
+               foundInText2("(computer) mouse", FALSE, FALSE) ||
                foundInText2("computer mice", FALSE, FALSE) ||
+               foundInText2("head mice", FALSE, FALSE) ||
+               foundInText2("head mouse", FALSE, FALSE) ||
                foundInText2("mouse cursor", FALSE, FALSE) ||
                foundInText2("mouse pointer", FALSE, FALSE) ||
+               foundInText2("mouse barrel", FALSE, FALSE) ||
                foundInText2("using a mouse", FALSE, FALSE) ||
                foundInText2("click of a mouse", FALSE, FALSE) ||
                foundInText2("mouse click", FALSE, FALSE) ||
@@ -51500,8 +52206,12 @@ int isLookForOK(char *lookFor)
                foundInText2("mice pad", FALSE, FALSE) ||
                foundInText2("keyboard", FALSE, FALSE) ||
                foundInText2("keyboard/mouse", FALSE, FALSE) ||
+               foundInText2("mouse lemur", FALSE, FALSE) ||
+               foundInText2("of mouse and", FALSE, FALSE) ||
+               foundInText2("of mice and", FALSE, FALSE) ||
                foundInText2("air mouse", FALSE, FALSE) ||
                foundInText2("cat and mouse", FALSE, FALSE) ||
+               foundInText2("cat-and-mouse", FALSE, FALSE) ||
                foundInText2("mickey mouse", FALSE, FALSE) ||
                foundInText2("mice and men", FALSE, FALSE) ||
                foundInText2("mice and man", FALSE, FALSE) ||
@@ -51854,6 +52564,8 @@ int isLookForOK(char *lookFor)
                foundInText2("carp nurseries", FALSE, FALSE) ||
                foundInText2("citrus nursery", FALSE, FALSE) ||
                foundInText2("citrus nurseries", FALSE, FALSE) ||
+               foundInText2("olive nursery", FALSE, FALSE) ||
+               foundInText2("olive nurseries", FALSE, FALSE) ||
                foundInText2("coastal nursery", FALSE, FALSE) ||
                foundInText2("coastal nurseries", FALSE, FALSE) ||
                foundInText2("container nursery", FALSE, FALSE) ||
@@ -52888,8 +53600,13 @@ int isLookForOK(char *lookFor)
         {
             if(foundInText2("plague locust", FALSE, FALSE) ||
                foundInText2("duck plague", FALSE, FALSE) ||
+               foundInText2("crayfish plague", FALSE, FALSE) ||
+               foundInText2("reef plague", FALSE, FALSE) ||
                foundInText2("plague vaccine", FALSE, FALSE) ||
                foundInText2("injury plague", FALSE, FALSE) ||
+               foundInText2("dental plague", FALSE, FALSE) ||
+               foundInText2("plague of", FALSE, FALSE) ||
+               foundInText2("to plague", FALSE, FALSE) ||
                foundInText2("white plague", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
@@ -53385,10 +54102,16 @@ int isLookForOK(char *lookFor)
                 (strcmp(lookFor, "pigeons") == 0))
         {
             if(foundInText2("cat among the pigeons", FALSE, FALSE) ||
+               foundInText2("microbial pigeon", FALSE, FALSE) ||
                foundInText2("pigeon english", FALSE, FALSE) ||
                foundInText2("pigeon pea", FALSE, FALSE) ||
+               foundInText2("pigeon tick", FALSE, FALSE) ||
+               foundInText2("pigeon louse", FALSE, FALSE) ||
                foundInText2("pink pigeon", FALSE, FALSE) ||
-               foundInText2("pigeon paramyxovirus", FALSE, FALSE) ||
+               foundInText2("pigeon inspired optimization", FALSE, FALSE) ||
+               foundInText2("pigeon-inspired optimization", FALSE, FALSE) ||
+               foundInText2("pigeon-inspired", FALSE, FALSE) ||
+               foundInText2("patient or the pigeon", FALSE, FALSE) ||
                foundInText2("typhoon pigeon", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
@@ -53560,25 +54283,120 @@ int isLookForOK(char *lookFor)
         else if((strcmp(lookFor, "rotation") == 0) ||
                 (strcmp(lookFor, "rotations") == 0))
         {
-            if(foundInText2("clinical rotation", FALSE, FALSE) ||
-                foundInText2("medicine rotation", FALSE, FALSE) ||
-                foundInText2("job rotation", FALSE, FALSE) ||
-                foundInText2("task rotation", FALSE, FALSE) ||
-                foundInText2("work rotation", FALSE, FALSE) ||
-                foundInText2("surgical rotation", FALSE, FALSE) ||
+            if(foundInText2("apex rotation", FALSE, FALSE) ||
+                foundInText2("body rotation", FALSE, FALSE) ||
+                foundInText2("canine rotation", FALSE, FALSE) ||
+                foundInText2("cataract", FALSE, FALSE) ||
+                foundInText2("clinical rotation", FALSE, FALSE) ||
+                foundInText2("continuous rotation", FALSE, FALSE) ||
                 foundInText2("crop rotation", FALSE, FALSE) ||
-                foundInText2("mental rotation", FALSE, FALSE) ||
-                foundInText2("opiod rotation", FALSE, FALSE) ||
-                foundInText2("steroid rotation", FALSE, FALSE) ||
-                foundInText2("genomics rotation", FALSE, FALSE) ||
-                foundInText2("genomic rotation", FALSE, FALSE) ||
-                foundInText2("geomin rotation", FALSE, FALSE) ||
-                foundInText2("nuclear rotation", FALSE, FALSE) ||
-                foundInText2("induced rotation", FALSE, FALSE) ||
-                foundInText2("developmental rotation", FALSE, FALSE) ||
+                foundInText2("crop", FALSE, FALSE) ||
+                foundInText2("crystallography", FALSE, FALSE) ||
                 foundInText2("development rotation", FALSE, FALSE) ||
+                foundInText2("developmental rotation", FALSE, FALSE) ||
+                foundInText2("drinking water", FALSE, FALSE) ||
+                foundInText2("en block rotation", FALSE, FALSE) ||
+                foundInText2("en-block rotation", FALSE, FALSE) ||
+                foundInText2("enblock rotation", FALSE, FALSE) ||
+                foundInText2("epipyseal rotation", FALSE, FALSE) ||
+                foundInText2("external rotation", FALSE, FALSE) ||
+                foundInText2("femoral component rotation", FALSE, FALSE) ||
+                foundInText2("femoral rotation", FALSE, FALSE) ||
+                foundInText2("femoral", FALSE, FALSE) ||
+                foundInText2("fetus", FALSE, FALSE) ||
+                foundInText2("flock rotation", FALSE, FALSE) ||
+                foundInText2("fluidic rotation", FALSE, FALSE) ||
+                foundInText2("fore arm rotation", FALSE, FALSE) ||
+                foundInText2("fore-arm rotation", FALSE, FALSE) ||
+                foundInText2("forearm rotation", FALSE, FALSE) ||
+                foundInText2("frontal plane rotation", FALSE, FALSE) ||
+                foundInText2("frontal rotation", FALSE, FALSE) ||
+                foundInText2("genomic rotation", FALSE, FALSE) ||
+                foundInText2("genomics rotation", FALSE, FALSE) ||
+                foundInText2("genotype", FALSE, FALSE) ||
+                foundInText2("geomin rotation", FALSE, FALSE) ||
+                foundInText2("gluteal rotation", FALSE, FALSE) ||
+                foundInText2("graduate rotation", FALSE, FALSE) ||
+                foundInText2("hand rotation", FALSE, FALSE) ||
+                foundInText2("head axial rotation", FALSE, FALSE) ||
+                foundInText2("head rotation", FALSE, FALSE) ||
+                foundInText2("head yaw rotation", FALSE, FALSE) ||
+                foundInText2("head-rotation", FALSE, FALSE) ||
+                foundInText2("histone rotation", FALSE, FALSE) ||
+                foundInText2("hopf born rotation", FALSE, FALSE) ||
+                foundInText2("hopf-born rotation", FALSE, FALSE) ||
+                foundInText2("humeral rotation", FALSE, FALSE) ||
+                foundInText2("induced rotation", FALSE, FALSE) ||
+                foundInText2("internal rotation", FALSE, FALSE) ||
+                foundInText2("intestinal rotation", FALSE, FALSE) ||
+                foundInText2("intramolecular rotation", FALSE, FALSE) ||
+                foundInText2("job rotation", FALSE, FALSE) ||
+                foundInText2("joint rotation", FALSE, FALSE) ||
+                foundInText2("knee rotation", FALSE, FALSE) ||
+                foundInText2("lateral rotation", FALSE, FALSE) ||
+                foundInText2("leg rotation", FALSE, FALSE) ||
+                foundInText2("lumbar rotation", FALSE, FALSE) ||
+                foundInText2("maize rotation", FALSE, FALSE) ||
+                foundInText2("maxillary rotation", FALSE, FALSE) ||
+                foundInText2("medicine rotation", FALSE, FALSE) ||
+                foundInText2("mental rotation", FALSE, FALSE) ||
+                foundInText2("nasal tip rotation", FALSE, FALSE) ||
+                foundInText2("nasal-tip rotation", FALSE, FALSE) ||
+                foundInText2("neurosurgery rotation", FALSE, FALSE) ||
+                foundInText2("nicu rotation", FALSE, FALSE) ||
+                foundInText2("nuclear rotation", FALSE, FALSE) ||
+                foundInText2("ooptical", FALSE, FALSE) ||
+                foundInText2("opiod rotation", FALSE, FALSE) ||
+                foundInText2("optical rotation", FALSE, FALSE) ||
+                foundInText2("otolaryngology rotation", FALSE, FALSE) ||
+                foundInText2("pediatric rotation", FALSE, FALSE) ||
+                foundInText2("pelvis rotation", FALSE, FALSE) ||
+                foundInText2("posterior position", FALSE, FALSE) ||
+                foundInText2("projection and rotation", FALSE, FALSE) ||
+                foundInText2("rape rotation", FALSE, FALSE) ||
+                foundInText2("rape seed rotation", FALSE, FALSE) ||
+                foundInText2("rapeseed rotation", FALSE, FALSE) ||
+                foundInText2("renal hilum", FALSE, FALSE) ||
+                foundInText2("residency rotation", FALSE, FALSE) ||
+                foundInText2("rice rotation", FALSE, FALSE) ||
+                foundInText2("role rotation", FALSE, FALSE) ||
+                foundInText2("rotation advancement flap", FALSE, FALSE) ||
+                foundInText2("rotation advancement", FALSE, FALSE) ||
+                foundInText2("rotation cross advancement", FALSE, FALSE) ||
+                foundInText2("rotation cross-advancement", FALSE, FALSE) ||
                 foundInText2("rotation flap", FALSE, FALSE) ||
-                foundInText2("rotations", FALSE, FALSE))
+                foundInText2("rotation grazing", FALSE, FALSE) ||
+                foundInText2("rotation hip", FALSE, FALSE) ||
+                foundInText2("rotation invariant", FALSE, FALSE) ||
+                foundInText2("rotation model", FALSE, FALSE) ||
+                foundInText2("rotation muscle", FALSE, FALSE) ||
+                foundInText2("rotation rate", FALSE, FALSE) ||
+                foundInText2("rotation specific", FALSE, FALSE) ||
+                foundInText2("rotation surgery", FALSE, FALSE) ||
+                foundInText2("rotation system", FALSE, FALSE) ||
+                foundInText2("rotation technique", FALSE, FALSE) ||
+                foundInText2("rotation worker", FALSE, FALSE) ||
+                foundInText2("rotation-advancement", FALSE, FALSE) ||
+                foundInText2("rotation-invariant", FALSE, FALSE) ||
+                foundInText2("rotation-specific", FALSE, FALSE) ||
+                foundInText2("rotations", FALSE, FALSE) ||
+                foundInText2("sampling and rotation", FALSE, FALSE) ||
+                foundInText2("scraper rotation", FALSE, FALSE) ||
+                foundInText2("shift rotation", FALSE, FALSE) ||
+                foundInText2("soybean rotation", FALSE, FALSE) ||
+                foundInText2("station rotation", FALSE, FALSE) ||
+                foundInText2("stem cell", FALSE, FALSE) ||
+                foundInText2("steroid rotation", FALSE, FALSE) ||
+                foundInText2("supply and rotation", FALSE, FALSE) ||
+                foundInText2("surgical rotation", FALSE, FALSE) ||
+                foundInText2("task rotation", FALSE, FALSE) ||
+                foundInText2("trunk rotation", FALSE, FALSE) ||
+                foundInText2("upland rotation", FALSE, FALSE) ||
+                foundInText2("vegetable rotation", FALSE, FALSE) ||
+                foundInText2("virtual rotation", FALSE, FALSE) ||
+                foundInText2("visiting rotation", FALSE, FALSE) ||
+                foundInText2("wheat rotation", FALSE, FALSE) ||
+                foundInText2("work rotation", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
     
@@ -53671,6 +54489,16 @@ int isLookForOK(char *lookFor)
                foundInText2("ion recombination", FALSE, FALSE) ||
                foundInText2("v(d)j recombination", FALSE, FALSE) ||
                foundInText2("vdj recombination", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+    
+        else if((strcmp(lookFor, "retrievers") == 0) || (strcmp(lookFor, "retriever") == 0))
+        {
+            if(foundInText2("stent-retriever", FALSE, FALSE) ||
+               foundInText2("stent retriever", FALSE, FALSE))
+              ok = FALSE;
+
+            else if(!foundInText2("dogs", FALSE, FALSE) && !foundInText2("dog", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
         
@@ -53887,7 +54715,10 @@ int isLookForOK(char *lookFor)
         else if((strcmp(lookFor, "robin") == 0) ||
                 (strcmp(lookFor, "robins") == 0))
         {
-            if(foundInText2("round robin", FALSE, FALSE) ||
+            if(foundInText2("ROBIN", TRUE, FALSE) ||
+                foundInText2("ROBINS", TRUE, FALSE) ||
+                foundInText2("ROBINs", TRUE, FALSE) ||
+                foundInText2("round robin", FALSE, FALSE) ||
                 foundInText2("round-robin", FALSE, FALSE) ||
                 foundInText2("round robins", FALSE, FALSE) ||
                 foundInText2("round-robins", FALSE, FALSE) ||
@@ -54400,6 +55231,21 @@ int isLookForOK(char *lookFor)
                foundInText2("RATs", TRUE, FALSE))
               ok = FALSE;
         } /* else fi */
+    
+        else if((strcmp(lookFor, "ravens") == 0) ||
+                (strcmp(lookFor, "raven") == 0))
+        {
+            if(foundInText2("problem matrice", FALSE, FALSE) || 
+               foundInText2("problem matrix", FALSE, FALSE) ||
+               foundInText2("progressive matrice", FALSE, FALSE) ||
+               foundInText2("progressive matrix", FALSE, FALSE) ||
+               foundInText2("advanced progressive", FALSE, FALSE) ||
+               foundInText2("standard progressive", FALSE, FALSE) ||
+               foundInText2("matrices", FALSE, FALSE) ||
+               foundInText2("matrice", FALSE, FALSE) ||
+               foundInText2("matrix", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
 
         else if((strcmp(lookFor, "ram") == 0) ||
                 (strcmp(lookFor, "rams") == 0))
@@ -54637,10 +55483,12 @@ int isLookForOK(char *lookFor)
         {
             if(foundInText2("sand flies", FALSE, FALSE) ||
                foundInText2("sand fly", FALSE, FALSE) ||
+               foundInText2("sand flea", FALSE, FALSE) ||
                foundInText2("SAND", TRUE, FALSE) ||
                foundInText2("SANDS", TRUE, FALSE) ||
                foundInText2("SANDs", TRUE, FALSE) ||
                foundInText2("SAnD", TRUE, FALSE) ||
+               foundInText2("sand, sun", FALSE, FALSE) ||
                foundInText2("social anxiety disorder", FALSE, FALSE) ||
                foundInText2("sand wasps", FALSE, FALSE) ||
                foundInText2("sand wasp", FALSE, FALSE) ||
@@ -54656,6 +55504,14 @@ int isLookForOK(char *lookFor)
                foundInText2("sand gazelle", FALSE, FALSE) ||
                foundInText2("sand rats", FALSE, FALSE) ||
                foundInText2("sand rat", FALSE, FALSE) ||
+               foundInText2("sand shrimp", FALSE, FALSE) ||
+               foundInText2("sand racer", FALSE, FALSE) ||
+               foundInText2("sand fynbos", FALSE, FALSE) ||
+               foundInText2("sand bath", FALSE, FALSE) ||
+               foundInText2("sand swimmer", FALSE, FALSE) ||
+               foundInText2("sand-swimmer", FALSE, FALSE) ||
+               foundInText2("sand hopper", FALSE, FALSE) ||
+               foundInText2("sand-hopper", FALSE, FALSE) ||
                foundInText2("sand bass", FALSE, FALSE) ||
                foundInText2("sand flathead", FALSE, FALSE) ||
                foundInText2("sand tilefish", FALSE, FALSE) ||
@@ -54684,6 +55540,10 @@ int isLookForOK(char *lookFor)
                foundInText2("sand dollar", FALSE, FALSE) ||
                foundInText2("sand hills", FALSE, FALSE) ||
                foundInText2("sand rice", FALSE, FALSE) ||
+               foundInText2("sand martin", FALSE, FALSE) ||
+               foundInText2("sand recluse", FALSE, FALSE) ||
+               foundInText2("sand spider", FALSE, FALSE) ||
+               foundInText2("sand filter", FALSE, FALSE) ||
                foundInText2("sand pear", FALSE, FALSE) ||
                foundInText2("sand martin", FALSE, FALSE) ||
                foundInText2("oil sands", FALSE, FALSE) ||
@@ -54701,8 +55561,10 @@ int isLookForOK(char *lookFor)
                foundInText2("built on sand", FALSE, FALSE) ||
                foundInText2("castle of sand", FALSE, FALSE) ||
                foundInText2("sand between the toes", FALSE, FALSE) ||
+               foundInText2("sand in the shorts", FALSE, FALSE) ||
                foundInText2("line in the sand", FALSE, FALSE) ||
                foundInText2("heads in the sand", FALSE, FALSE) ||
+               foundInText2("head in the sand", FALSE, FALSE) ||
                foundInText2("burying our heads in the sand", FALSE, FALSE) ||
                foundInText2("footprints in the sand", FALSE, FALSE) ||
                foundInText2("footprint in the sand", FALSE, FALSE) ||
@@ -55341,6 +56203,19 @@ int isLookForOK(char *lookFor)
               ok = FALSE;
         } /* else fi */
     
+        else if((strcmp(lookFor, "stroke rate") == 0) ||
+                (strcmp(lookFor, "stroke-rate") == 0))
+        {
+            if(foundInText2("swimmer", FALSE, FALSE) ||
+               foundInText2("swimming", FALSE, FALSE) ||
+               foundInText2("rowing", FALSE, FALSE) ||
+               foundInText2("kayaking", FALSE, FALSE) ||
+               foundInText2("boating", FALSE, FALSE) ||
+               foundInText2("boat", FALSE, FALSE) ||
+               foundInText2("kayak", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+
         else if((strcmp(lookFor, "stroke") == 0) ||
                 (strcmp(lookFor, "strokes") == 0))
         {
@@ -55355,12 +56230,21 @@ int isLookForOK(char *lookFor)
                 foundInText2("two stroke", FALSE, FALSE) ||
                 foundInText2("swimmer", FALSE, FALSE) ||
                 foundInText2("swimming", FALSE, FALSE) ||
+                foundInText2("rowing", FALSE, FALSE) ||
+                foundInText2("kayaking", FALSE, FALSE) ||
+                foundInText2("boating", FALSE, FALSE) ||
+                foundInText2("boat", FALSE, FALSE) ||
+                foundInText2("kayak", FALSE, FALSE) ||
                 foundInText2("ictal", FALSE, FALSE) ||
                 foundInText2("stroke and ball", FALSE, FALSE) ||
                 foundInText2("offensive strokes", FALSE, FALSE) ||
                 foundInText2("offensive stroke", FALSE, FALSE) ||
                 foundInText2("forward strokes", FALSE, FALSE) ||
                 foundInText2("forward stroke", FALSE, FALSE) ||
+                foundInText2("wing stroke", FALSE, FALSE) ||
+                foundInText2("stroke-plane", FALSE, FALSE) ||
+                foundInText2("stroke plane", FALSE, FALSE) ||
+                foundInText2("stroke count", FALSE, FALSE) ||
                 foundInText2("wall strokes", FALSE, FALSE) ||
                 foundInText2("wall stroke", FALSE, FALSE) ||
                 foundInText2("ground strokes", FALSE, FALSE) ||
@@ -55368,6 +56252,17 @@ int isLookForOK(char *lookFor)
                 foundInText2("nine strokes", FALSE, FALSE) ||
                 foundInText2("nine stroke", FALSE, FALSE) ||
                 foundInText2("side stroke", FALSE, FALSE) ||
+                foundInText2("post-stroke", FALSE, FALSE) ||
+                foundInText2("post stroke", FALSE, FALSE) ||
+                foundInText2("stroke free", FALSE, FALSE) ||
+                foundInText2("stroke-free", FALSE, FALSE) ||
+                foundInText2("stroke mimic", FALSE, FALSE) ||
+                foundInText2("stroke volume", FALSE, FALSE) ||
+                foundInText2("stroke contrast", FALSE, FALSE) ||
+                foundInText2("letter stroke", FALSE, FALSE) ||
+                foundInText2("backhand stroke", FALSE, FALSE) ||
+                foundInText2("back-hand stroke", FALSE, FALSE) ||
+                foundInText2("back hand stroke", FALSE, FALSE) ||
                 foundInText2("back stroke", FALSE, FALSE) ||
                 foundInText2("crawl stroke", FALSE, FALSE))
              ok = FALSE;
@@ -55747,6 +56642,7 @@ int isLookForOK(char *lookFor)
                foundInText2("tequila", FALSE, FALSE) ||
                foundInText2("russell silver", FALSE, FALSE) ||
                foundInText2("russell-silver", FALSE, FALSE) ||
+               foundInText2("silver perch", FALSE, FALSE) ||
                foundInText2("silver russell", FALSE, FALSE) ||
                foundInText2("silver european eel", FALSE, FALSE) ||
                foundInText2("silver standard", FALSE, FALSE) ||
@@ -55768,6 +56664,8 @@ int isLookForOK(char *lookFor)
                foundInText2("silver stage", FALSE, FALSE) ||
                foundInText2("silver sea bream", FALSE, FALSE) ||
                foundInText2("silver bream", FALSE, FALSE) ||
+               foundInText2("silver pomfret", FALSE, FALSE) ||
+               foundInText2("pampus argenteus", FALSE, FALSE) ||
                foundInText2("silver japanese eels", FALSE, FALSE) ||
                foundInText2("silver eels", FALSE, FALSE) ||
                foundInText2("silver eel", FALSE, FALSE) ||
@@ -55894,7 +56792,20 @@ int isLookForOK(char *lookFor)
                 foundInText2("iowa singing", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
-    
+        
+        else if(strcmp(lookFor, "shepherd") == 0)
+        {
+            if(foundInText2("german shepherd", FALSE, FALSE) ||
+                foundInText2("belgian shepherd", FALSE, FALSE) ||
+                foundInText2("australian shepherd", FALSE, FALSE) ||
+                foundInText2("american shepherd", FALSE, FALSE) ||
+                foundInText2("shepherd dog", FALSE, FALSE))
+              ok = TRUE;
+
+            else
+              ok = FALSE;
+        } /* else fi */
+
         else if(strcmp(lookFor, "swamp") == 0)
         {
             if(foundInText2("drain the swamp", FALSE, FALSE) ||
@@ -56212,7 +57123,8 @@ int isLookForOK(char *lookFor)
         {
             if(foundInText2("SHE", TRUE, FALSE) ||
                foundInText2("SHEs", TRUE, FALSE) ||
-               foundInText2("SHES", TRUE, FALSE))
+               foundInText2("SHES", TRUE, FALSE) ||
+               foundInText2("qi she", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
     } /* else fi S */
@@ -56317,6 +57229,32 @@ int isLookForOK(char *lookFor)
                foundInText2("earth tremors", FALSE, FALSE) ||
                foundInText2("essential tremors", FALSE, FALSE) ||
                foundInText2("earthquake", FALSE, FALSE))
+              ok = FALSE;
+        } /* else fi */
+        
+        else if((strcmp(lookFor, "tunas") == 0) ||
+                (strcmp(lookFor, "tuna") == 0))
+        {
+            if(foundInText2("tuna fish", FALSE, FALSE) ||
+               foundInText2("albacore tuna", FALSE, FALSE) ||
+               foundInText2("bigeye tuna", FALSE, FALSE) ||
+               foundInText2("big-eye tuna", FALSE, FALSE) ||
+               foundInText2("big eye tuna", FALSE, FALSE) ||
+               foundInText2("yellowfin tuna", FALSE, FALSE) ||
+               foundInText2("canned tuna", FALSE, FALSE) ||
+               foundInText2("skipjack tuna", FALSE, FALSE) ||
+               foundInText2("bluefin tuna", FALSE, FALSE) ||
+               foundInText2("blue-fin tuna", FALSE, FALSE) ||
+               foundInText2("blue fin tuna", FALSE, FALSE))
+              ok = TRUE;
+
+            else if(foundInText2("TUNA", TRUE, FALSE) ||
+               foundInText2("TUNAs", TRUE, FALSE) ||
+               foundInText2("TuNA", TRUE, FALSE) ||
+               foundInText2("TuNAs", TRUE, FALSE) ||
+               foundInText2("las tunas", FALSE, FALSE) ||
+               foundInText2("tuna on rye", FALSE, FALSE) ||
+               foundInText2("tuna swarm optimization", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
 
@@ -56689,7 +57627,10 @@ int isLookForOK(char *lookFor)
         else if((strcmp(lookFor, "tree") == 0) ||
                 (strcmp(lookFor, "trees") == 0))
         {
-            if(foundInText2("phylogenetic tree", FALSE, FALSE) ||
+            if(!isLookForOK("forests"))
+              ok = FALSE;
+
+            else if(foundInText2("phylogenetic tree", FALSE, FALSE) ||
                 foundInText2("phylogenetic", FALSE, FALSE) ||
                 foundInText2("gene tree", FALSE, FALSE) ||
                 foundInText2("mammal tree", FALSE, FALSE) ||
@@ -56706,6 +57647,11 @@ int isLookForOK(char *lookFor)
                 foundInText2("tree structured", FALSE, FALSE) ||
                 foundInText2("tree puzzle", FALSE, FALSE) ||
                 foundInText2("vascular tree", FALSE, FALSE) ||
+                foundInText2("right tree", FALSE, FALSE) ||
+                foundInText2("wrong tree", FALSE, FALSE) ||
+                foundInText2("mistaking the tree", FALSE, FALSE) ||
+                foundInText2("missing the tree", FALSE, FALSE) ||
+                foundInText2("tree falls in a forest", FALSE, FALSE) ||
                 foundInText2("venous tree", FALSE, FALSE) ||
                 foundInText2("villiferous tree", FALSE, FALSE) ||
                 foundInText2("hematopoietic tree", FALSE, FALSE) ||
@@ -56728,6 +57674,7 @@ int isLookForOK(char *lookFor)
                 foundInText2("tree based", FALSE, FALSE) ||
                 foundInText2("fuzzy tree", FALSE, FALSE) ||
                 foundInText2("master tree", FALSE, FALSE) ||
+                foundInText2("smart tree", FALSE, FALSE) ||
                 foundInText2("ontology tree", FALSE, FALSE) ||
                 foundInText2("i2b2 tree", FALSE, FALSE) ||
                 foundInText2("contour tree connectivity", FALSE, FALSE) ||
@@ -56790,6 +57737,7 @@ int isLookForOK(char *lookFor)
                 foundInText2("tree rat", FALSE, FALSE) ||
                 foundInText2("tree frog", FALSE, FALSE) ||
                 foundInText2("tree sparrow", FALSE, FALSE) ||
+                foundInText2("tree swallow", FALSE, FALSE) ||
                 foundInText2("tree squirrel", FALSE, FALSE) ||
                 foundInText2("tree shrew", FALSE, FALSE) ||
                 foundInText2("median tree", FALSE, FALSE) ||
@@ -57623,14 +58571,31 @@ int isLookForOK(char *lookFor)
                 foundInText2("water triplefin", FALSE, FALSE) ||
                 foundInText2("water buffaloes", FALSE, FALSE) ||
                 foundInText2("water buffalo", FALSE, FALSE) ||
+                foundInText2("water vole", FALSE, FALSE) ||
                 foundInText2("water polo", FALSE, FALSE) ||
                 foundInText2("water stress", FALSE, FALSE) ||
                 foundInText2("water fluoridation", FALSE, FALSE) ||
                 foundInText2("waste water", FALSE, FALSE) ||
                 foundInText2("saline water", FALSE, FALSE) ||
+                foundInText2("troubled water", FALSE, FALSE) ||
+                foundInText2("trouble water", FALSE, FALSE) ||
+                foundInText2("the baby and the bath water", FALSE, FALSE) ||
+                foundInText2("with the bath water", FALSE, FALSE) ||
+                foundInText2("coconut water", FALSE, FALSE) ||
+                foundInText2("water bottle", FALSE, FALSE) ||
+                foundInText2("water bug", FALSE, FALSE) ||
+                foundInText2("water mint", FALSE, FALSE) ||
+                foundInText2("water maze", FALSE, FALSE) ||
+                foundInText2("water-pipes", FALSE, FALSE) ||
+                foundInText2("water pipes", FALSE, FALSE) ||
+                foundInText2("water pipe smoking", FALSE, FALSE) ||
+                foundInText2("water-pipe smoking", FALSE, FALSE) ||
                 foundInText2("lung water", FALSE, FALSE) ||
                 foundInText2("water microbiology", FALSE, FALSE) ||
                 foundInText2("water treatment", FALSE, FALSE) ||
+                foundInText2("water over the bridge", FALSE, FALSE) ||
+                foundInText2("water dripping on a stone", FALSE, FALSE) ||
+                foundInText2("water under the bridge", FALSE, FALSE) ||
                 foundInText2("oil and water", FALSE, FALSE) ||
                 foundInText2("oil/water", FALSE, FALSE) ||
                 foundInText2("blood is thicker than water", FALSE, FALSE) ||
@@ -57799,6 +58764,7 @@ int isLookForOK(char *lookFor)
                 foundInText2("wood owl", FALSE, FALSE) ||
                 foundInText2("wood-warbler", FALSE, FALSE) ||
                 foundInText2("wood warbler", FALSE, FALSE) ||
+                foundInText2("wood buffalo", FALSE, FALSE) ||
                 foundInText2("wood pigeon", FALSE, FALSE) ||
                 foundInText2("wood thrush", FALSE, FALSE) ||
                 foundInText2("wood nematode", FALSE, FALSE) ||
@@ -57877,6 +58843,12 @@ int isLookForOK(char *lookFor)
                foundInText2("sheep's clothing", FALSE, FALSE) ||
                foundInText2("sheeps clothing", FALSE, FALSE) ||
                foundInText2("sheep clothing", FALSE, FALSE) ||
+               foundInText2("wolf's clothing", FALSE, FALSE) ||
+               foundInText2("wolfs clothing", FALSE, FALSE) ||
+               foundInText2("wolf clothing", FALSE, FALSE) ||
+               foundInText2("wolf in disguise", FALSE, FALSE) ||
+               foundInText2("a wolf in", FALSE, FALSE) ||
+               foundInText2("a wolf at the door", FALSE, FALSE) ||
                foundInText2("wolf motor", FALSE, FALSE) |
                foundInText2("wolf spider", FALSE, FALSE) |
                foundInText2("wolf piezolith", FALSE, FALSE) |
@@ -57934,32 +58906,42 @@ int isLookForOK(char *lookFor)
     
         else if(strcmp(lookFor, "walking") == 0)
         {
-            if(foundInText2("walking dead", FALSE, FALSE) ||
-               foundInText2("walking mutant", FALSE, FALSE) ||
-               foundInText2("walking wounded", FALSE, FALSE) ||
-               foundInText2("walking catfish", FALSE, FALSE) ||
-               foundInText2("walking a tightrope", FALSE, FALSE) ||
-               foundInText2("walking a fine line", FALSE, FALSE) ||
-               foundInText2("tightrope walking", FALSE, FALSE) ||
-               foundInText2("walking the tightrope", FALSE, FALSE) ||
-               foundInText2("walking blood bank", FALSE, FALSE) ||
-               foundInText2("walking the straight and narrow", FALSE, FALSE) ||
+            if(foundInText2("chain walking", FALSE, FALSE) ||
+               foundInText2("chain-walking", FALSE, FALSE) ||
+               foundInText2("cross walk", FALSE, FALSE) ||
+               foundInText2("cross walking", FALSE, FALSE) ||
+               foundInText2("cross-walk", FALSE, FALSE) ||
+               foundInText2("cross-walking", FALSE, FALSE) ||
+               foundInText2("dead man walking", FALSE, FALSE) ||
+               foundInText2("dead-man walking", FALSE, FALSE) ||
                foundInText2("dna walking", FALSE, FALSE) ||
                foundInText2("genome walking", FALSE, FALSE) ||
-               foundInText2("walking the middle path", FALSE, FALSE) ||
-               foundInText2("walking the line", FALSE, FALSE) ||
-               foundInText2("walking the walk", FALSE, FALSE) ||
+               foundInText2("how far have we walked", FALSE, FALSE) ||
+               foundInText2("tightrope walking", FALSE, FALSE) ||
+               foundInText2("value of distance walked", FALSE, FALSE) ||
+               foundInText2("walk in shoe", FALSE, FALSE) ||
+               foundInText2("walk the straight and narrow", FALSE, FALSE) ||
+               foundInText2("walked angles", FALSE, FALSE) ||
+               foundInText2("walked away", FALSE, FALSE) ||
+               foundInText2("walking a fine line", FALSE, FALSE) ||
+               foundInText2("walking a tightrope", FALSE, FALSE) ||
+               foundInText2("walking blood bank", FALSE, FALSE) ||
+               foundInText2("walking catfish", FALSE, FALSE) ||
+               foundInText2("walking dead", FALSE, FALSE) ||
+               foundInText2("walking horse", FALSE, FALSE) ||
                foundInText2("walking in shoe", FALSE, FALSE) ||
+               foundInText2("walking mutant", FALSE, FALSE) ||
                foundInText2("walking on egg shell", FALSE, FALSE) ||
                foundInText2("walking on eggshell", FALSE, FALSE) ||
-               foundInText2("walking the talk", FALSE, FALSE) ||
-               foundInText2("walking the plank", FALSE, FALSE) ||
                foundInText2("walking than running", FALSE, FALSE) ||
-               foundInText2("walking horse", FALSE, FALSE) ||
-               foundInText2("cross walking", FALSE, FALSE) ||
-               foundInText2("cross-walking", FALSE, FALSE) ||
-               foundInText2("chain walking", FALSE, FALSE) ||
-               foundInText2("chain-walking", FALSE, FALSE))
+               foundInText2("walking the line", FALSE, FALSE) ||
+               foundInText2("walking the middle path", FALSE, FALSE) ||
+               foundInText2("walking the plank", FALSE, FALSE) ||
+               foundInText2("walking the straight and narrow", FALSE, FALSE) ||
+               foundInText2("walking the talk", FALSE, FALSE) ||
+               foundInText2("walking the tightrope", FALSE, FALSE) ||
+               foundInText2("walking the walk", FALSE, FALSE) ||
+               foundInText2("walking wounded", FALSE, FALSE))
               ok = FALSE;
         } /* else fi */
     
@@ -58366,7 +59348,10 @@ int isInvalidTitleOnly()
 
     rtn = FALSE;
 
-    if(!forceOK_Title)
+/*
+    if(!forceOK_Title || ((MTI_AUTO && !hasCON) || MTI_REVIEW))
+*/
+    if(!hasCON)
     {
         /* If the title starts with any of these, then quit */
 
@@ -60833,7 +61818,7 @@ char *removeLowercaseGenus(char *text)
 int isAmbigTrig(char *lookFor)
 {
    int found, done, status;
-   long j;
+   long j, numFound, len, i;
 
    found = done = FALSE;
    for(j = 0; !found && !done && (j < numAmbigTerms); j++)
@@ -60862,12 +61847,102 @@ int isAmbigTrig(char *lookFor)
                foundInText2("active adult", FALSE, FALSE))
              found = FALSE;
        } /* fi */
+
+       else if(strcmp(lookFor, "aging") == 0)
+       {
+            if(foundInText2("active aging", FALSE, FALSE) ||
+               foundInText2("ageing employee", FALSE, FALSE) ||
+               foundInText2("ageing research", FALSE, FALSE) ||
+               foundInText2("ageing workforce", FALSE, FALSE) ||
+               foundInText2("aging and health", FALSE, FALSE) ||
+               foundInText2("aging and lifestyle", FALSE, FALSE) ||
+               foundInText2("aging and longevity", FALSE, FALSE) ||
+               foundInText2("aging and retirement", FALSE, FALSE) ||
+               foundInText2("aging animals", FALSE, FALSE) ||
+               foundInText2("aging baby boomers", FALSE, FALSE) ||
+               foundInText2("aging causes", FALSE, FALSE) ||
+               foundInText2("aging changes", FALSE, FALSE) ||
+               foundInText2("aging employee", FALSE, FALSE) ||
+               foundInText2("aging female ", FALSE, FALSE) ||
+               foundInText2("aging females", FALSE, FALSE) ||
+               foundInText2("aging general population", FALSE, FALSE) ||
+               foundInText2("aging gracefully", FALSE, FALSE) ||
+               foundInText2("aging immune system", FALSE, FALSE) ||
+               foundInText2("aging in humans", FALSE, FALSE) ||
+               foundInText2("aging in place", FALSE, FALSE) ||
+               foundInText2("aging male", FALSE, FALSE) ||
+               foundInText2("aging males", FALSE, FALSE) ||
+               foundInText2("aging men", FALSE, FALSE) ||
+               foundInText2("aging mice", FALSE, FALSE) ||
+               foundInText2("aging of the population", FALSE, FALSE) ||
+               foundInText2("aging phenotype", FALSE, FALSE) ||
+               foundInText2("aging population ", FALSE, FALSE) ||
+               foundInText2("aging process", FALSE, FALSE) ||
+               foundInText2("aging process", FALSE, FALSE) ||
+               foundInText2("aging research", FALSE, FALSE) ||
+               foundInText2("aging smokers", FALSE, FALSE) ||
+               foundInText2("aging society", FALSE, FALSE) ||
+               foundInText2("aging study", FALSE, FALSE) ||
+               foundInText2("aging syndrome", FALSE, FALSE) ||
+               foundInText2("aging women", FALSE, FALSE) ||
+               foundInText2("aging workforce", FALSE, FALSE) ||
+               foundInText2("aging world population", FALSE, FALSE) ||
+               foundInText2("aging associated", FALSE, FALSE) ||
+               foundInText2("aging-associated", FALSE, FALSE) ||
+               foundInText2("aging in place", FALSE, FALSE) ||
+               foundInText2("aging-in-place", FALSE, FALSE) ||
+               foundInText2("aging inplace", FALSE, FALSE) ||
+               foundInText2("aging related", FALSE, FALSE) ||
+               foundInText2("aging-related", FALSE, FALSE) ||
+               foundInText2("anti aging", FALSE, FALSE) ||
+               foundInText2("anti-aging", FALSE, FALSE) ||
+               foundInText2("biomarkers of aging", FALSE, FALSE) ||
+               foundInText2("brain aging", FALSE, FALSE) ||
+               foundInText2("cardiovascular aging", FALSE, FALSE) ||
+               foundInText2("cognitive aging", FALSE, FALSE) ||
+               foundInText2("delaying aging", FALSE, FALSE) ||
+               foundInText2("during aging", FALSE, FALSE) ||
+               foundInText2("effect of aging", FALSE, FALSE) ||
+               foundInText2("frailty, aging", FALSE, FALSE) ||
+               foundInText2("memory in aging", FALSE, FALSE) ||
+               foundInText2("normal aging", FALSE, FALSE) ||
+               foundInText2("population aging", FALSE, FALSE) ||
+               foundInText2("reproductive aging", FALSE, FALSE) ||
+               foundInText2("skin aging", FALSE, FALSE) ||
+               foundInText2("stress in aging", FALSE, FALSE) ||
+               foundInText2("vascular aging", FALSE, FALSE) ||
+               foundInText2("views on aging", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
    } /* else fi "A" */
+
+   else if(found && (lookFor[0] == 'b'))
+   {
+       if(strcmp(lookFor, "berlin") == 0)
+       {
+            if(foundInText2("in berlin", FALSE, FALSE))
+             found = FALSE;
+       } /* fi */
+
+       else if(strcmp(lookFor, "boston") == 0)
+       {
+            if(foundInText2("in boston", FALSE, FALSE))
+             found = FALSE;
+       } /* fi */
+
+       else if(strcmp(lookFor, "bipolar") == 0)
+       {
+            if(foundInText2("bipolar patient", FALSE, FALSE))
+             found = FALSE;
+       } /* fi */
+   } /* else fi "B" */
 
    else if(found && (lookFor[0] == 'c'))
    {
        if((strcmp(lookFor, "cross-sectional") == 0) || (strcmp(lookFor, "cross sectional") == 0))
        {
+            found = FALSE;
+/*
             if(foundInText2("cross sectional analyses", FALSE, FALSE) ||
                foundInText2("cross sectional analysis", FALSE, FALSE) ||
                foundInText2("cross sectional cohort", FALSE, FALSE) ||
@@ -60970,6 +62045,7 @@ int isAmbigTrig(char *lookFor)
                foundInText2("cross-sectional, community-based", FALSE, FALSE) ||
                foundInText2("cross-sectional, community based", FALSE, FALSE))
              found = FALSE;
+*/
        } /* fi */
 
        else if((strcmp(lookFor, "cats") == 0) || (strcmp(lookFor, "cat") == 0))
@@ -60982,6 +62058,8 @@ int isAmbigTrig(char *lookFor)
                foundInText2("client-owned cat", FALSE, FALSE) ||
                foundInText2("client owned cat", FALSE, FALSE) ||
                foundInText2("healthy cats", FALSE, FALSE) ||
+               foundInText2("mixed-breed cat", FALSE, FALSE) ||
+               foundInText2("mixed breed cat", FALSE, FALSE) ||
                foundInText2("stray cat", FALSE, FALSE) ||
                foundInText2("shelter cat", FALSE, FALSE) ||
                foundInText2("feral cat", FALSE, FALSE) ||
@@ -60992,6 +62070,171 @@ int isAmbigTrig(char *lookFor)
                foundInText2("felis silvestris catus", FALSE, FALSE) ||
                foundInText2("felis catus", FALSE, FALSE) ||
                foundInText2("feline", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
+
+       else if(strcmp(lookFor, "communication") == 0)
+       {
+            if(foundInText2("affective communication", FALSE, FALSE) ||
+               foundInText2("alcohol-related communication", FALSE, FALSE) ||
+               foundInText2("alcohol related communication", FALSE, FALSE) ||
+               foundInText2("alternate methods of communication", FALSE, FALSE) ||
+               foundInText2("auditory communication", FALSE, FALSE) ||
+               foundInText2("better communication", FALSE, FALSE) ||
+               foundInText2("brief communication", FALSE, FALSE) ||
+               foundInText2("clear communication", FALSE, FALSE) ||
+               foundInText2("clinical communication", FALSE, FALSE) ||
+               foundInText2("clinician communication", FALSE, FALSE) ||
+               foundInText2("chemical communication", FALSE, FALSE) ||
+               foundInText2("molecular communication", FALSE, FALSE) ||
+               foundInText2("intracranial communication", FALSE, FALSE) ||
+               foundInText2("intra-cranial communication", FALSE, FALSE) ||
+               foundInText2("intra cranial communication", FALSE, FALSE) ||
+               foundInText2("intracellular communication", FALSE, FALSE) ||
+               foundInText2("intra-cellular communication", FALSE, FALSE) ||
+               foundInText2("intra cellular communication", FALSE, FALSE) ||
+               foundInText2("intercellular communication", FALSE, FALSE) ||
+               foundInText2("inter-cellular communication", FALSE, FALSE) ||
+               foundInText2("inter cellular communication", FALSE, FALSE) ||
+               foundInText2("communication framework", FALSE, FALSE) ||
+               foundInText2("communication abilities", FALSE, FALSE) ||
+               foundInText2("communication ability", FALSE, FALSE) ||
+               foundInText2("communication and empathy", FALSE, FALSE) ||
+               foundInText2("communication and engagement", FALSE, FALSE) ||
+               foundInText2("communication approach", FALSE, FALSE) ||
+               foundInText2("communication barrier", FALSE, FALSE) ||
+               foundInText2("communication barriers", FALSE, FALSE) ||
+               foundInText2("communication behavior", FALSE, FALSE) ||
+               foundInText2("communication behaviour", FALSE, FALSE) ||
+               foundInText2("communication between patients", FALSE, FALSE) ||
+               foundInText2("communication campaign", FALSE, FALSE) ||
+               foundInText2("communication campaigns", FALSE, FALSE) ||
+               foundInText2("communication capabilities", FALSE, FALSE) ||
+               foundInText2("communication channel", FALSE, FALSE) ||
+               foundInText2("communication channels", FALSE, FALSE) ||
+               foundInText2("communication competencies", FALSE, FALSE) ||
+               foundInText2("communication curriculum", FALSE, FALSE) ||
+               foundInText2("communication deficit", FALSE, FALSE) ||
+               foundInText2("communication deficits", FALSE, FALSE) ||
+               foundInText2("communication difficulties", FALSE, FALSE) ||
+               foundInText2("communication difficulty", FALSE, FALSE) ||
+               foundInText2("communication equipment", FALSE, FALSE) ||
+               foundInText2("communication error", FALSE, FALSE) ||
+               foundInText2("communication failure", FALSE, FALSE) ||
+               foundInText2("communication failures", FALSE, FALSE) ||
+               foundInText2("communication format", FALSE, FALSE) ||
+               foundInText2("communication formats", FALSE, FALSE) ||
+               foundInText2("communication guide", FALSE, FALSE) ||
+               foundInText2("communication intervention", FALSE, FALSE) ||
+               foundInText2("communication lag", FALSE, FALSE) ||
+               foundInText2("communication module", FALSE, FALSE) ||
+               foundInText2("communication modules", FALSE, FALSE) ||
+               foundInText2("communication needs", FALSE, FALSE) ||
+               foundInText2("communication of risk", FALSE, FALSE) ||
+               foundInText2("communication of risks", FALSE, FALSE) ||
+               foundInText2("communication officer", FALSE, FALSE) ||
+               foundInText2("communication officers", FALSE, FALSE) ||
+               foundInText2("communication partners", FALSE, FALSE) ||
+               foundInText2("communication pathway", FALSE, FALSE) ||
+               foundInText2("communication pathways", FALSE, FALSE) ||
+               foundInText2("communication process", FALSE, FALSE) ||
+               foundInText2("communication program", FALSE, FALSE) ||
+               foundInText2("communication programs", FALSE, FALSE) ||
+               foundInText2("communication science", FALSE, FALSE) ||
+               foundInText2("communication sciences", FALSE, FALSE) ||
+               foundInText2("communication skill", FALSE, FALSE) ||
+               foundInText2("communication skills", FALSE, FALSE) ||
+               foundInText2("communication strategies", FALSE, FALSE) ||
+               foundInText2("communication strategy", FALSE, FALSE) ||
+               foundInText2("communication system", FALSE, FALSE) ||
+               foundInText2("communication technologies", FALSE, FALSE) ||
+               foundInText2("communication technology", FALSE, FALSE) ||
+               foundInText2("communication to patients", FALSE, FALSE) ||
+               foundInText2("communication tool", FALSE, FALSE) ||
+               foundInText2("communication tools", FALSE, FALSE) ||
+               foundInText2("communication tranining", FALSE, FALSE) ||
+               foundInText2("communication words", FALSE, FALSE) ||
+               foundInText2("crisis communication", FALSE, FALSE) ||
+               foundInText2("cross-cultural communication", FALSE, FALSE) ||
+               foundInText2("cross cultural communication", FALSE, FALSE) ||
+               foundInText2("cultural communication", FALSE, FALSE) ||
+               foundInText2("deficits in communication", FALSE, FALSE) ||
+               foundInText2("discipline of communication", FALSE, FALSE) ||
+               foundInText2("during communication", FALSE, FALSE) ||
+               foundInText2("effective communication", FALSE, FALSE) ||
+               foundInText2("email communication", FALSE, FALSE) ||
+               foundInText2("emotive communication", FALSE, FALSE) ||
+               foundInText2("empathic communication", FALSE, FALSE) ||
+               foundInText2("enhanced communication", FALSE, FALSE) ||
+               foundInText2("enhancing communication", FALSE, FALSE) ||
+               foundInText2("evaluating communication", FALSE, FALSE) ||
+               foundInText2("everyday communication", FALSE, FALSE) ||
+               foundInText2("face-to-face communication", FALSE, FALSE) ||
+               foundInText2("face to face communication", FALSE, FALSE) ||
+               foundInText2("facilitating communication", FALSE, FALSE) ||
+               foundInText2("failure in communication", FALSE, FALSE) ||
+               foundInText2("failures in communication", FALSE, FALSE) ||
+               foundInText2("family communication", FALSE, FALSE) ||
+               foundInText2("fostering communication", FALSE, FALSE) ||
+               foundInText2("frequency of communication", FALSE, FALSE) ||
+               foundInText2("good communication", FALSE, FALSE) ||
+               foundInText2("hand over communication", FALSE, FALSE) ||
+               foundInText2("hand-over communication", FALSE, FALSE) ||
+               foundInText2("handover communication", FALSE, FALSE) ||
+               foundInText2("health communication", FALSE, FALSE) ||
+               foundInText2("hypnotic communication", FALSE, FALSE) ||
+               foundInText2("impair communication", FALSE, FALSE) ||
+               foundInText2("improve communication", FALSE, FALSE) ||
+               foundInText2("improved communication", FALSE, FALSE) ||
+               foundInText2("improvements in communication", FALSE, FALSE) ||
+               foundInText2("improving communication", FALSE, FALSE) ||
+               foundInText2("information communication", FALSE, FALSE) ||
+               foundInText2("integrated communication", FALSE, FALSE) ||
+               foundInText2("interdisciplinary communication", FALSE, FALSE) ||
+               foundInText2("interpersonal communication", FALSE, FALSE) ||
+               foundInText2("interprofessional communication", FALSE, FALSE) ||
+               foundInText2("language communication", FALSE, FALSE) ||
+               foundInText2("lines of communication", FALSE, FALSE) ||
+               foundInText2("manner of communication", FALSE, FALSE) ||
+               foundInText2("measuring communication", FALSE, FALSE) ||
+               foundInText2("media communication", FALSE, FALSE) ||
+               foundInText2("medical communication", FALSE, FALSE) ||
+               foundInText2("medium of communication", FALSE, FALSE) ||
+               foundInText2("mediums of communication", FALSE, FALSE) ||
+               foundInText2("mobile communication", FALSE, FALSE) ||
+               foundInText2("mother-daughter communication", FALSE, FALSE) ||
+               foundInText2("mother daughter communication", FALSE, FALSE) ||
+               foundInText2("ongoing communication", FALSE, FALSE) ||
+               foundInText2("online communication", FALSE, FALSE) ||
+               foundInText2("optimized communication", FALSE, FALSE) ||
+               foundInText2("pandemic communication", FALSE, FALSE) ||
+               foundInText2("patient communication", FALSE, FALSE) ||
+               foundInText2("patient-centered communication", FALSE, FALSE) ||
+               foundInText2("patient centered communication", FALSE, FALSE) ||
+               foundInText2("pattern of communication", FALSE, FALSE) ||
+               foundInText2("patterns of communication", FALSE, FALSE) ||
+               foundInText2("person-to-person communication", FALSE, FALSE) ||
+               foundInText2("person to person communication", FALSE, FALSE) ||
+               foundInText2("physician communication", FALSE, FALSE) ||
+               foundInText2("pragmatic communication", FALSE, FALSE) ||
+               foundInText2("process of communication", FALSE, FALSE) ||
+               foundInText2("public communication", FALSE, FALSE) ||
+               foundInText2("referential communication", FALSE, FALSE) ||
+               foundInText2("remote communication", FALSE, FALSE) ||
+               foundInText2("risk communication", FALSE, FALSE) ||
+               foundInText2("sexual communication", FALSE, FALSE) ||
+               foundInText2("social communicationi", FALSE, FALSE) ||
+               foundInText2("spoken communication", FALSE, FALSE) ||
+               foundInText2("surgeon communication", FALSE, FALSE) ||
+               foundInText2("test communication", FALSE, FALSE) ||
+               foundInText2("therapetuic communication", FALSE, FALSE) ||
+               foundInText2("timely communication", FALSE, FALSE) ||
+               foundInText2("traditional communication", FALSE, FALSE) ||
+               foundInText2("verbal communication", FALSE, FALSE) ||
+               foundInText2("video communication", FALSE, FALSE) ||
+               foundInText2("virtual communication", FALSE, FALSE) ||
+               foundInText2("voice communication", FALSE, FALSE) ||
+               foundInText2("wearable communication", FALSE, FALSE))
              found = FALSE;
        } /* else fi */
 
@@ -61083,6 +62326,10 @@ int isAmbigTrig(char *lookFor)
                foundInText2("in dogs", FALSE, FALSE) ||
                foundInText2("in a dog", FALSE, FALSE) ||
                foundInText2("terrier dog", FALSE, FALSE) ||
+               foundInText2("pavlov's dog", FALSE, FALSE) ||
+               foundInText2("pavlovs dog", FALSE, FALSE) ||
+               foundInText2("pavlovs' dog", FALSE, FALSE) ||
+               foundInText2("pavlov dog", FALSE, FALSE) ||
                foundInText2("beagle dog", FALSE, FALSE) ||
                foundInText2("jindo dog", FALSE, FALSE) ||
                foundInText2("dalmation dog", FALSE, FALSE) ||
@@ -61090,7 +62337,185 @@ int isAmbigTrig(char *lookFor)
                foundInText2("canis lupus familiaris", FALSE, FALSE))
              found = FALSE;
        } /* fi */
+
+       else if((strcmp(lookFor, "dachshund") == 0) || (strcmp(lookFor, "dachshunds") == 0))
+       {
+            if(foundInText2("miniature dachshund", FALSE, FALSE) ||
+               foundInText2("in a dachshund", FALSE, FALSE))
+             found = TRUE;
+
+            else if(foundInText2("mediates dachshund", FALSE, FALSE) ||
+               foundInText2("dachshund homolog", FALSE, FALSE) ||
+               foundInText2("dachshund depletion", FALSE, FALSE) ||
+               foundInText2("dachshund 1", FALSE, FALSE) ||
+               foundInText2("elongated by dachshund", FALSE, FALSE) ||
+               foundInText2("targeting dachshund", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
+
+       else if(strcmp(lookFor, "drainage") == 0)
+       {
+            if(foundInText2("abdominal drainage", FALSE, FALSE) ||
+               foundInText2("abscess drainage", FALSE, FALSE) ||
+               foundInText2("biliary drainage", FALSE, FALSE) ||
+               foundInText2("catheter drainage", FALSE, FALSE) ||
+               foundInText2("catheterization drainage", FALSE, FALSE) ||
+               foundInText2("chest drainage", FALSE, FALSE) ||
+               foundInText2("collection drainage", FALSE, FALSE) ||
+               foundInText2("compulsory drainage", FALSE, FALSE) ||
+               foundInText2("csf drainage", FALSE, FALSE) ||
+               foundInText2("cyst drainage", FALSE, FALSE) ||
+               foundInText2("cystoventricular drainage", FALSE, FALSE) ||
+               foundInText2("digital drainage", FALSE, FALSE) ||
+               foundInText2("drainage catheter", FALSE, FALSE) ||
+               foundInText2("drainage device", FALSE, FALSE) ||
+               foundInText2("drainage devices", FALSE, FALSE) ||
+               foundInText2("drainage fluid", FALSE, FALSE) ||
+               foundInText2("drainage fluids", FALSE, FALSE) ||
+               foundInText2("drainage for infected", FALSE, FALSE) ||
+               foundInText2("drainage of abscess", FALSE, FALSE) ||
+               foundInText2("drainage of urine", FALSE, FALSE) ||
+               foundInText2("drainage or biopsy", FALSE, FALSE) ||
+               foundInText2("drainage output", FALSE, FALSE) ||
+               foundInText2("drainage procedural", FALSE, FALSE) ||
+               foundInText2("drainage procedure", FALSE, FALSE) ||
+               foundInText2("drainage procedures", FALSE, FALSE) ||
+               foundInText2("drainage thoracotomy", FALSE, FALSE) ||
+               foundInText2("drainage tube", FALSE, FALSE) ||
+               foundInText2("drainage tubes", FALSE, FALSE) ||
+               foundInText2("dual drainage", FALSE, FALSE) ||
+               foundInText2("effusion drainage", FALSE, FALSE) ||
+               foundInText2("endoscopic drainage", FALSE, FALSE) ||
+               foundInText2("fluid collection drainage", FALSE, FALSE) ||
+               foundInText2("fluid drainage", FALSE, FALSE) ||
+               foundInText2("gallbladder drainage", FALSE, FALSE) ||
+               foundInText2("glaucoma drainage", FALSE, FALSE) ||
+               foundInText2("gravity drainage", FALSE, FALSE) ||
+               foundInText2("guided drainage", FALSE, FALSE) ||
+               foundInText2("incision and drainage", FALSE, FALSE) ||
+               foundInText2("lymphedema drainage", FALSE, FALSE) ||
+               foundInText2("negative-presure drainage", FALSE, FALSE) ||
+               foundInText2("negative presure drainage", FALSE, FALSE) ||
+               foundInText2("paracentesis drainage", FALSE, FALSE) ||
+               foundInText2("percutaneous drainage", FALSE, FALSE) ||
+               foundInText2("peritoneal drainage", FALSE, FALSE) ||
+               foundInText2("pleural drainage", FALSE, FALSE) ||
+               foundInText2("postoperative drainage", FALSE, FALSE) ||
+               foundInText2("prompt drainage", FALSE, FALSE) ||
+               foundInText2("prophylactic drainage", FALSE, FALSE) ||
+               foundInText2("pseudocyst drainage", FALSE, FALSE) ||
+               foundInText2("puncture drainage", FALSE, FALSE) ||
+               foundInText2("resulting from drainage", FALSE, FALSE) ||
+               foundInText2("rinse and drainage", FALSE, FALSE) ||
+               foundInText2("sac drainage", FALSE, FALSE) ||
+               foundInText2("secretion drainage", FALSE, FALSE) ||
+               foundInText2("seton drainage", FALSE, FALSE) ||
+               foundInText2("stereotatic drainage", FALSE, FALSE) ||
+               foundInText2("suction drainage", FALSE, FALSE) ||
+               foundInText2("surgical drainage", FALSE, FALSE) ||
+               foundInText2("targeted drainage", FALSE, FALSE) ||
+               foundInText2("thoracic drainage", FALSE, FALSE) ||
+               foundInText2("timing of drainage", FALSE, FALSE) ||
+               foundInText2("transgastric drainage", FALSE, FALSE) ||
+               foundInText2("transgluteal drainage", FALSE, FALSE) ||
+               foundInText2("transluminal drainage", FALSE, FALSE) ||
+               foundInText2("transnasal drainage", FALSE, FALSE) ||
+               foundInText2("transrectal drainage", FALSE, FALSE) ||
+               foundInText2("tube drainage", FALSE, FALSE) ||
+               foundInText2("undergoing drainage", FALSE, FALSE) ||
+               foundInText2("vacuum sealing drainage", FALSE, FALSE) ||
+               foundInText2("variceal drainage", FALSE, FALSE) ||
+               foundInText2("ventricle drainage", FALSE, FALSE) ||
+               foundInText2("ventricular drainage", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
+
+       else if(strcmp(lookFor, "discharge") == 0)
+       {
+            if(foundInText2("admission-to-discharge", FALSE, FALSE) ||
+               foundInText2("admission to discharge", FALSE, FALSE) ||
+               foundInText2("after discharge", FALSE, FALSE) ||
+               foundInText2("at discharge", FALSE, FALSE) ||
+               foundInText2("beyond discharge", FALSE, FALSE) ||
+               foundInText2("centric discharge", FALSE, FALSE) ||
+               foundInText2("csu discharge", FALSE, FALSE) ||
+               foundInText2("date of discharge", FALSE, FALSE) ||
+               foundInText2("delayed discharge", FALSE, FALSE) ||
+               foundInText2("department discharge", FALSE, FALSE) ||
+               foundInText2("discharge after hospitalization", FALSE, FALSE) ||
+               foundInText2("discharge criteria", FALSE, FALSE) ||
+               foundInText2("discharge destination", FALSE, FALSE) ||
+               foundInText2("discharge management", FALSE, FALSE) ||
+               foundInText2("discharge medication", FALSE, FALSE) ||
+               foundInText2("discharge outcome", FALSE, FALSE) ||
+               foundInText2("discharge outcomes", FALSE, FALSE) ||
+               foundInText2("discharge planning", FALSE, FALSE) ||
+               foundInText2("discharge preparation", FALSE, FALSE) ||
+               foundInText2("discharge process", FALSE, FALSE) ||
+               foundInText2("discharge rate", FALSE, FALSE) ||
+               foundInText2("discharge rates", FALSE, FALSE) ||
+               foundInText2("discharge readiness", FALSE, FALSE) ||
+               foundInText2("discharge to", FALSE, FALSE) ||
+               foundInText2("disparities in discharge", FALSE, FALSE) ||
+               foundInText2("eye discharge", FALSE, FALSE) ||
+               foundInText2("early discharge", FALSE, FALSE) ||
+               foundInText2("early-discharge", FALSE, FALSE) ||
+               foundInText2("early discharge", FALSE, FALSE) ||
+               foundInText2("first discharge", FALSE, FALSE) ||
+               foundInText2("following discharge", FALSE, FALSE) ||
+               foundInText2("hospital discharge", FALSE, FALSE) ||
+               foundInText2("hospitalization discharge", FALSE, FALSE) ||
+               foundInText2("icu discharge", FALSE, FALSE) ||
+               foundInText2("improve discharge", FALSE, FALSE) ||
+               foundInText2("improving discharge", FALSE, FALSE) ||
+               foundInText2("on discharge", FALSE, FALSE) ||
+               foundInText2("post discharge", FALSE, FALSE) ||
+               foundInText2("post-discharge", FALSE, FALSE) ||
+               foundInText2("postnatal discharge", FALSE, FALSE) ||
+               foundInText2("prior to discharge", FALSE, FALSE) ||
+               foundInText2("prompt discharge", FALSE, FALSE) ||
+               foundInText2("safe discharge", FALSE, FALSE) ||
+               foundInText2("same day discharge", FALSE, FALSE) ||
+               foundInText2("same-day-discharge", FALSE, FALSE) ||
+               foundInText2("self discharge", FALSE, FALSE) ||
+               foundInText2("self-discharge", FALSE, FALSE) ||
+               foundInText2("supported discharge", FALSE, FALSE) ||
+               foundInText2("unit discharge", FALSE, FALSE) ||
+               foundInText2("unplanned discharge", FALSE, FALSE) ||
+               foundInText2("upon discharge", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
    } /* else fi "D" */
+
+   else if(found && (lookFor[0] == 'f'))
+   {
+       if(strcmp(lookFor, "florida") == 0)
+       {
+            if(foundInText2("in florida", FALSE, FALSE))
+             found = FALSE;
+       } /* fi */
+   } /* else fi "F" */
+
+   else if(found && (lookFor[0] == 'g'))
+   {
+       if(strcmp(lookFor, "georgia") == 0)
+       {
+            if(foundInText2("in georgia", FALSE, FALSE))
+             found = FALSE;
+       } /* fi */
+   } /* else fi "G" */
+
+   else if(found && (lookFor[0] == 'h'))
+   {
+       if(strcmp(lookFor, "horses") == 0)
+       {
+           /* If we are in an Equine journal, non-ambiguous */
+
+           if((strcmp(JID, "0173320") == 0) && (strcmp(JID, "8216840") == 0) &&
+              (strcmp(JID, "8511904") == 0))
+             found = FALSE;
+       } /* fi */
+   } /* else fi "H" */
 
    else if(found && (lookFor[0] == 'i'))
    {
@@ -61107,6 +62532,7 @@ int isAmbigTrig(char *lookFor)
        {
             if(foundInText2("community dwelling japanese", FALSE, FALSE) ||
                foundInText2("community-dwelling japanese", FALSE, FALSE) ||
+               foundInText2("in japan", FALSE, FALSE) ||
                foundInText2("japanese adolescense", FALSE, FALSE) ||
                foundInText2("japanese adolescent", FALSE, FALSE) ||
                foundInText2("japanese adult", FALSE, FALSE) ||
@@ -61324,6 +62750,7 @@ int isAmbigTrig(char *lookFor)
              found = FALSE;
        } /* else fi */
 
+/* Removed November 4, 2021 since incorprated in filtering code 
        else if(strcmp(lookFor, "msm") == 0)
        {
             if(foundInText2("men who have sex with men", FALSE, FALSE) ||
@@ -61375,7 +62802,8 @@ int isAmbigTrig(char *lookFor)
                foundInText2("pre-exposure prophylaxis", FALSE, FALSE) ||
                foundInText2("pre exposure prophylaxis", FALSE, FALSE))
              found = FALSE;
-       } /* else fi */
+       }
+*/
 
        else if(strcmp(lookFor, "milk") == 0)
        {
@@ -61426,6 +62854,12 @@ int isAmbigTrig(char *lookFor)
                foundInText2("in milk", FALSE, FALSE))
              found = FALSE;
        } /* else fi */
+
+       else if(strcmp(lookFor, "mississippi") == 0)
+       {
+            if(foundInText2("in mississippi", FALSE, FALSE))
+             found = FALSE;
+       } /* fi */
    } /* else fi "M" */
 
    else if(found && (lookFor[0] == 'p'))
@@ -61582,6 +63016,18 @@ int isAmbigTrig(char *lookFor)
                foundInText2("pig pen", FALSE, FALSE) ||
                foundInText2("pig manure", FALSE, FALSE) ||
                foundInText2("pig genome", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
+
+       else if(strcmp(lookFor, "paris") == 0)
+       {
+            if(foundInText2("in paris", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
+
+       else if(strcmp(lookFor, "philadelphia") == 0)
+       {
+            if(foundInText2("in philadelphia", FALSE, FALSE))
              found = FALSE;
        } /* else fi */
    } /* else fi "P" */
@@ -61908,6 +63354,74 @@ int isAmbigTrig(char *lookFor)
                foundInText2("wool sheep", FALSE, FALSE))
              found = FALSE;
        } /* fi */
+
+       else if((strcmp(lookFor, "screws") == 0) || (strcmp(lookFor, "screw") == 0))
+       {
+            if(foundInText2("absorbable screw", FALSE, FALSE) ||
+               foundInText2("abutment screw", FALSE, FALSE) ||
+               foundInText2("acetabular screw", FALSE, FALSE) ||
+               foundInText2("anchor screw", FALSE, FALSE) ||
+               foundInText2("anchoring screw", FALSE, FALSE) ||
+               foundInText2("angulated screw", FALSE, FALSE) ||
+               foundInText2("articular screw", FALSE, FALSE) ||
+               foundInText2("biocomposite screw", FALSE, FALSE) ||
+               foundInText2("bone-screw", FALSE, FALSE) ||
+               foundInText2("bone screw", FALSE, FALSE) ||
+               foundInText2("cancellous screw", FALSE, FALSE) ||
+               foundInText2("cannulated screw", FALSE, FALSE) ||
+               foundInText2("channel screw", FALSE, FALSE) ||
+               foundInText2("compression screw", FALSE, FALSE) ||
+               foundInText2("condylar screw", FALSE, FALSE) ||
+               foundInText2("cortical locking screw", FALSE, FALSE) ||
+               foundInText2("distal screw", FALSE, FALSE) ||
+               foundInText2("fibular screw", FALSE, FALSE) ||
+               foundInText2("head screw", FALSE, FALSE) ||
+               foundInText2("herbert screw", FALSE, FALSE) ||
+               foundInText2("hip screw", FALSE, FALSE) ||
+               foundInText2("iliac screw", FALSE, FALSE) ||
+               foundInText2("inference screw", FALSE, FALSE) ||
+               foundInText2("interfacial screw", FALSE, FALSE) ||
+               foundInText2("interference screw", FALSE, FALSE) ||
+               foundInText2("intramedullary screw", FALSE, FALSE) ||
+               foundInText2("isthmus screw", FALSE, FALSE) ||
+               foundInText2("lag screw", FALSE, FALSE) ||
+               foundInText2("locking screw", FALSE, FALSE) ||
+               foundInText2("mini-screw", FALSE, FALSE) ||
+               foundInText2("mini screw", FALSE, FALSE) ||
+               foundInText2("pedicle screw", FALSE, FALSE) ||
+               foundInText2("percutaneous screw", FALSE, FALSE) ||
+               foundInText2("plate and screws", FALSE, FALSE) ||
+               foundInText2("plate screw", FALSE, FALSE) ||
+               foundInText2("plate-screw", FALSE, FALSE) ||
+               foundInText2("plga screw", FALSE, FALSE) ||
+               foundInText2("prosthetic screw", FALSE, FALSE) ||
+               foundInText2("radiocarpal screw", FALSE, FALSE) ||
+               foundInText2("sacral screw", FALSE, FALSE) ||
+               foundInText2("screw dislocated", FALSE, FALSE) ||
+               foundInText2("screw dislocation", FALSE, FALSE) ||
+               foundInText2("screw fixation", FALSE, FALSE) ||
+               foundInText2("screw implantation", FALSE, FALSE) ||
+               foundInText2("screw insertion", FALSE, FALSE) ||
+               foundInText2("screw instrumentation", FALSE, FALSE) ||
+               foundInText2("screw loosening", FALSE, FALSE) ||
+               foundInText2("screw malposition", FALSE, FALSE) ||
+               foundInText2("screw migration", FALSE, FALSE) ||
+               foundInText2("screw placement", FALSE, FALSE) ||
+               foundInText2("screw reconstruction", FALSE, FALSE) ||
+               foundInText2("screw removal", FALSE, FALSE) ||
+               foundInText2("screw technique", FALSE, FALSE) ||
+               foundInText2("screw tightening", FALSE, FALSE) ||
+               foundInText2("screw-retained", FALSE, FALSE) ||
+               foundInText2("screw retained", FALSE, FALSE) ||
+               foundInText2("screw-rod", FALSE, FALSE) ||
+               foundInText2("screw rod", FALSE, FALSE) ||
+               foundInText2("syndesmotic screw", FALSE, FALSE) ||
+               foundInText2("trajectory screw", FALSE, FALSE) ||
+               foundInText2("transarticular screw", FALSE, FALSE) ||
+               foundInText2("transpedicular screw", FALSE, FALSE) ||
+               foundInText2("transsacral screw", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
    } /* else fi "S" */
 
    else if(found && (lookFor[0] == 'w'))
@@ -61972,7 +63486,114 @@ int isAmbigTrig(char *lookFor)
                foundInText2("wheat cultivar", FALSE, FALSE))
              found = FALSE;
        } /* fi */
+
+       else if(strcmp(lookFor, "water") == 0)
+       {
+            if(foundInText2("contaminated water", FALSE, FALSE) ||
+               foundInText2("contaminated waters", FALSE, FALSE) ||
+               foundInText2("eutrophic water", FALSE, FALSE) ||
+               foundInText2("freshwater", FALSE, FALSE) ||
+               foundInText2("from water", FALSE, FALSE) ||
+               foundInText2("from-water", FALSE, FALSE) ||
+               foundInText2("in water", FALSE, FALSE) ||
+               foundInText2("in-water", FALSE, FALSE) ||
+               foundInText2("mine water", FALSE, FALSE) ||
+               foundInText2("natural water", FALSE, FALSE) ||
+               foundInText2("oil water", FALSE, FALSE) ||
+               foundInText2("oil-water", FALSE, FALSE) ||
+               foundInText2("oil-in-water", FALSE, FALSE) ||
+               foundInText2("oil in water", FALSE, FALSE) ||
+               foundInText2("overlying water", FALSE, FALSE) ||
+               foundInText2("river water", FALSE, FALSE) ||
+               foundInText2("soil water", FALSE, FALSE) ||
+               foundInText2("soil-water", FALSE, FALSE) ||
+               foundInText2("surface water", FALSE, FALSE) ||
+               foundInText2("water allocation", FALSE, FALSE) ||
+               foundInText2("water assessment", FALSE, FALSE) ||
+               foundInText2("water bodies", FALSE, FALSE) ||
+               foundInText2("water body", FALSE, FALSE) ||
+               foundInText2("water borne", FALSE, FALSE) ||
+               foundInText2("water concentration", FALSE, FALSE) ||
+               foundInText2("water drop", FALSE, FALSE) ||
+               foundInText2("water drops", FALSE, FALSE) ||
+               foundInText2("water effluent", FALSE, FALSE) ||
+               foundInText2("water effluents", FALSE, FALSE) ||
+               foundInText2("water environment", FALSE, FALSE) ||
+               foundInText2("water flow", FALSE, FALSE) ||
+               foundInText2("water hydrolysis", FALSE, FALSE) ||
+               foundInText2("water isotope", FALSE, FALSE) ||
+               foundInText2("water remediation", FALSE, FALSE) ||
+               foundInText2("water reservoir", FALSE, FALSE) ||
+               foundInText2("water reservoirs", FALSE, FALSE) ||
+               foundInText2("water resource", FALSE, FALSE) ||
+               foundInText2("water resources", FALSE, FALSE) ||
+               foundInText2("water reuse", FALSE, FALSE) ||
+               foundInText2("water sample", FALSE, FALSE) ||
+               foundInText2("water samples", FALSE, FALSE) ||
+               foundInText2("water saturated", FALSE, FALSE) ||
+               foundInText2("water security", FALSE, FALSE) ||
+               foundInText2("water system", FALSE, FALSE) ||
+               foundInText2("water systems", FALSE, FALSE) ||
+               foundInText2("water temperature", FALSE, FALSE) ||
+               foundInText2("water temperatures", FALSE, FALSE) ||
+               foundInText2("water toxicity", FALSE, FALSE) ||
+               foundInText2("water treatment", FALSE, FALSE) ||
+               foundInText2("water use", FALSE, FALSE) ||
+               foundInText2("water-borne", FALSE, FALSE) ||
+               foundInText2("water borne", FALSE, FALSE) ||
+               foundInText2("dialysis water", FALSE, FALSE) ||
+               foundInText2("domestic water", FALSE, FALSE) ||
+               foundInText2("oxidizing water", FALSE, FALSE) ||
+               foundInText2("water content", FALSE, FALSE) ||
+               foundInText2("water disinfection", FALSE, FALSE) ||
+               foundInText2("water loss", FALSE, FALSE) ||
+               foundInText2("water molecule", FALSE, FALSE) ||
+               foundInText2("water transport", FALSE, FALSE) ||
+               foundInText2("water-soluble", FALSE, FALSE) ||
+               foundInText2("water soluble", FALSE, FALSE) ||
+               foundInText2("well water", FALSE, FALSE) ||
+               foundInText2("water saturated", FALSE, FALSE) ||
+               foundInText2("water-saturated", FALSE, FALSE))
+             found = FALSE;
+
+            else /* Look to see how often found in text if 2 or more - non-ambiguous */
+            {
+                len = (long)strlen(globalPI);
+                numFound = 0;
+                for(i = 0; i < len; i++)
+                {
+                    if(globalPI[i] == ';')
+                      numFound++;
+                } /* for */
+
+                if(numFound > 1)
+                  found = FALSE;
+            } /* else */
+       } /* else fi */
+
+       else if(strcmp(lookFor, "wales") == 0)
+       {
+            if(foundInText2("in wales", FALSE, FALSE))
+             found = FALSE;
+       } /* else fi */
    } /* else fi "W" */
+
+   else if(found && (lookFor[0] == 'y'))
+   {
+       if(strcmp(lookFor, "yucatan") == 0)
+       {
+            if(foundInText2("the yucatan", FALSE, FALSE) ||
+               foundInText2("of yucatan", FALSE, FALSE) ||
+               foundInText2("in yucatan", FALSE, FALSE) ||
+               foundInText2("from yucatan", FALSE, FALSE) ||
+               foundInText2("rural yucatan", FALSE, FALSE) ||
+               foundInText2("yucatan shelf", FALSE, FALSE) ||
+               foundInText2("yucatan state", FALSE, FALSE) ||
+               foundInText2("yucatan peninsula", FALSE, FALSE) ||
+               foundInText2("yucatan, mexico", FALSE, FALSE))
+             found = FALSE;
+       } /* fi */
+   } /* else fi "Z" */
 
    else if(found && (lookFor[0] == 'z'))
    {
@@ -62032,3 +63653,110 @@ int isAmbigTrig(char *lookFor)
 
    return(found);
 } /* isAmbigTrig */
+
+
+/***************************************************************************
+*
+*  removeHEXCODE --
+*
+*      This
+*
+***************************************************************************/
+
+char *removeHEXCODE(char *text)
+{
+    int done, c, haveFT;
+    long i, len, diff, start, pos, sLen;
+    char *rtn, *tmp, *foo, *rest;
+
+    len = (long)strlen(text);
+    rtn = strdup(text);
+    tmp = strdup(text);
+    rest = strdup(text);
+    strcpy(rest, "");
+    haveFT = FALSE;
+
+    /* First, check to see if we have full text or not.  If we do, we want
+       to make sure we preserve the hex codes within the full text segment.
+    */
+
+    foo = strstr(rtn, "<b>FULL TEXT SNIPPETS:");
+    if(foo != NULL)
+    {
+        diff = foo - rtn;
+        haveFT = TRUE;
+        free(rest);
+        rest = strdup(foo);
+        rtn[diff] = '\0';
+    } /* fi */
+
+   /* Now, ready to trim HEX Codes out of text. &#HEX; */
+    
+    foo = strstr(rtn, "&#");
+    while(foo != NULL)
+    {
+        len = (long)strlen(rtn);
+        diff = foo - rtn;
+        done = FALSE;
+        pos = 0;
+
+        /* Copy over beginning of string */
+
+        for(i = 0; i < diff; i++)
+          tmp[pos++] = rtn[i];
+
+        /* Add blank */
+
+        tmp[pos++] = ' ';
+
+        /* Find end of hexcode */
+
+        sLen = 0;
+        for(i = diff; !done && (i < len); i++)
+        {
+            if((rtn[i] == ';') || (rtn[i] == ' ') || (rtn[i] == '\n'))
+              done = TRUE;
+
+            if(i > (diff + 15))
+              done = TRUE;
+
+            sLen++;
+        } /* for */
+
+        if(RTM_Debug)
+        {
+            fprintf(fout, "Hex code tag /Removal: #");
+            for(i = 0; i < sLen; i++)
+              fprintf(fout, "%c", rtn[i + diff]);
+            fprintf(fout, "#\n");
+            fflush(fout);
+        } /* fi */
+
+        /* Now pick up the rest of the line */
+
+        start = diff + sLen;
+        for(i = start; i < len; i++)
+          tmp[pos++] = rtn[i];
+        tmp[pos] = '\0';
+        free(rtn);
+        rtn = strdup(tmp);
+        len = pos;
+
+        foo = strstr(rtn, "&#");
+    } /* while */
+
+    free(tmp);
+    if(haveFT)
+    {
+        len = (long)strlen(rest) + (long)strlen(rtn);
+        tmp = (char *)malloc(len + 100);
+        strcpy(tmp, rtn);
+        strcat(tmp, rest);
+        free(rtn);
+        rtn = strdup(tmp);
+        free(tmp);
+    } /* fi */
+
+    free(rest);
+    return(rtn);
+} /* removeHEXCODE */

@@ -595,6 +595,7 @@ struct finalStruct {
    int datatype;
    int oktoprint;
    int wasForced;
+   int saveFDOC;
    long score;
    long num_RCs;
    float VocabDenFactor;
@@ -4471,9 +4472,13 @@ Removed:
 "cross sectional", "cross-sectional", "prospective", 
 
 "men", "bovine", "mice", "wine", "seeds", "rabbits", "mothers",
+
+"rat", "rats", "rabbit", "man", "sheep", "cattle", "chickens", "iron", 
+
+"parents", 
 */
 
-static long numAmbigTerms = 187;
+static long numAmbigTerms = 178;
 static char *ambig_Terms[] = { 
-"aged", "ageing", "aging", "ai", "alder", "als", "app", "arm", "bats", "bay", "bear", "bears", "berlin", "berry", "bidens", "bipolar", "bird", "birds", "boston", "burn", "butterfly", "cat", "cats", "cattle", "chickens", "child", "clip", "communication", "crab", "dance", "dancing", "discharge", "discharged", "dog", "doping", "drainage", "duck", "eagles", "elephants", "extracts", "falling", "falls", "farm", "farms", "fatigue", "feathers", "flies", "florida", "forests", "fox", "friends", "georgia", "gold", "gypsy", "haematopoietic", "hedgehogs", "hematopoietic", "hog", "horses", "ice", "incarcerated", "individuality", "individuals", "iris", "iron", "islands", "japanese", "justice", "lake", "lamb", "languages", "latex", "leaf", "leaves", "leopard", "lifting", "lion", "lobster", "longevity", "lotus", "love", "maize", "mammalian", "man", "masks", "meadows", "mesh", "migrants", "military", "milk", "mississippi", "monkeys", "moon", "mosquito", "mouse", "msm", "mus", "mushrooms", "needles", "nurseries", "oak", "octopus", "oranges", "orbits", "ova", "parents", "paris", "peach", "pear", "pet", "pharmaceuticals", "philadelphia", "pig", "pigs", "plague", "platelets", "platinum", "pond", "potato", "potatoes", "printing", "public health service", "qi", "rabbit", "rain", "rat", "rats", "reading", "repositioning", "respect", "rice", "rivers", "roma", "rotation", "sand", "screws", "seed", "sheep", "ship", "shoe", "shoes", "silicon", "silk", "silver", "singing", "sitting", "slaves", "smoke", "snails", "snakes", "snow", "soldiers", "spices", "starlings", "sti", "streams", "strokes", "swallows", "swiss", "tablets", "tail", "tails", "tick", "ticks", "tigers", "touch", "travel-related", "tree", "trees", "trust", "tsunami", "turkey", "venus", "wales", "walking", "water", "wheat", "wind", "winds", "wing", "wolf", "wood", "wool", "yeast", "yucatan", "zebra", "zebras"
+"aged", "ageing", "aging", "ai", "alder", "als", "app", "arm", "bats", "bay", "bear", "bears", "berlin", "berry", "bidens", "bipolar", "bird", "birds", "boston", "burn", "butterfly", "cat", "cats", "child", "clip", "communication", "crab", "dance", "dancing", "discharge", "discharged", "dog", "doping", "drainage", "duck", "eagles", "elephants", "extracts", "falling", "falls", "farm", "farms", "fatigue", "feathers", "flies", "florida", "forests", "fox", "friends", "georgia", "gold", "gypsy", "haematopoietic", "hedgehogs", "hematopoietic", "hog", "horses", "ice", "incarcerated", "individuality", "individuals", "iris", "islands", "japanese", "justice", "lake", "lamb", "languages", "latex", "leaf", "leaves", "leopard", "lifting", "lion", "lobster", "longevity", "lotus", "love", "maize", "mammalian", "masks", "meadows", "mesh", "migrants", "military", "milk", "mississippi", "monkeys", "moon", "mosquito", "mouse", "msm", "mus", "mushrooms", "needles", "nurseries", "oak", "octopus", "oranges", "orbits", "ova", "paris", "peach", "pear", "pet", "pharmaceuticals", "philadelphia", "pig", "pigs", "plague", "platelets", "platinum", "pond", "potato", "potatoes", "printing", "public health service", "qi", "rain",  "reading", "repositioning", "respect", "rice", "rivers", "roma", "rotation", "sand", "screws", "seed", "ship", "shoe", "shoes", "silicon", "silk", "silver", "singing", "sitting", "slaves", "smoke", "snails", "snakes", "snow", "soldiers", "spices", "starlings", "sti", "streams", "strokes", "swallows", "swiss", "tablets", "tail", "tails", "tick", "ticks", "tigers", "touch", "travel-related", "tree", "trees", "trust", "tsunami", "turkey", "venus", "wales", "walking", "water", "wheat", "wind", "winds", "wing", "wolf", "wood", "wool", "yeast", "yucatan", "zebra", "zebras"
 };

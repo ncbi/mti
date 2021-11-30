@@ -14,6 +14,7 @@ extern struct finalStruct finalMHlist[MAX_FINAL_MHs];
 
 extern int RTM_Debug;
 extern FILE *fout;
+extern int MTI_REVIEW, MTI_AUTO;
 
 extern int amIAnimalCT(char *mh);
 extern int foundInText(char *lookFor, int caseSensitive, int TitleOnly);
@@ -38,6 +39,9 @@ void filterGenSpec();
 extern int query_btree();
 int isDiseaseSCR(char *name);
 void checkCTRemove(char *mh);
+void checkFDOC();
+int isModelOrganism(char *dui);
+int isFDOC_SCR(char *name);
 
 int numBD = 37;
 struct bdStruct BodyPartsDis[37] = {
@@ -291,9 +295,15 @@ void filterPreIndex(int isLevelOne)
 {
     int numForced, numAllowed, k, j, n, ok, found, foundD12,
         foundHM, foundT, foundForced;
-    long i, z, l, numGEOsFound;
+    long i, z, l, numGEOsFound, numFDOC;
     char dui[50], tmp[SMALL_LINE + 1];
     char **rows = NULL;
+
+    if(RTM_Debug)
+    {
+        fprintf(fout, "Entered filterPreIndex(%d)\n", isLevelOne);
+        fflush(fout);
+    } /* fi */
 
     /* Remove all SHs, include all CTs, 
        remove all but, Humans if from Antonio's ML, and limit to
@@ -339,121 +349,98 @@ void filterPreIndex(int isLevelOne)
     /* Keep HMs if NM is a disease/syndrome SCR - 6/14/16 */
     /* 10/4/2017 - added back in keeping if SCR is forced */
 
+    for(i = 0; i < numFinalCTs; i++)
+      finalCTlist[i].saveFDOC = FALSE;
+
+    for(i = 0; i < numFinalMHs; i++)
+      finalMHlist[i].saveFDOC = FALSE;
+
+    if(MTI_REVIEW)
+      checkFDOC();
+
     for(i = 0; i < numFinalMHs; i++)
     {
         if((finalMHlist[i].datatype == NM) && finalMHlist[i].oktoprint)
         {
             foundForced = FALSE;
-            if(finalMHlist[i].wasForced ||
-               strstr(finalMHlist[i].trigger, "Forced") != NULL)
+            if(finalMHlist[i].wasForced || strstr(finalMHlist[i].trigger, "Forced") != NULL)
               foundForced = TRUE;
-        } /* fi */
 
-        if((finalMHlist[i].datatype == NM) &&
-           finalMHlist[i].oktoprint && !foundForced)
-        {
-            finalMHlist[i].oktoprint = FALSE;
-            if(RTM_Debug)
+            if(!foundForced && finalMHlist[i].saveFDOC)
             {
-                fprintf(fout, "Removing NM: #%s|%s# filterPreIndex Rule\n",
-                        finalMHlist[i].mh, finalMHlist[i].dui);
+                if(RTM_Debug)
+                  fprintf(fout, "Pre-Index - KEEPING SCR FDOC: %s\n", finalMHlist[i].mh);
 
-                for(j = 0; j < finalMHlist[i].num_HMs; j++)
-                  fprintf(fout, "  --- HM[%ld]: #%s#\n", j,
-                          finalMHlist[i].HMs[j]);
-                fflush(fout);
+                if(finalMHlist[i].trigger != NULL)
+                  free(finalMHlist[i].trigger);
+
+                finalMHlist[i].trigger = strdup("Forced Disease, Organism, Chemical");
             } /* fi */
 
-            /* Now remove any associated HMs for NM, if not a disease SCR
-               and not a Forced term.
-            */
-
-            if(!isDiseaseSCR(finalMHlist[i].mh))
+            else if(!foundForced)
             {
-                for(j = 0; j < finalMHlist[i].num_HMs; j++)
+                finalMHlist[i].oktoprint = FALSE;
+                if(RTM_Debug)
                 {
-                    foundHM = FALSE;
-                    for(k = 0; !foundHM && (k < numFinalMHs); k++)
+                    fprintf(fout, "Removing NM: #%s|%s# filterPreIndex Rule\n",
+                            finalMHlist[i].mh, finalMHlist[i].dui);
+
+                    for(j = 0; j < finalMHlist[i].num_HMs; j++)
+                      fprintf(fout, "  --- HM[%ld]: #%s#\n", j,
+                              finalMHlist[i].HMs[j]);
+                    fflush(fout);
+                } /* fi */
+
+                /* Now remove any associated HMs for NM, if not a disease SCR
+                   and not a Forced term.
+                */
+
+                if(!isDiseaseSCR(finalMHlist[i].mh))
+                {
+                    for(j = 0; j < finalMHlist[i].num_HMs; j++)
                     {
-                        if(finalMHlist[k].ETflag &&
-                            (strlen(finalMHlist[k].mh_orig) > 0))
+                        foundHM = FALSE;
+                        for(k = 0; !foundHM && (k < numFinalMHs); k++)
                         {
-                            if(finalMHlist[i].HMs[j][0] ==
-                                             finalMHlist[k].mh_orig[0])
+                            if(finalMHlist[k].ETflag && (strlen(finalMHlist[k].mh_orig) > 0))
                             {
-                                if(strcmp(finalMHlist[i].HMs[j],
-                                         finalMHlist[k].mh_orig) == 0)
-                                  foundHM = TRUE;
-                            } /* fi */
-                        } /* fi */
-
-                        else
-                        {
-                            if(finalMHlist[i].HMs[j][0] == finalMHlist[k].mh[0])
-                            {
-                                if(strcmp(finalMHlist[i].HMs[j],
-                                         finalMHlist[k].mh) == 0)
-                                  foundHM = TRUE;
-                            } /* fi */
-                        } /* else */
-
-                        if(foundHM)
-                        {
-                            if(strstr(finalMHlist[k].trigger, "Forced") == NULL)
-                            {
-                                finalMHlist[k].oktoprint = FALSE;
-                                if(RTM_Debug)
+                                if(finalMHlist[i].HMs[j][0] == finalMHlist[k].mh_orig[0])
                                 {
-                                    fprintf(fout, "Removing associated HM:");
-                                    fprintf(fout, " #%s# (%s)",
-                                     finalMHlist[k].mh, finalMHlist[k].trigger);
-                                    fprintf(fout, " filterPreIndex Rule\n");
-                                    fflush(fout);
+                                    if(strcmp(finalMHlist[i].HMs[j], finalMHlist[k].mh_orig) == 0)
+                                      foundHM = TRUE;
                                 } /* fi */
                             } /* fi */
-                        } /* fi */
-                    } /* for */
-                } /* for */
-            } /* fi */
-        } /* fi */
+
+                            else
+                            {
+                                if(finalMHlist[i].HMs[j][0] == finalMHlist[k].mh[0])
+                                {
+                                    if(strcmp(finalMHlist[i].HMs[j], finalMHlist[k].mh) == 0)
+                                      foundHM = TRUE;
+                                } /* fi */
+                            } /* else */
+
+                            if(foundHM)
+                            {
+                                if(strstr(finalMHlist[k].trigger, "Forced") == NULL)
+                                {
+                                    finalMHlist[k].oktoprint = FALSE;
+                                    if(RTM_Debug)
+                                    {
+                                        fprintf(fout, "Removing associated HM:");
+                                        fprintf(fout, " #%s# (%s)",
+                                                finalMHlist[k].mh, finalMHlist[k].trigger);
+                                        fprintf(fout, " filterPreIndex Rule\n");
+                                        fflush(fout);
+                                    } /* fi RTM_Debug */
+                                } /* fi !Forced */
+                            } /* fi foundHM */
+                        } /* for numFinalMHs */
+                    } /* for num_HMs */
+                } /* fi !isDiseaseSCR */
+            } /* else fi !foundForced */
+        } /* fi NM */
     } /* for */
-
-    numGEOsFound = 0;
-
-    /* Want to keep any Geographics that were triggered by the actual
-       text -- not PRC Only or one of the machine learning paths.
-
-       REMOVED August 6, 2021 - really want to prioritize other terms over the Geographics
-           which will be found regardless via the text.
-
-    for(i = 0; i < numFinalMHs; i++)
-    {
-        if((finalMHlist[i].datatype == MH) && finalMHlist[i].oktoprint)
-        {
-             foundT = FALSE;
-             for(l = 0; !foundT && (l < finalMHlist[i].num_treecodes); l++)
-             {
-                  if(finalMHlist[i].treecodes[l][0] == 'Z')
-                  {
-                      foundT = TRUE;
-                      if(strlen(finalMHlist[i].trigger) > 0)
-                      {
-                          if(RTM_Debug)
-                          {
-                              fprintf(fout, "Saving Geographic: %s (%s)\n",
-                                  finalMHlist[i].mh, finalMHlist[i].trigger);
-                              fflush(fout);
-                          }
-                      }
-
-                      finalMHlist[i].wasForced = TRUE;
-                      numGEOsFound++;
-                  }
-             }
-        }
-    }
-    */
-
 
     /* ################################################################# */
 
@@ -462,7 +449,7 @@ void filterPreIndex(int isLevelOne)
        provided.
     */
 
-    numForced = numAllowed = 0;
+    numForced = numAllowed = numFDOC = 0;
     for(i = 0; i < numFinalMHs; i++)
     {
         if(finalMHlist[i].wasForced && finalMHlist[i].oktoprint)
@@ -472,6 +459,14 @@ void filterPreIndex(int isLevelOne)
 
             numForced++;
         } /* fi */
+
+        else if(finalMHlist[i].saveFDOC)
+        {
+            if(RTM_Debug)
+              fprintf(fout, "FDOC: %s\n", finalMHlist[i].mh);
+
+            numFDOC++;
+        } /* fi */
     } /* for */
 
     numAllowed = 5 - numForced;
@@ -479,8 +474,8 @@ void filterPreIndex(int isLevelOne)
       numAllowed = 0;
 
     if(RTM_Debug)
-      fprintf(fout, "Found %ld Forced Terms -- %ld Allowed\n",
-              numForced, numAllowed);
+      fprintf(fout, "Found %ld Forced Terms -- Allowed: %ld  -- FDOC: %ld\n",
+              numForced, numAllowed, numFDOC);
 
     /* Now go through and remove extras */
 
@@ -494,6 +489,17 @@ void filterPreIndex(int isLevelOne)
                   fprintf(fout, "Pre-Index - KEEPING: %s\n", finalMHlist[i].mh);
                 numAllowed--;
             } /* fi */
+
+            else if(finalMHlist[i].saveFDOC)
+            {
+                if(RTM_Debug)
+                  fprintf(fout, "Pre-Index - KEEPING FDOC: %s\n", finalMHlist[i].mh);
+
+                if(finalMHlist[i].trigger != NULL)
+                  free(finalMHlist[i].trigger);
+
+                finalMHlist[i].trigger = strdup("Forced Disease, Organism, Chemical");
+            } /* else */
 
             else
             {
@@ -1597,3 +1603,288 @@ void checkCTRemove(char *mh)
         } /* fi */
     } /* for */
 } /* checkCTRemove */
+
+
+/***************************************************************************
+*
+*  checkFDOC --
+*
+*      This 
+*
+***************************************************************************/
+
+void checkFDOC()
+{
+    int isOrganism, isDisease, isChemical, isOKSCR, isModel;
+    long i, l, numOrganisms;
+
+    /* Check on number of "Model" Organisms we have ready to print in both CT & MH lists */
+
+    numOrganisms = 0;
+    for(i = 0; i < numFinalCTs; i++)
+    {
+        if(finalCTlist[i].oktoprint && finalCTlist[i].wasForced)
+        {
+            if(isModelOrganism(finalCTlist[i].dui))
+               numOrganisms++;
+        } /* fi */
+    } /* for each CT */
+
+    for(i = 0; i < numFinalMHs; i++)
+    {
+        if(finalMHlist[i].oktoprint && finalMHlist[i].wasForced)
+        {
+            if(isModelOrganism(finalMHlist[i].dui))
+               numOrganisms++;
+        } /* fi */
+    } /* for each MH */
+
+    if(RTM_Debug)
+    {
+        fprintf(fout, "numOrganisms Found: %ld\n", numOrganisms);
+        fflush(fout);
+    } /* fi */
+
+    for(i = 0; i < numFinalMHs; i++)
+    {
+        if(RTM_Debug)
+        {
+            fprintf(fout, "checkFDOC[%ld] - %s|%d|%d|", i, finalMHlist[i].mh,
+                    finalMHlist[i].wasForced, finalMHlist[i].oktoprint);
+            fflush(fout);
+
+            if(finalMHlist[i].datatype == MH)
+              fprintf(fout, "MH|");
+
+            else if(finalMHlist[i].datatype == NM)
+              fprintf(fout, "NM|");
+
+            else if(finalMHlist[i].datatype == CT)
+              fprintf(fout, "CT|");
+
+            else if(finalMHlist[i].datatype == HM)
+              fprintf(fout, "HM|");
+
+            else
+              fprintf(fout, "UNK|");
+
+            fprintf(fout, "%s|%ld|\n", finalMHlist[i].textloc, finalMHlist[i].numPIs);
+            fflush(fout);
+        } /* fi RTM_Debug */
+
+        /* Now, go through terms that may not be indexed.  If they meet any of our criteria,
+           we want to save them.
+
+           1) Found in Title with 1 or more occurrences
+           2) Found in Abstract with 2 or more occurrences
+           3) If no Model Organisms found, we will allow a Model Organism if it shows up
+              in the Abstract with only a single occurrence.
+
+           4) If one of the above is found, then we check to see if an Organism,
+              Disease, or Chemical and allow if one of these three.  Or, if Chemical or Disease SCR.
+        */
+
+        if(finalMHlist[i].oktoprint && !finalMHlist[i].wasForced)
+        {
+             if(RTM_Debug)
+               fprintf(fout, "   --- Term to FDOC check\n");
+
+             isOrganism = isDisease = isChemical = isOKSCR = isModel = FALSE;
+             if(finalMHlist[i].datatype == MH)
+             {
+                 for(l = 0; l < finalMHlist[i].num_treecodes; l++)
+                 {
+                     if(finalMHlist[i].treecodes[l][0] == 'B')  /* Organism Tree */
+                     {
+                         isOrganism = TRUE;
+                         isModel = isModelOrganism(finalMHlist[i].dui);
+                     } /* fi Organism */
+
+                     else if(finalMHlist[i].treecodes[l][0] == 'C')  /* Disease Tree */
+                       isDisease = TRUE;
+
+                     else if(finalMHlist[i].treecodes[l][0] == 'D')  /* Chemical Tree */
+                       isDisease = TRUE;
+                 } /* for */
+             } /* fi MH */
+
+             else if(finalMHlist[i].datatype == NM)
+             {
+                 if(isFDOC_SCR(finalMHlist[i].mh))
+                   isOKSCR = TRUE;
+             } /* else */
+
+             if(RTM_Debug)
+               fprintf(fout, "O: %d|D: %d|C: %d|S: %d\n", isOrganism, isDisease,
+                       isChemical, isOKSCR);
+
+             if(isOrganism || isDisease || isChemical ||isOKSCR)
+             {
+                 /* 1) Found in Title with 1 or more occurrences */
+
+                 if((strstr(finalMHlist[i].textloc, "TI") != NULL) && (finalMHlist[i].numPIs > 0))
+                 {
+                     finalMHlist[i].saveFDOC = TRUE;
+                     if(RTM_Debug)
+                     {
+                         fprintf(fout, "FDOC Save Rule 1: %s\n", finalMHlist[i].mh);
+                         fflush(fout);
+                     } /* fi */
+                 } /* fi TI Rule 1 */
+
+                 /* 2) Found in Abstract with 2 or more occurrences */
+
+                 else if((strstr(finalMHlist[i].textloc, "AB") != NULL) &&
+                        (finalMHlist[i].numPIs > 1))
+                 {
+                     finalMHlist[i].saveFDOC = TRUE;
+                     if(RTM_Debug)
+                     {
+                         fprintf(fout, "FDOC Save Rule 2: %s\n", finalMHlist[i].mh);
+                         fflush(fout);
+                     } /* fi */
+                 } /* fi AB Rule 2 */
+
+                 /* 3) In the event that we have no organisms indexed, if we find a MODEL organism
+                       in the abstract but it only has one occurrence, ok to let it go through.
+                       AND then IF AND ONLY IF it is one of the model organisms.
+
+                       UPDATE: If any model organism if even only once in Abstract still add
+                            November 19, 2021.
+                 if((numOrganisms == 0) && isModel)
+                 */
+
+                 if(isModel)
+                 {
+                     if((strstr(finalMHlist[i].textloc, "AB") != NULL) &&
+                        (finalMHlist[i].numPIs > 0))
+                     {
+                         finalMHlist[i].saveFDOC = TRUE;
+                         if(RTM_Debug)
+                         {
+                             fprintf(fout, "FDOC Save Rule 3: %s\n", finalMHlist[i].mh);
+                             fflush(fout);
+                         } /* fi */
+                     } /* fi AB Rule 3 */
+                 } /* fi No Organisms & model */
+             } /* fi found target type */
+        } /* fi */
+    } /* for */
+} /* checkFDOC */
+
+/***************************************************************************
+*
+*  isModelOrganism --
+*
+*      This 
+*
+***************************************************************************/
+
+int isModelOrganism(char *dui)
+{
+    int rtn;
+
+    /* Return true if we match dui to any of the model organisms -
+         Humans|D006801
+         Mice|D051379
+         Rats|D051381
+         Arabidopsis|D017360
+         Drosophila|D004330
+         Saccharomyces cerevisiae|D012441
+         Caenorhabditis elegans|D017173
+         Escherichia coli|D004926
+         Zebrafish|D015027
+         Xenopus|D014981
+         Schizosaccharomyces|D012568
+
+         Cats|D002415
+         Cattle|D002417
+         Dogs|D004285
+         Cricetinae|D006224
+         Rabbits|D011817
+         Sheep|D012756
+         Swine|D013552
+         Chlorocebus aethiops|D002522
+         Horses|D006736
+         Bees|D001516
+         Guinea Pigs|D006168
+    */
+
+    rtn = FALSE;
+    if((strcmp(dui, "D006801") == 0) || (strcmp(dui, "D051379") == 0) ||
+       (strcmp(dui, "D051381") == 0) || (strcmp(dui, "D017360") == 0) ||
+       (strcmp(dui, "D004330") == 0) || (strcmp(dui, "D012441") == 0) ||
+       (strcmp(dui, "D017173") == 0) || (strcmp(dui, "D004926") == 0) ||
+       (strcmp(dui, "D015027") == 0) || (strcmp(dui, "D014981") == 0) ||
+       (strcmp(dui, "D012568") == 0) ||
+
+       /* Additional allowed as Model Organisms */
+
+       (strcmp(dui, "D002415") == 0) || (strcmp(dui, "D002417") == 0) ||
+       (strcmp(dui, "D004285") == 0) || (strcmp(dui, "D006224") == 0) ||
+       (strcmp(dui, "D011817") == 0) || (strcmp(dui, "D006736") == 0) ||
+       (strcmp(dui, "D012756") == 0) || (strcmp(dui, "D001516") == 0) ||
+       (strcmp(dui, "D013552") == 0) || (strcmp(dui, "D006168") == 0) ||
+       (strcmp(dui, "D002522") == 0))
+      rtn = TRUE;
+
+    return(rtn);
+} /* isModelOrganism */
+
+
+/***************************************************************************
+*
+*  isFDOC_SCR --
+*
+*      This 
+*
+***************************************************************************/
+
+int isFDOC_SCR(char *name)
+{
+    char **rows;
+    int n, k, rtn, class;
+
+    /*
+   1 - Regular Chemical,  Drug, or Substance
+   2 - Protocol
+   3 - Disease
+   4 - Organism
+
+   For 1, we want to try and break it down a bit more
+      D08, D12 HMs -- Protein
+      D26 HMs -- Drug
+      D01, D02 HMs -- Chemical
+      D09 -- Carbohydrates
+      Other
+
+   New Classes:
+
+      40 - Protein
+      50 - Drug
+      60 - Chemical
+      70 - Carbohydrates
+      80 - Others
+
+      For FDOC we want 1, 3, 4
+    */
+
+    rtn = FALSE;
+    query_btree(SCRCLASS, name, &rows, &n);
+    if((rows != NULL) && (n > 0))
+    {
+        class = -1;
+        sscanf(rows[0], "%*[^|]|%d", &class);
+        if((class == 1) || (class == 3) || (class == 4))
+          rtn = TRUE;
+
+        for(k = 0; k < n; k++)
+          free(rows[k]);
+        free(rows);
+    } /* fi */
+
+    else if(rows != NULL)
+      free(rows);
+
+    return(rtn);
+} /* isFDOC_SCR */

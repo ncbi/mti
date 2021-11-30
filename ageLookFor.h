@@ -34,7 +34,7 @@ Aged (64 - 79)
 Aged, 80 and over (80+)
 */
 
-static long numAgeLookForRight = 52;
+static long numAgeLookForRight = 53;
 static char *ageTriggersRight[] = {
 "ages ranged between",
 "between the ages of",
@@ -63,6 +63,7 @@ static char *ageTriggersRight[] = {
 "ages  range",
 "ages ranged",
 "ages ranges",
+"mean age of",
 "median  age",
 "median aged",
 "median ages",

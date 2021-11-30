@@ -149,8 +149,8 @@ extern int showHMs, showETs, showETsD, limitTitleOnly, Title_Only, showDUIs,
            Special_PT, showTUIs, RSfilterTO, TitleNumWords, showTreecodes,
            RSfilterALL, showRSfilter, addAddls, cutOffScore, showRemovals,
            RTM_Debug, addCTs, lTO_II, doLogging, CATALOGING, exitNoResult,
-           nursingJournal, veterinaryJournal, dentistryJournal, hasCON, hasEFR,
-           hasPROF, hasRPF, hasROF, hasUOF, doNoAddForced, showType,
+           nursingJournal, veterinaryJournal, dentistryJournal, ophthalmologyJournal, 
+           hasCON, hasEFR, hasPROF, hasRPF, hasROF, hasUOF, doNoAddForced, showType,
            firstLineJournal, preIndex, MeSHonDemand, MeSHonDemand2, MoD_Raw,
            MoD_PP, OLDMEDLINE, level1Filter, JSON, showScores,
            showScoresFull, trackPositional, showIlyaML, MTI_AUTO, doIL2R,
@@ -1526,6 +1526,61 @@ void combined_display(int strictFilter_set, int medFilter_set,
            if(finalMHlist[i].oktoprint)
              numValidMH++;
        } /* for */
+
+       /* MTIA - if we have no answer, can we provide a default answer?
+
+          100953980|ALTEX - Animal Testing Alternatives
+       */
+
+       if((numValidCT + numValidMH) == 0)
+       {
+           if(strcmp(nlmID, "100953980") == 0)
+           {
+               finalMHlist[0].ETflag = FALSE;
+               finalMHlist[0].datatype = MH;
+               finalMHlist[0].oktoprint = TRUE;
+               finalMHlist[0].wasForced = TRUE;
+               finalMHlist[0].score = 1000;
+               finalMHlist[0].num_RCs = 0;
+               finalMHlist[0].VocabDenFactor = 0.0;
+               finalMHlist[0].muid = strdup(muid);
+               finalMHlist[0].mh = strdup("Animal Testing Alternatives");
+               finalMHlist[0].mh_orig = strdup("");
+               finalMHlist[0].dui = strdup("D000826");
+               finalMHlist[0].entry_term = strdup("");
+               finalMHlist[0].RC_PMIDs = strdup("");
+               finalMHlist[0].trigger = strdup("Forced Journal Default");
+               finalMHlist[0].textloc = strdup("");
+               finalMHlist[0].numPIs = 0;
+               finalMHlist[0].paths[MMI] = TRUE;
+               finalMHlist[0].num_treecodes = 0;
+               finalMHlist[0].num_STs = 0;
+               numFinalMHs = 1;
+
+
+               finalCTlist[0].ETflag = FALSE;
+               finalCTlist[0].datatype = CT;
+               finalCTlist[0].oktoprint = TRUE;
+               finalCTlist[0].wasForced = TRUE;
+               finalCTlist[0].score = 1000;
+               finalCTlist[0].num_RCs = 0;
+               finalCTlist[0].VocabDenFactor = 0.0;
+               finalCTlist[0].muid = strdup(muid);
+               finalCTlist[0].mh = strdup("Animals");
+               finalCTlist[0].mh_orig = strdup("");
+               finalCTlist[0].dui = strdup("D000818");
+               finalCTlist[0].entry_term = strdup("");
+               finalCTlist[0].RC_PMIDs = strdup("");
+               finalCTlist[0].trigger = strdup("Forced Journal Default");
+               finalCTlist[0].textloc = strdup("");
+               finalCTlist[0].numPIs = 0;
+               finalCTlist[0].paths[MMI] = TRUE;
+               finalCTlist[0].num_treecodes = 0;
+               pullTREEs_CT(0);
+               finalCTlist[0].num_STs = 0;
+               numFinalCTs = 1;
+           } /* fi */
+       } /* fi */
 
        if((numValidCT + numValidMH) == 0)
        {
@@ -6313,7 +6368,6 @@ void doLearning2Rank(int BioASQ)
                        isAmbig = FALSE;
                        strcpy(ambigTrigger, "");
                        if((strcmp(L2R_MH, "accidental falls") == 0) || 
-                          (strcmp(L2R_MH, "cross-sectional studies") == 0) ||
                           (strcmp(L2R_MH, "chickens") == 0) ||
                           (strcmp(L2R_MH, "seasons") == 0))
                        {
@@ -6379,7 +6433,7 @@ void doLearning2Rank(int BioASQ)
                                        finalCTlist[p].num_treecodes = 0;
                                        pullTREEs_CT(p);
 
-                                       /* Semantic Types - max 25 */
+                                       /* SemL2R_PATHantic Types - max 25 */
 
                                        finalCTlist[p].num_STs = 0;
 
@@ -7229,11 +7283,18 @@ int shouldKeepL2R(char *inL2R, int haveCOVID19)
 
    } /* else */
 
-   /* Some terms we don't want L2R for - */
+   /* Some terms we don't want L2R for -
+Entomology|D004772|C0014386
+Ego|D004532|C0013712
+Patients|D010361|C0030705
+Cross-Sectional Studies|D003430|C0010362
+Women|D014930|C0043210
+    */
 
    else if((strcmp(dui, "D004772") == 0) ||
            (strcmp(dui, "D004532") == 0) ||
            (strcmp(dui, "D010361") == 0) ||
+           (strcmp(dui, "D003430") == 0) ||
            (strcmp(dui, "D014930") == 0))
      rtn= FALSE;
 
@@ -7255,6 +7316,22 @@ int shouldKeepL2R(char *inL2R, int haveCOVID19)
            (strcmp(dui, "D000073640") == 0) ||
            (strcmp(dui, "D058873") == 0))
         rtn= FALSE;
+   } /* fi */
+
+   /* Fever via Global Temperature */
+
+   if(strcmp(dui, "D005334") == 0)
+   {
+       if(foundInText("global temperature", FALSE, TRUE))
+         rtn= FALSE;
+   } /* fi */
+
+   /* Emergency Service, Hospital via emergency action */
+
+   if(strcmp(dui, "D004636") == 0)
+   {
+       if(foundInText("emergency action", FALSE, TRUE))
+         rtn= FALSE;
    } /* fi */
 
    if(!rtn && RTM_Debug)
@@ -7323,7 +7400,7 @@ int shouldKeepL2R_MTI_AUTO(char *inL2R, int haveCOVID19)
           (strcmp(term, "advertising as topic") == 0) ||
           (strcmp(term, "patient education as topic") == 0))
         rtn = TRUE;
-   } /* fi */
+   } /* fi as topic */
 
    else if(isCTDUI(dui))
    {
@@ -7350,7 +7427,23 @@ int shouldKeepL2R_MTI_AUTO(char *inL2R, int haveCOVID19)
           (strcmp(term, "infant") == 0) ||
           (strcmp(term, "united states") == 0))
         rtn = TRUE;
-   } /* else */
+   } /* else fi CT */
+
+   /* Some terms we don't want L2R for -
+Entomology|D004772|C0014386
+Ego|D004532|C0013712
+Patients|D010361|C0030705
+Cross-Sectional Studies|D003430|C0010362
+Women|D014930|C0043210
+    */
+
+   else if((strcmp(dui, "D004772") == 0) ||
+           (strcmp(dui, "D004532") == 0) ||
+           (strcmp(dui, "D010361") == 0) ||
+           (strcmp(dui, "D003430") == 0) ||
+           (strcmp(dui, "D014930") == 0))
+     rtn= FALSE;
+
 
     /*    2021 - If we are recommending COVID-19 terms then if any of these terms are only
                  from PRC, remove them.
@@ -7367,6 +7460,22 @@ int shouldKeepL2R_MTI_AUTO(char *inL2R, int haveCOVID19)
            (strcmp(dui, "D000073640") == 0) ||
            (strcmp(dui, "D058873") == 0))
         rtn= FALSE;
+   } /* fi */
+
+   /* Fever via Global Temperature */
+
+   if(strcmp(dui, "D005334") == 0)
+   {
+       if(foundInText("global temperature", FALSE, TRUE))
+         rtn= FALSE;
+   } /* fi */
+
+   /* Emergency Service, Hospital via emergency action */
+
+   if(strcmp(dui, "D004636") == 0)
+   {
+       if(foundInText("emergency action", FALSE, TRUE))
+         rtn= FALSE;
    } /* fi */
 
    if(!rtn && RTM_Debug)
@@ -9078,6 +9187,11 @@ char *pullSnippet(long startPos, char *text)
                if(text[i + 1] == '/')
                  done = TRUE;
             } /* fi */
+
+            /* Check to see if we are at the end of a parenthetical */
+
+            else if(text[i] == ')')
+              done = TRUE;
         } /* fi */
 
         i++;
@@ -9160,7 +9274,7 @@ char *pullSnippetLeft(long startPos, char *text, long strLen)
 
         /* 14-year-old man, 15-year-old woman and 20-year-old man */
 
-        else if((text[i] == ',') || (text[i] == ';') || (text[i] == '\n'))
+        else if((text[i] == ',') || (text[i] == '(') || (text[i] == ';') || (text[i] == '\n'))
           done = TRUE;
 
         i--;
@@ -9560,9 +9674,12 @@ char *pullYears(char *snippet, long len, int hasRange, long snippetOffset)
 
            if(ok)
            {
+               /* Convert comma to period european notation for decimal */
+/*
                if(tmp[i] == ',')
-                 rtn[yPos++] = '.';  /* Convert comma to period european notation for decimal */
+                 rtn[yPos++] = '.';
                else
+*/
                  rtn[yPos++] = tmp[i];
            } /* fi */
        } /* fi */
@@ -9853,7 +9970,11 @@ float determineYear(char *str)
     float rtn;
 
     rtn = -1.0;
-    sscanf(str, "%f", &rtn);
+
+    /* Don't want interpretataion of comma in the string */
+
+    if(strchr(str, ',') == NULL)
+      sscanf(str, "%f", &rtn);
 
     return(rtn);
 } /* determineYear */
@@ -12665,6 +12786,13 @@ int checkAddCT(char *citSpan, int flag)
    float k;
    char *tmp;
 
+   if(RTM_Debug)
+   {
+       fprintf(fout, "checkAddCT(#%s#, %d)\n", citSpan, flag);
+       fprintf(fout, "checkAddCT: begYear: %ld  endYear: %ld\n", begYear, endYear);
+       fflush(fout);
+   } /* fi */
+
    for(k = begYear; k <= endYear; (k += 0.1))
    {
        /* Infant, Newborn (0 - 1 month) */
@@ -12961,68 +13089,97 @@ void check_Species_Protein_SCRs(char *filename, char *targetSpecies)
 
                /* Add any special filtering here */
 
-               /* Specific Low Back Pain (SLBP)
-                  If we see "back pain", turn off the protein.
-                */
-
-               if(strcmp(lookFor, "slbp") == 0)
+               if(lookFor[0] == 'c')
                {
-                   if(foundInText("back pain", FALSE, FALSE))
-                     ok = FALSE;
-               } /* fi */
+                   /* copper transport vs choline tma lyase */
 
-               if(strcmp(lookFor, "mapt") == 0)
+                   if(strcmp(lookFor, "cutc") == 0)
+                   {
+                       if(foundInText("choline", FALSE, FALSE))
+                         ok = FALSE;
+                   } /* fi */
+               } /* fi "C" */
+
+               else if(lookFor[0] == 'e')
                {
-                   if(foundInText("mapt study", FALSE, FALSE))
-                     ok = FALSE;
-               } /* fi */
+                   /* eGFR */
 
-               /* copper transport vs choline tma lyase */
+                   if(strcmp(lookFor, "egfr") == 0)
+                   {
+                       if(!foundInText("EGFR", TRUE, FALSE))
+                         ok = FALSE;
+                   } /* fi */
 
-               if(strcmp(lookFor, "cutc") == 0)
+                   /* erg NO for Opthalmology Journals */
+
+                   else if(strcmp(lookFor, "erg") == 0)
+                   {
+                       if(ophthalmologyJournal)
+                         ok = FALSE;
+                   } /* else fi */
+               } /* else fi "E" */
+
+               else if(lookFor[0] == 'f')
                {
-                   if(foundInText("choline", FALSE, FALSE))
-                     ok = FALSE;
-               } /* fi */
+                   /* functional and therapeutic outcomes (FTO) */
 
-               /* eGFR */
+                   if(strcmp(lookFor, "fto") == 0)
+                   {
+                       if(foundInText("fluorine-doped tin oxide", FALSE, FALSE) ||
+                          foundInText("fluorine doped tin oxide", FALSE, FALSE) || 
+                          foundInText("functional and therapeutic outcomes", FALSE, FALSE) || 
+                          foundInText("functional and therapeutic outcome", FALSE, FALSE))
+                         ok = FALSE;
+                   } /* fi */
+               } /* else fi "F" */
 
-               if(strcmp(lookFor, "egfr") == 0)
+               else if(lookFor[0] == 'h')
                {
-                   if(!foundInText("EGFR", TRUE, FALSE))
-                     ok = FALSE;
-               } /* fi */
+                   if(strcmp(lookFor, "htt") == 0)
+                   {
+                       if(foundInText("5-htt", FALSE, FALSE) ||
+                          foundInText("5 htt", FALSE, FALSE) ||
+                          foundInText("5htt", FALSE, FALSE))
+                         ok = FALSE;
+                   } /* fi */
+               } /* else fi "H" */
 
-               /* functional and therapeutic outcomes (FTO) */
-
-               if(strcmp(lookFor, "fto") == 0)
+               else if(lookFor[0] == 'm')
                {
-                   if(foundInText("fluorine-doped tin oxide", FALSE, FALSE) ||
-                      foundInText("fluorine doped tin oxide", FALSE, FALSE) || 
-                      foundInText("functional and therapeutic outcomes", FALSE, FALSE) || 
-                      foundInText("functional and therapeutic outcome", FALSE, FALSE))
-                     ok = FALSE;
-               } /* fi */
+                   if(strcmp(lookFor, "mapt") == 0)
+                   {
+                       if(foundInText("mapt study", FALSE, FALSE))
+                         ok = FALSE;
+                   } /* fi */
+               } /* else fi "M" */
 
-               if(strcmp(lookFor, "tert") == 0)
+               else if(lookFor[0] == 's')
                {
-                   if(!foundInText("TERT", TRUE, FALSE))
-                     ok = FALSE;
-               } /* fi */
+                   /* Specific Low Back Pain (SLBP)
+                      If we see "back pain", turn off the protein.
+                    */
 
-               if(strcmp(lookFor, "htt") == 0)
-               {
-                   if(foundInText("5-htt", FALSE, FALSE) ||
-                      foundInText("5 htt", FALSE, FALSE) ||
-                      foundInText("5htt", FALSE, FALSE))
-                     ok = FALSE;
-               } /* fi */
+                   if(strcmp(lookFor, "slbp") == 0)
+                   {
+                       if(foundInText("back pain", FALSE, FALSE))
+                         ok = FALSE;
+                   } /* fi */
+               } /* else fi "S" */
 
-               if(strcmp(lookFor, "tspo") == 0)
+               else if(lookFor[0] == 't')
                {
-                   if(!foundInText("TSPO", TRUE, FALSE))
-                     ok = FALSE;
-               } /* fi */
+                   if(strcmp(lookFor, "tert") == 0)
+                   {
+                       if(!foundInText("TERT", TRUE, FALSE))
+                         ok = FALSE;
+                   } /* fi */
+
+                   else if(strcmp(lookFor, "tspo") == 0)
+                   {
+                       if(!foundInText("TSPO", TRUE, FALSE))
+                         ok = FALSE;
+                   } /* else fi */
+               } /* else fi "T" */
 
                if(ok)
                {

@@ -187,7 +187,7 @@ public class GetPRC_NCat_HTTPS
       while(!done)
       {
 /*
-https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=22825365&cmd=neighbor_score&term=medline[sb]&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov&api_key=8ed2ad8415029f5f018b4ee5da61542e8308
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=22825365&cmd=neighbor_score&term=medline[sb]&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov&api_key=${API_KEY}
 */
          done = true;
          try
@@ -210,14 +210,14 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=228253
               PMIDstr +
               "&cmd=neighbor_score&term=medline[sb]&tool=Medical_Text_Indexer" +
               "&email=mork@nlm.nih.gov" +
-              "&api_key=8ed2ad8415029f5f018b4ee5da61542e8308");
+              "&api_key=${API_KEY}");
 
             if(DebugDisplay)
               System.out.println("URL: " + urlString + "?" + 
                     "dbfrom=pubmed&id=" + PMIDstr +
               "&cmd=neighbor_score&term=medline[sb]&tool=Medical_Text_Indexer" +
               "&email=mork@nlm.nih.gov" +
-              "&api_key=8ed2ad8415029f5f018b4ee5da61542e8308");
+              "&api_key=${API_KEY}");
 
             URLConnection conn = newurl.openConnection();
             BufferedReader buffURL = 
@@ -735,14 +735,14 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nlmcatalog&term=10
     Step 04: Now we can retrieve the related articles link information
              (getCatalogNeighbors).
 
-        https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=nlmcatalog&id=101468148&cmd=neighbor_score&db=nlmcatalog&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov&api_key=8ed2ad8415029f5f018b4ee5da61542e8308
+        https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=nlmcatalog&id=101468148&cmd=neighbor_score&db=nlmcatalog&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov&api_key=${API_KEY}
 
     Step 05: Once we have all of the related article links, we can then pull
              down the actual records associated with the related articles.
              This is in xml format and we'll need to extract the MH/SH terms.
              (runCatalogRetrieval)
 
-https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&id=546987&retmode=xml&api_key=8ed2ad8415029f5f018b4ee5da61542e8308
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&id=546987&retmode=xml&api_key=${API_KEY}
 
 */
 
@@ -762,7 +762,7 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&id=54698
                  NCBI_IDstr + "&cmd=neighbor_score" +
                  "&db=nlmcatalog&tool=Medical_Text_Indexer" +
                  "&email=mork@nlm.nih.gov" + 
-                 "&api_key=8ed2ad8415029f5f018b4ee5da61542e8308");
+                 "&api_key=${API_KEY}");
 
             if(DebugDisplay)
               System.out.println("getNC - newurl: #" + newurl + "#");
@@ -925,14 +925,14 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&id=54698
       {
          try
          {
-             // Sample: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&id=546987&report=xml&mode=text&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov&api_key=8ed2ad8415029f5f018b4ee5da61542e8308
+             // Sample: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&id=546987&report=xml&mode=text&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov&api_key=${API_KEY}
 
              String urlString =
                     "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi";
              URL newurl = new URL(urlString + "?" + "db=nlmcatalog&id=" +
                      PMID_list + "&retmode=xml" + 
                      "&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov" +
-                     "&api_key=8ed2ad8415029f5f018b4ee5da61542e8308");
+                     "&api_key=${API_KEY}");
 
              URLConnection conn = newurl.openConnection();
              BufferedReader buffURL = 
@@ -1134,7 +1134,7 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&id=54698
           URL newurl = new URL(urlString + "?" + "db=nlmcatalog&id=" +
                   PMID_list + "&rettype=medline&retmode=text" + 
                   "&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov" +
-                  "&api_key=8ed2ad8415029f5f018b4ee5da61542e8308");
+                  "&api_key=${API_KEY}");
 
           URLConnection conn = newurl.openConnection();
           BufferedReader buffURL = 
@@ -1185,7 +1185,7 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&id=54698
         Step 03: Do an esearch of the NLMID and grab the "ID" line which is the
                  internal NCBI number.
  
-https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nlmcatalog&term=14311410R[nlmid]&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov&api_key=8ed2ad8415029f5f018b4ee5da61542e8308
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nlmcatalog&term=14311410R[nlmid]&tool=Medical_Text_Indexer&email=mork@nlm.nih.gov&api_key=${API_KEY}
       */
 
       boolean done = false;
@@ -1200,7 +1200,7 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nlmcatalog&term=14
             URL newurl = new URL(urlString + "db=nlmcatalog&term=" +
                     NLMIDstr + "[nlmid]&tool=Medical_Text_Indexer" +
                     "&email=mork@nlm.nih.gov" +
-                    "&api_key=8ed2ad8415029f5f018b4ee5da61542e8308");
+                    "&api_key=${API_KEY}");
 
             if(DebugDisplay)
               System.out.println("getNCBI_ID: URL#" + newurl + "#");

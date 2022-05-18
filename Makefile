@@ -10,7 +10,7 @@ LLIBS = ./btree_cotrel_query.a
 
 INC = -I. -I${DB_DIR}/include
 
-OBJS = btree_cotrel_query.a MTI.Linux createBtree
+OBJS = btree_cotrel_query.a MTI.Linux
 
 all:	${OBJS}
 
@@ -20,9 +20,6 @@ clean:
 btree_cotrel_query.a:	btree_query.c
 		${CC} ${CFLAGS} -c btree_query.c  ${INC}
 		/usr/bin/ar ru btree_cotrel_query.a btree_query.o
-
-createBtree:	createBtree.c
-	${CC} ${CFLAGS} ${INC} -o createBtree createBtree.c ${DBLIBS}
 
 MTI.Linux:	MTI.o btree_cotrel_query.a validate.o cluster.o display.o \
 		medium_filtering.o params.o parseMARC.o \

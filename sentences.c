@@ -1000,7 +1000,7 @@ void checkSentMHs()
 
                          sprintf(globalET, "[\"%s\"-%s-0-\"%s\"]\0", MHname, locLC, tmp);
                          sprintf(from, "Sentence MH Check: %s\0", tmp);
-                         process_mterm(FALSE, "", MHname, MMI, 1000.0, MH, loc, globalET, from, MHui, "",
+                         process_mterm(FALSE, "", MHname, MMI, 1.0, MH, loc, globalET, from, MHui, "",
                                   globalPI, TRUE);
 
                          if(RTM_Debug)
@@ -1195,7 +1195,7 @@ void checkSentCTs()
 
                          sprintf(globalET, "[\"%s\"-%s-0-\"%s\"]\0", MHname, locLC, tmp);
                          sprintf(from, "Sentence CT Check: %s\0", tmp);
-                         process_mterm(FALSE, "", MHname, MMI, 1000.0, CT, loc, globalET, from, MHui, "",
+                         process_mterm(FALSE, "", MHname, MMI, 1.0, CT, loc, globalET, from, MHui, "",
                                   globalPI, TRUE);
 
                          if(RTM_Debug)

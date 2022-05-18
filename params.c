@@ -119,6 +119,7 @@ void param_init(int argc, char *argv[])
 
       else if(strcmp(argv[i], "-MTI_AUTO") == 0)
       {
+          MTI_REVIEW = FALSE;
           MTI_AUTO = TRUE;
           showETs = FALSE;
       } /* else fi */
@@ -2203,6 +2204,7 @@ void read_param_from_file(char *paramFilename)
       else if(strcmp(strbuf, "MTI_AUTO") == 0)
       {
           strcat(actualCommand, " -MTI_AUTO");
+          MTI_REVIEW = FALSE;
           MTI_AUTO = TRUE;
           showETs = FALSE;
       } /* else fi */

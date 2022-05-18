@@ -15,7 +15,7 @@ extern int haveHMD, max, doAgedReview, showAgedReview, RTM_Debug, CATALOGING,
            nursingJournal, veterinaryJournal, dentistryJournal,
            firstLineReviewJournal, removeAged, showJust, doNoAddForced,
            Pregnant_Non_Pregnant_OK, sportsMedicineJournal, botanyJournal,
-           geriatricJournal, foundNonHumanTrigger;
+           geriatricJournal, foundNonHumanTrigger, doTimingFlag;
 extern long avgScore, numBelow;
 
 extern FILE *fout;
@@ -45,6 +45,7 @@ extern void process_mterm(int ambigFlag, char *ambigTrigger, char *mterm, int th
                    char *trigger, char *this_dui, char *origPMID,
                    char *positionalInfo, int forcePrint);
 extern int foundInText(char *lookFor, int caseSensitive, int TitleOnly);
+extern int foundInText_CT(char *lookFor, int caseSensitive, int TitleOnly);
 
 extern struct MLstruct MLPicks;
 extern int amIGeographical(int pos);
@@ -390,6 +391,12 @@ void check_CTs(int flag)
    char tmp[SMALL_LINE + 1], tmpList[SMALL_LINE + 1], jTmp[SMALL_LINE + 1],
         cui[25], from[SMALL_LINE + 1], *foo, loc[250];
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "check_CTs(%d)\n", flag);
+       fflush(stderr);
+   } /* fi */
+
    okMice = okRats = TRUE;
    Human_found = Animal_found = Aged_found = FALSE;
 
@@ -406,6 +413,12 @@ void check_CTs(int flag)
    } /* for */
    new_CTs = CTIpos = foundCTIpos = 0;
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "check_CTs - 1\n");
+       fflush(stderr);
+   } /* fi */
+
    /* Do these additions prior to calculationg the final CheckTags to
       make sure whatever they add will be included in the CTs.
 
@@ -417,6 +430,12 @@ void check_CTs(int flag)
        checkPregnancyMammalOnly();
        checkCoordinationRules();
        checkNewOtherCoordRules();
+   } /* fi */
+
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "check_CTs - 10\n");
+       fflush(stderr);
    } /* fi */
 
    /* Now, do the CheckTags */
@@ -470,6 +489,12 @@ void check_CTs(int flag)
       } /* fi */
    } /* for */
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "check_CTs - 20\n");
+       fflush(stderr);
+   } /* fi */
+
    /* What does the list of CTs look like before mt_table review */
 
    if(showAgedReview)
@@ -510,6 +535,12 @@ void check_CTs(int flag)
        } /* fi */
    } /* for */
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "check_CTs - 30\n");
+       fflush(stderr);
+   } /* fi */
+
    if(showAgedReview)
    {
        fprintf(fout, "\n");
@@ -531,6 +562,12 @@ void check_CTs(int flag)
            new_CTs++;
        } /* fi */
    } /* for */
+
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "check_CTs - 40\n");
+       fflush(stderr);
+   } /* fi */
 
    if(showAgedReview)
    {
@@ -559,11 +596,23 @@ void check_CTs(int flag)
        } /* for */
    } /* fi showAgedReview */
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "check_CTs - 50\n");
+       fflush(stderr);
+   } /* fi */
+
    /* Now go through all of the treecodes for each term and add CheckTags
       as appropriate for each treecode we find.
    */
 
    checkTreecodes_CT();
+
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "check_CTs - 60\n");
+       fflush(stderr);
+   } /* fi */
 
    /* What does the list of CTs look like before we do text triggers */
 
@@ -961,7 +1010,7 @@ void check_CTs(int flag)
                          (ct == Cercopithecus) || (ct == Bees))
                       {
                           process_mterm(FALSE, "", CT_list[ct].Name, MMI,
-                                        1000.0, CT, "", foo, jTmp,
+                                        1.0, CT, "", foo, jTmp,
                                         CT_list[ct].DUI, "",
                                         positionalInfo[i], TRUE);
 
@@ -1005,7 +1054,7 @@ void check_CTs(int flag)
                    if(ok2)
                    {
                        process_mterm(FALSE, "", CT_list[ct].Name, MMI,
-                                     1000.0, CT, "", foo, triggers[i],
+                                     1.0, CT, "", foo, triggers[i],
                                      CT_list[ct].DUI, "",
                                      positionalInfo[i], TRUE);
 
@@ -1032,8 +1081,7 @@ void check_CTs(int flag)
 
                        else if(RTM_Debug)
                        {
-                           fprintf(fout,
-                             "Removing Humans Veterinary Journal Rule\n");
+                           fprintf(fout, "Removing Humans Veterinary Journal Rule 1\n");
                            fflush(fout);
                        } /* else fi */
                    } /* fi */
@@ -1052,7 +1100,7 @@ void check_CTs(int flag)
                                        positionalInfo[i]);
 
                        process_mterm(FALSE, "", CT_list[ct].Name, MMI,
-                                     1000.0, CT, loc, foo, triggers[i],
+                                     1.0, CT, loc, foo, triggers[i],
                                      CT_list[ct].DUI, "",
                                      positionalInfo[i], TRUE);
 
@@ -1248,7 +1296,7 @@ void check_CTs(int flag)
             } /* fi */
 
             strcpy(from, "CCPI Stunting Forced Rule");
-            process_mterm(FALSE, "", "Growth Disorders", MMI, 1000.0,
+            process_mterm(FALSE, "", "Growth Disorders", MMI, 1.0,
                           MH, "", "", from, "D006130", "", "", TRUE);
 
             index = search_index("D006130");
@@ -1613,7 +1661,8 @@ void finalDCMSCheck()
 
     /* Patient(s) is causing Humans to be recommended even for
        Veterinary Medicine journals.  So, if have Humans in a Vet
-       journal, remove unless we have Humans actually in the text.
+       journal, remove unless we have Humans actually in the text or
+       something from the Forced Humans list.
     */
 
     if(veterinaryJournal)
@@ -1625,14 +1674,14 @@ void finalDCMSCheck()
             {
                  done = TRUE;
                  if(!foundInText("human", FALSE, FALSE) &&
-                    !foundInText("children", FALSE, TRUE))
+                    !foundInText("children", FALSE, TRUE) &&
+                    (strstr(mt_table[i].trigger, "Forced Humans:") == NULL))
                  {
                      mt_table[i].safe = FALSE;
                      mt_table[i].oktoprint = FALSE;
                      mt_table[i].score = -1;
                      if(RTM_Debug)
-                       fprintf(fout,
-                          "Removing Humans Veterinary Journal Rule\n");
+                       fprintf(fout, "Removing Humans Veterinary Journal Rule 2\n");
                  } /* fi */
             } /* fi */
         } /* /* for */
@@ -1644,13 +1693,13 @@ void finalDCMSCheck()
             {
                  done = TRUE;
                  if(!foundInText("human", FALSE, FALSE) &&
-                    !foundInText("children", FALSE, TRUE))
+                    !foundInText("children", FALSE, TRUE) &&
+                    (strstr(ct_table[i].trigger, "Forced Humans:") == NULL))
                  {
                      ct_table[i].oktoprint = FALSE;
                      ct_table[i].score = -1;
                      if(RTM_Debug)
-                       fprintf(fout,
-                          "Removing Humans Veterinary Journal Rule\n");
+                       fprintf(fout, "Removing Humans Veterinary Journal Rule 3\n");
                  } /* fi */
             } /* fi */
         } /* /* for */
@@ -2106,7 +2155,7 @@ void checkCoordinationRules()
             sprintf(from, "Neoplasm Coordination Rule: %s\0",
                     neoplasmCoords[k].mh);
             process_mterm(FALSE, "", neoplasmCoords[k].coord,
-                          MMI, 1000.0, MH, "", "", from,
+                          MMI, 1.0, MH, "", "", from,
                           neoplasmCoords[k].DUI, "", "", TRUE);
 
             index = search_index(neoplasmCoords[k].DUI);
@@ -2214,7 +2263,7 @@ void checkCoordinationRules()
                 {
                     strcpy(from, "Pregnancy & Viviparous Rule");
                     process_mterm(FALSE, "", "Viviparity, Nonmammalian",
-                          MMI, 1000.0, MH, "", "", from,
+                          MMI, 1.0, MH, "", "", from,
                           "D052286", "", "", TRUE);
 
                     index = search_index("D052286");
@@ -2250,7 +2299,7 @@ void checkNewOtherCoordRules()
 
     if(RTM_Debug)
     {
-        fprintf(fout, "Entered checkNewOtherCoordRules\n");
+        fprintf(fout, "Entered checkNewOtherCoordRules - %ld\n", numNewOthCoords);
         fflush(fout);
     } /* fi */
 
@@ -2258,7 +2307,7 @@ void checkNewOtherCoordRules()
     {
         if(RTM_Debug)
         {
-            fprintf(fout, "NewOtherCoord check: #%s#\n", NewothCoords[k].mh);
+            fprintf(fout, "NewOtherCoord check [%ld]: #%s#\n", k, NewothCoords[k].mh);
             fflush(fout);
         } /* fi */
 
@@ -2326,7 +2375,7 @@ void checkNewOtherCoordRules()
                 else
                 {
                     process_mterm(FALSE, "", NewothCoords[k].coord, MMI,
-                       1000.0, MH, "", "", from, NewothCoords[k].dui, "", "", TRUE);
+                       1.0, MH, "", "", from, NewothCoords[k].dui, "", "", TRUE);
 
                     index = search_index(NewothCoords[k].dui);
                     if((index >= 0) && (mt_table[index].score == 0))
@@ -2354,7 +2403,7 @@ void checkNewOtherCoordRules()
                                NewothCoords[k].mh, NewothCoords[k].words[j]);
 
                        process_mterm(FALSE, "", NewothCoords[k].coord, MMI,
-                                     1000.0, MH, "", "", from,
+                                     1.0, MH, "", "", from,
                                      NewothCoords[k].dui, "", "", TRUE);
 
                        index = search_index(NewothCoords[k].dui);
@@ -2588,11 +2637,6 @@ void AntonioCheck()
         } /* fi */
     } /* else */
 
-    /* ***************************************************************
-       Need to add logic to NOT recommend Male/Female when Plant related
-       article is being indexed.  Indexer Feedback: 2955
-    */
-
     /* Now, see what we have left to add */
 
     for(i = 0; i < NUM_ANTONIO_MHs; i++)
@@ -2654,7 +2698,7 @@ void AntonioCheck()
                                    "Forced - Antonio ML Rules", "Forced - Antonio ML Rules");
                 else
                 {
-                    process_mterm(FALSE, "", AntonioMHs[i], MMI, 1000.0, MH, "", "",
+                    process_mterm(FALSE, "", AntonioMHs[i], MMI, 1.0, MH, "", "",
                                   "Forced - Antonio ML Rules", dui, "", "", TRUE);
 
                     index = search_index(dui);
@@ -2859,6 +2903,12 @@ void doReviewMTIFLCheck()
     {
         if(mt_table[i].datatype == CT)
         {
+            if(RTM_Debug)
+            {
+                fprintf(fout, "doReviewMTIFLCheck: mt_table[%ld]: %s\n", i, mt_table[i].mh);
+                fflush(stdout);
+            } /* fi */
+
             ok = TRUE;
 
             if((strcmp(mt_table[i].mh, CT_list[Human].Name) != 0) &&
@@ -2890,6 +2940,13 @@ void doReviewMTIFLCheck()
                      if(found_AgeRelated)
                        okToContinue = FALSE;
                  } /* fi !Human */
+
+                 if(RTM_Debug)
+                 {
+                     fprintf(fout, "doReviewMTIFLCheck: ok: %d  okToContinue: %d - |%s|\n", 
+                             ok, okToContinue, mt_table[i].textloc);
+                     fflush(stdout);
+                 } /* fi */
 
                  if(okToContinue)
                  {
@@ -2941,6 +2998,12 @@ void doReviewMTIFLCheck()
                          } /* fi */
                      } /* else fi */
                  } /* fi okToContinue */
+            } /* fi */
+
+            if(RTM_Debug)
+            {
+                fprintf(fout, "doReviewMTIFLCheck: ok: %d\n", ok);
+                fflush(stdout);
             } /* fi */
 
             if(!ok)
@@ -3200,12 +3263,12 @@ void doForcedMiceRats()
 
                             if(MiceRats[i].DUI[0] == 'D')
                               process_mterm(FALSE, "", MiceRats[i].mh,
-                                     MMI, 1000.0, MH, "TI", "", from,
+                                     MMI, 1.0, MH, "TI", "", from,
                                      MiceRats[i].DUI, "", "", TRUE);
 
                             else /* CDNF protein, rat */
                               process_mterm(FALSE, "", MiceRats[i].mh,
-                                       MMI, 1000.0, NM, "TI", "", from,
+                                       MMI, 1.0, NM, "TI", "", from,
                                        MiceRats[i].DUI, "", "", TRUE);
 
                             index = search_index(MiceRats[i].DUI);
@@ -3361,15 +3424,26 @@ void checkTreecodes_CT()
 
              CTIpos = CTIcharStartPos[mt_table[j].treecodes[i][0] - 'A'];
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "CTIpos: %ld -- numCTIs: %ld\n", CTIpos, numCTIs);
+       fflush(stderr);
+   } /* fi */
+
              /* Don't want to include the following treecodes:
 
                 Introduced Species since it can be Plants or Animals
+                Pregnancy-Associated Plasma Protein-A - Female/Pregnancy not always correct
              */
 
              if((strcmp(mt_table[j].treecodes[i], "B01.050.050.580") == 0) ||
                 (strstr(mt_table[j].treecodes[i], "C22.674.710") != NULL) ||
                 (strcmp(mt_table[j].treecodes[i], "G16.500.275.157.049.400") == 0) ||
-                (strcmp(mt_table[j].treecodes[i], "N06.230.124.049.400") == 0))
+                (strcmp(mt_table[j].treecodes[i], "N06.230.124.049.400") == 0) ||
+
+                (strcmp(mt_table[j].treecodes[i], "D08.811.277.656.300.480.632") == 0) ||
+                (strcmp(mt_table[j].treecodes[i], "D08.811.277.656.675.374.632") == 0) ||
+                (strcmp(mt_table[j].treecodes[i], "D12.776.780.700") == 0))
                CTIpos = -1;
 
 
@@ -3511,7 +3585,7 @@ void checkText_Triggers(int okMice, int okRats)
        strcpy(ambigTrigger, "");
        strcpy(PIinfo, "");
        localFoundPos = localFoundLen = txtStartPos = txtLen = textStartPos = -1;
-       if(foundInText(TermCTs[q].lcTerm, FALSE, FALSE))
+       if(foundInText_CT(TermCTs[q].lcTerm, FALSE, FALSE))
        {
            if((txtStartPos > -1) && (txtLen > -1))
            {
@@ -4261,12 +4335,17 @@ void Final_Treecode_CT_Check()
              /* Don't want to include the following treecodes:
 
                 Introduced Species since it can be Plants or Animals
+                Pregnancy-Associated Plasma Protein-A - Female/Pregnancy not always correct
              */
 
              if((strcmp(finalMHlist[j].treecodes[i], "B01.050.050.580") == 0) ||
                 (strstr(finalMHlist[j].treecodes[i], "C22.674.710") != NULL) ||
                 (strcmp(finalMHlist[j].treecodes[i], "G16.500.275.157.049.400") == 0) ||
-                (strcmp(finalMHlist[j].treecodes[i], "N06.230.124.049.400") == 0))
+                (strcmp(finalMHlist[j].treecodes[i], "N06.230.124.049.400") == 0) ||
+
+                (strcmp(finalMHlist[j].treecodes[i], "D08.811.277.656.300.480.632") == 0) ||
+                (strcmp(finalMHlist[j].treecodes[i], "D08.811.277.656.675.374.632") == 0) ||
+                (strcmp(finalMHlist[j].treecodes[i], "D12.776.780.700") == 0))
                CTIpos = -1;
 
              if(CTIpos == -1)

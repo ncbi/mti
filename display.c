@@ -12,35 +12,35 @@
 #define RSfilterALL_limit 203
 #define RSfilterALL_rank 13
 
-#define HUMAN_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Human_Proteins/topCombined"
-#define HUMAN_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Human_Proteins/microRNA/topCombined"
+#define HUMAN_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Human_Proteins/topCombined"
+#define HUMAN_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Human_Proteins/microRNA/topCombined"
 
-#define MOUSE_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Mouse_Proteins/topCombined"
-#define MOUSE_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Mouse_Proteins/microRNA/topCombined"
+#define MOUSE_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Mouse_Proteins/topCombined"
+#define MOUSE_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Mouse_Proteins/microRNA/topCombined"
 
-#define RAT_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Rat_Proteins/topCombined"
-#define RAT_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Rat_Proteins/microRNA/topCombined"
+#define RAT_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Rat_Proteins/topCombined"
+#define RAT_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Rat_Proteins/microRNA/topCombined"
 
-#define ARABIDOPSIS_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Arabidopsis_Proteins/topCombined"
-#define ARABIDOPSIS_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Arabidopsis_Proteins/microRNA/topCombined"
+#define ARABIDOPSIS_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Arabidopsis_Proteins/topCombined"
+#define ARABIDOPSIS_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Arabidopsis_Proteins/microRNA/topCombined"
 
-#define DROSOPHILA_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Drosophila_Proteins/topCombined"
-#define DROSOPHILA_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Drosophila_Proteins/microRNA/topCombined"
+#define DROSOPHILA_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Drosophila_Proteins/topCombined"
+#define DROSOPHILA_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Drosophila_Proteins/microRNA/topCombined"
 
-#define SCEREVISIAE_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Scerevisiae_Proteins/topCombined"
+#define SCEREVISIAE_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Scerevisiae_Proteins/topCombined"
 
-#define CELEGANS_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Celegans_Proteins/topCombined"
-#define CELEGANS_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Celegans_Proteins/microRNA/topCombined"
+#define CELEGANS_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Celegans_Proteins/topCombined"
+#define CELEGANS_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Celegans_Proteins/microRNA/topCombined"
 
-#define ECOLI_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Ecoli_Proteins/topCombined"
+#define ECOLI_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Ecoli_Proteins/topCombined"
 
-#define ZEBRAFISH_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Zebrafish_Proteins/topCombined"
-#define ZEBRAFISH_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Zebrafish_Proteins/microRNA/topCombined"
+#define ZEBRAFISH_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Zebrafish_Proteins/topCombined"
+#define ZEBRAFISH_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Zebrafish_Proteins/microRNA/topCombined"
 
-#define XENOPUS_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Xenopus_Proteins/topCombined"
-#define XENOPUS_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Xenopus_Proteins/microRNA/topCombined"
+#define XENOPUS_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Xenopus_Proteins/topCombined"
+#define XENOPUS_TOP_MICRORNA_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Xenopus_Proteins/microRNA/topCombined"
 
-#define SPOMBE_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2021/SCR_Triggers/Spombe_Proteins/topCombined"
+#define SPOMBE_TOP_SCR_FILE "/nfsvol/nls/MEDLINE_Baseline_Repository/MeSH/2022/SCR_Triggers/Spombe_Proteins/topCombined"
 
 #define MAX_BELOW 250
 #define IntJEatDisord "8111226"
@@ -124,12 +124,16 @@ extern long cit_len;
 extern char *citation;
 extern char *L2R_Citation;
 extern long gTLen;
+extern long TIStartPos;
 extern char *globalTitle;
+extern char *globalTitle_Orig;
 extern long gALen;
+extern long ABStartPos;
 extern char *globalAbstract;
 extern FILE *fout;
 extern char muid[SMALL_LINE + 1];
 extern char nlmID[SMALL_LINE + 1];
+extern long citVersion;
 
 extern char *PRC_PMIDs[MAX_PRC];
 extern float PRC_Scores[MAX_PRC];
@@ -156,7 +160,7 @@ extern int showHMs, showETs, showETsD, limitTitleOnly, Title_Only, showDUIs,
            showScoresFull, trackPositional, showIlyaML, MTI_AUTO, doIL2R,
            goHigh, doIL2RHybrid, ACCME, MTI_REVIEW, foundNonHumanTrigger,
            haveFreeText, insectsJournal, doLookAtConf, geriatricJournal,
-           botanyJournal, zootaxaJournal;
+           botanyJournal, zootaxaJournal, COVID_Related, doTimingFlag;
 
 extern char *fITXALLbase;
 extern long fITXALLlen;
@@ -208,6 +212,7 @@ extern void process_PTterm(char *mterm, char *textloc,
                            char *entry_term, char *trigger, char *this_dui,
                            char *positionalInfo);
 extern char *checkSentMaleFemalePct(int foundMale, int foundFemale);
+extern int isAnimalRelated();
 
 long highScore = 1000;
 
@@ -369,7 +374,7 @@ void check_Species_microRNA_SCRs(char *filename, char *targetSpecies);
 char *SwapAnd(char *insegment);
 void checkMaleFemalePct();
 void AddSpecialAgedTerms(int agePos, char *snippet, long begSpan);
-long lookForAgedTermsRight(char *haystack);
+long lookForAgedTermsRight(char *haystack, int agedOK);
 long lookForAgedTermsLeft(char *haystack);
 char *XoutTriggerInText(char *lookFor, char *text);
 void lookAtConfidence();
@@ -403,6 +408,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
    char tmp[MED_LINE + 1], trigger[MAXLINE + 1], extras[MAXLINE + 1], *foo,
         tmp2[SMALL_LINE + 1], mh_orig[251], *entryTerm,
         posInfo[SMALL_LINE + 1], humanTrigger[SMALL_LINE + 1];
+
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "combined_display - 1\n");
+       fflush(stderr);
+   } /* fi */
 
    /* Calculate whatever the highest score is right now */
 
@@ -439,6 +450,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
 
    /* Add all items that we are "forcing" to display first */
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "combined_display - 2\n");
+       fflush(stderr);
+   } /* fi */
+
    for(i = 0; i < mt_count; i++)
    {
       if(mt_table[i].oktoprint && (mt_table[i].datatype != CT) &&
@@ -458,6 +475,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
    done = FALSE;
    strcpy(extras, "");
    tctr = 0;
+
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "combined_display - 3\n");
+       fflush(stderr);
+   } /* fi */
 
    /* Add main recommendations here with cut-off for Title Only */
 
@@ -561,6 +584,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
       to make sure.
    */
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "combined_display - 4\n");
+       fflush(stderr);
+   } /* fi */
+
    if(!noAnswer)
    {
       /* Print out any HMs that were added due to an NM that has printed,
@@ -592,6 +621,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
              } /* for each HM for this NM */
           } /* fi NM && hasPrinted */
       } /* for each MTI */
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 30\n");
+          fflush(stderr);
+      } /* fi */
 
       /* Non Tree Top Geographic Term and Epidemiologic Studies Terms */
 
@@ -682,6 +717,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
              } /* fi oktoprint */
          } /* fi check_special_term */
       } /* for */
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 40\n");
+          fflush(stderr);
+      } /* fi */
 
       /* CTs within regular list */
 
@@ -791,19 +832,42 @@ void combined_display(int strictFilter_set, int medFilter_set,
       } /* for */
    } /* fi */
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 50\n");
+          fflush(stderr);
+      } /* fi */
+
    if(!noAnswer)
    {
       if(!doNoAddForced)
         check_SHs();
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 51\n");
+          fflush(stderr);
+      } /* fi */
+
       if(!doNoAddForced && addCTs)
       {
+          if(doTimingFlag)
+          {
+              fprintf(stderr, "combined_display - 52\n");
+              fflush(stderr);
+          } /* fi */
           if(RTM_Debug)
           {
               fprintf(fout, "Calling check_CTs ...\n");
               fflush(fout);
           } /* fi */
           check_CTs(TRUE);
+
+          if(doTimingFlag)
+          {
+              fprintf(stderr, "combined_display - 52.5\n");
+              fflush(stderr);
+          } /* fi */
 
           /* Print out any items that we added via check_CTs. */
 
@@ -820,12 +884,30 @@ void combined_display(int strictFilter_set, int medFilter_set,
             } /* fi */
          } /* for */
 
+          if(doTimingFlag)
+          {
+              fprintf(stderr, "combined_display - 53\n");
+              fflush(stderr);
+          } /* fi */
+
          /* Now, if we added anything, rerun the checkCTs */
 
          if(added)
           check_CTs(FALSE);
+
+          if(doTimingFlag)
+          {
+              fprintf(stderr, "combined_display - 54\n");
+              fflush(stderr);
+          } /* fi */
       } /* fi addCTs */
    } /* fi !noAnswer */
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 60\n");
+          fflush(stderr);
+      } /* fi */
 
    /* Go through mt_table make sure we got everything before adding non-leaf */
 
@@ -840,9 +922,21 @@ void combined_display(int strictFilter_set, int medFilter_set,
        } /* fi */
    } /* for */
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 70\n");
+          fflush(stderr);
+      } /* fi */
+
    /* Look at Non-Leaf Forced Terms here */
 
    printNonLeaf();
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 80\n");
+          fflush(stderr);
+      } /* fi */
 
    /* Go through mt_table one last time to make sure we got everything */
 
@@ -895,12 +989,30 @@ void combined_display(int strictFilter_set, int medFilter_set,
        } /* else fi */
    } /* for */
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 90\n");
+          fflush(stderr);
+      } /* fi */
+
    /* Final check of the CTs after Non-Leaf have printed */
 
    if(!doNoAddForced && addCTs)
      check_CTs(FALSE);
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 100\n");
+          fflush(stderr);
+      } /* fi */
+
    checkNewOtherCoordRules();
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 110\n");
+          fflush(stderr);
+      } /* fi */
 
    haveHumansBelowLine = FALSE;
    if((numBelow > 0)  && !doNoAddForced)
@@ -918,6 +1030,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
        } /* for */
    } /* fi */
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 120\n");
+          fflush(stderr);
+      } /* fi */
+
    /* If we want the full list, we need to add information into the OVF list */
 
    if(which == FULL_DISPLAY)
@@ -928,6 +1046,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
              saveOverFlow(i, 0);
        } /* for each mt_count entry */
    } /* fi */
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 130\n");
+          fflush(stderr);
+      } /* fi */
 
    /*************************** BELOW THE LINE *******************************/
 
@@ -950,6 +1074,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
          } /* fi */
    } /* for */
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 140\n");
+          fflush(stderr);
+      } /* fi */
+
    /* SH List */
 
    printSHs(strictFilter_set, which);
@@ -957,36 +1087,111 @@ void combined_display(int strictFilter_set, int medFilter_set,
    for(i = 0; i < numBelow; i++)
      free(belowLineTmp[i]);
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 150\n");
+          fflush(stderr);
+      } /* fi */
+
    if(!doNoAddForced)
    {
        filterNeoplasms();
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterNeoplasms\n");
+           fflush(stderr);
+       } /* fi */
+
        filterCancer();
 
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterCancer\n");
+           fflush(stderr);
+       } /* fi */
+
        filterMentalDisorders();
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterMentalDisorders\n");
+           fflush(stderr);
+       } /* fi */
+
        filterGenSpec();
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterGenSpec\n");
+           fflush(stderr);
+       } /* fi */
 
        if(strcmp(nlmID, IntJEatDisord) == 0)
          filterIJED();
 
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterIJED\n");
+           fflush(stderr);
+       } /* fi */
+
        if(preIndex)
          filterPreIndex(FALSE);
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterPreIndex\n");
+           fflush(stderr);
+       } /* fi */
 
        else if(MTI_AUTO || ACCME)
        {
            filterPreIndex(TRUE);  /* Includes filterML(FALSE) */
+
+           if(doTimingFlag)
+           {
+               fprintf(stderr, "combined_display - after filterPreIndex2\n");
+               fflush(stderr);
+           } /* fi */
+
            filterHeuristicN();
+
+           if(doTimingFlag)
+           {
+               fprintf(stderr, "combined_display - after filterHeuristicN\n");
+               fflush(stderr);
+           } /* fi */
        } /* fi */
 
        else if(level1Filter)
          filterPreIndex(TRUE);
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterPreIndex3\n");
+           fflush(stderr);
+       } /* fi */
 
        /* Added filtering 4/4/14 */
 
        if(firstLineJournal || preIndex || level1Filter || OLDMEDLINE)
          filterBodyPartDisease();
 
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterBodyPartDisease\n");
+           fflush(stderr);
+       } /* fi */
+
        if(MeSHonDemand)
          filterMeSHonDemand();
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after filterMeSHonDemand\n");
+           fflush(stderr);
+       } /* fi */
 
        if(OLDMEDLINE)
          filterOLDMEDLINE();
@@ -994,6 +1199,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
        /* Handle Zika on it's own */
 
        checkZika_2016();
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "combined_display - after checkZika_2016\n");
+           fflush(stderr);
+       } /* fi */
    } /* fi */
 
    /* Check on what we are returning */
@@ -1004,6 +1215,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
        if(finalCTlist[i].oktoprint)
          numValidCT++;
    } /* for */
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 200\n");
+          fflush(stderr);
+      } /* fi */
 
    /* Remove all of the subheadings if that is all we have, or if we
       only have CTs and SHs.
@@ -1020,11 +1237,23 @@ void combined_display(int strictFilter_set, int medFilter_set,
        } /* for */
    } /* fi */
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 210\n");
+          fflush(stderr);
+      } /* fi */
+
    for(i = 0; i < numFinalMHs; i++)
    {
        if(finalMHlist[i].oktoprint)
          numValidMH++;
    } /* for */
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 220\n");
+          fflush(stderr);
+      } /* fi */
 
    /* MTIFL (only MTIFL AND Chinese Journals and NOT Preliminary MeSH requires
       at least one result and the default result is Humans.
@@ -1068,6 +1297,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
        } /* fi */
    } /* fi */
 
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 230\n");
+          fflush(stderr);
+      } /* fi */
+
    /* Make sure all of the CTs have some score
 
       See if we need to add Humans here triggered by something we are
@@ -1090,6 +1325,12 @@ void combined_display(int strictFilter_set, int medFilter_set,
 
        finalCTlist[i].score = highScore + 1000;
    } /* for */
+
+      if(doTimingFlag)
+      {
+          fprintf(stderr, "combined_display - 240\n");
+          fflush(stderr);
+      } /* fi */
 
    /* If we have any MHs marked as HMs that have additional pathways, modify
       at this point.  6/9/16
@@ -1125,28 +1366,82 @@ void combined_display(int strictFilter_set, int medFilter_set,
        } /* fi */
    } /* for */
 
+   if(doTimingFlag)
+   {
+       fprintf(stderr, "Just before doNoAddForced\n");
+       fflush(stderr);
+   } /* fi */
+
    if(!doNoAddForced)
    {
        if(foundHumanTrigger && !foundHuman)
          checkAddHumans(foundHumanNoPrint, humanPos, humanTrigger);
 
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "After checkAddHumans\n");
+           fflush(stderr);
+       } /* fi */
+
        if(doIL2R || doIL2RHybrid)
          doLearning2Rank(BioASQ);
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "After doLearning2Rank\n");
+           fflush(stderr);
+       } /* fi */
 
        if(!veterinaryJournal)
          checkForAgeYears();
 
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "After checkForAgeYears\n");
+           fflush(stderr);
+       } /* fi */
+
        checkMaleFemalePct();
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "After checkMaleFemalePct\n");
+           fflush(stderr);
+       } /* fi */
 
        if(doLookAtConf)
          lookAtConfidence();
 
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "After lookAtConfidence\n");
+           fflush(stderr);
+       } /* fi */
+
        Final_Treecode_CT_Check();
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "After Final_Treecode_CT_Check\n");
+           fflush(stderr);
+       } /* fi */
 
        checkBeforeFinalPrint();
 
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "After checkBeforeFinalPrint\n");
+           fflush(stderr);
+       } /* fi */
+
        if(veterinaryJournal)
          lookForAnimalDiseaseAdds();
+
+       if(doTimingFlag)
+       {
+           fprintf(stderr, "After lookForAnimalDiseaseAdds\n");
+           fflush(stderr);
+       } /* fi */
 
        /* Only keep GEOs if they are found in the title of the article
           for the Zootaxa (101179386) journal.  Per Susan's email 11/15/19.
@@ -1429,6 +1724,8 @@ void combined_display(int strictFilter_set, int medFilter_set,
 
    /* Check to make sure we are not recommending both the PT and it's "as Topic" term.  
       If we have the "as Topic" term, remove the PT from indexing.
+
+      NOTE: Allow Scientific Integrity Review PT along with Scientific Misconduct "as Topic"
    */
 
    if(numPTsFound > 0)
@@ -1499,7 +1796,7 @@ void combined_display(int strictFilter_set, int medFilter_set,
 
        /* Look at Protocol Rules - "protocol" in Title */
 
-       if(foundInText("protocol", FALSE, TRUE))
+       if(foundInText("protocol", FALSE, TRUE) && !foundInText("unified protocol", FALSE, TRUE))
          check_PTs_Protocol();
 
        /* Make sure we don't have Review, Systematic Review, and Meta-analysis with any of
@@ -3817,11 +4114,11 @@ void printFinal(int which, int starMHTI_set, int justFacts, int show_id,
 void printFinalJustInfo(char *PRC_from, int useWSD, int useWSDTIOnly)
 {
     int isSpecialJournal;
-    long i, j;
+    long i, j, len, localVersion;
     char tmp[MAXLINE + 1], *foo, *foo2, *foo3, *foo4, *foo5, *newET;
 
     /*
-JUST: 0|PMID|which PRC|Title Only Flag|firstLineJournal Flag|WSD usage|v121008A
+JUST: 0|PMID|Version|which PRC|Title Only Flag|firstLineJournal Flag|WSD usage|v220505
 JUST: 2|VocabFactor|Check Tag MH|CT|Triggering information (Note: mt_table CT)
 JUST: 4|VocabFactor|MeSH Heading|Type|From|MMI Entry Terms|Triggers|# RC|PRC List|Score|Where|Entry Term Info|Positional Information
     Type: NM = Chemical
@@ -3848,6 +4145,10 @@ JUST: 7|0.0000|Publication Type|PT|From|Entry Term|Triggers|Score|Where|Position
     */
 
     isSpecialJournal = 0;
+    if(citVersion > -1)
+      localVersion = citVersion;
+    else
+      localVersion = 1;
 
     if(firstLineJournal && MTI_AUTO && hasCON)
       isSpecialJournal = 5;
@@ -3864,9 +4165,33 @@ JUST: 7|0.0000|Publication Type|PT|From|Entry Term|Triggers|Score|Where|Position
     if(strlen(PRC_from) < 2)
       strcpy(PRC_from, "No Related Articles Used");
 
-    fprintf(fout, "JUST: 0|%s|%s|%d|%d|%s|v121008A|VocabDen\n",
-            muid, PRC_from, Title_Only, isSpecialJournal,
-            (useWSD || useWSDTIOnly) ? "WSD" : "no WSD");
+    if(strcmp(PRC_from, "Forced No Result - Invalid Title") == 0)
+    {
+         /* Check to see if title has bar '|' and if so, change to ':' so it doesn't
+            mess up the parsing of the line later.
+         */
+
+         foo = strdup(globalTitle_Orig);
+         if(strchr(foo, '|') != NULL)
+         {
+             len = (long)strlen(foo);
+             for(i = 0; i < len; i++)
+             {
+                 if(foo[i] == '|')
+                   foo[i] = ':';
+             } /* for */
+         } /* fi */
+
+         fprintf(fout, "JUST: 0|%s|%ld|%s:%s|%d|%d|%s|v220505|VocabDen\n",
+                 muid, localVersion, PRC_from, foo, Title_Only, isSpecialJournal,
+                 (useWSD || useWSDTIOnly) ? "WSD" : "no WSD");
+         free(foo);
+    } /* fi */
+
+    else
+       fprintf(fout, "JUST: 0|%s|%ld|%s|%d|%d|%s|v220505|VocabDen\n",
+               muid, localVersion, PRC_from, Title_Only, isSpecialJournal,
+               (useWSD || useWSDTIOnly) ? "WSD" : "no WSD");
 
     /* Check Tags (CTs) -- Never Star */
 
@@ -7334,6 +7659,44 @@ Women|D014930|C0043210
          rtn= FALSE;
    } /* fi */
 
+   /* Prostatic Neoplasms */
+
+   if(strcmp(dui, "D011471") == 0)
+   {
+       if(!foundInText("prostate", FALSE, FALSE) &&  !foundInText("prostatic", FALSE, FALSE))
+         rtn= FALSE;
+   } /* fi */
+
+   /* Zebras triggering Equidae */
+
+   if(strcmp(dui, "D018397") == 0)
+   {
+       if(foundInText("zebras", FALSE, TRUE) || foundInText("zebra", FALSE, TRUE))
+       {
+           if(!isLookForOK("zebra"))
+             rtn = FALSE;
+       } /* fi */
+   } /* fi */
+
+   /* Lions triggering Lions */
+
+   if(strcmp(dui, "D008045") == 0)
+   {
+       if(foundInText("lions", FALSE, FALSE) || foundInText("lion", FALSE, FALSE))
+       {
+           if(!isLookForOK("lions"))
+             rtn = FALSE;
+       } /* fi */
+   } /* fi */
+
+   /* Mother Nature triggering Mothers & Mother-Child Relations */
+
+   if((strcmp(dui, "D009034") == 0) || (strcmp(dui, "D009035") == 0))
+   {
+       if(!isLookForOK("mothers"))
+         rtn = FALSE;
+   } /* fi */
+
    if(!rtn && RTM_Debug)
    {
        fprintf(fout, "L2R - Ignoring L2R Line: #%s|%s#\n", term, dui);
@@ -7478,6 +7841,44 @@ Women|D014930|C0043210
          rtn= FALSE;
    } /* fi */
 
+   /* Prostatic Neoplasms */
+
+   if(strcmp(dui, "D011471") == 0)
+   {
+       if(!foundInText("prostate", FALSE, FALSE) &&  !foundInText("prostatic", FALSE, FALSE))
+         rtn= FALSE;
+   } /* fi */
+
+   /* Zebras triggering Equidae */
+
+   if(strcmp(dui, "D018397") == 0)
+   {
+       if(foundInText("zebras", FALSE, TRUE) || foundInText("zebra", FALSE, TRUE))
+       {
+           if(!isLookForOK("zebra"))
+             rtn = FALSE;
+       } /* fi */
+   } /* fi */
+
+   /* Lions triggering Lions */
+
+   if(strcmp(dui, "D008045") == 0)
+   {
+       if(foundInText("lions", FALSE, FALSE) || foundInText("lion", FALSE, FALSE))
+       {
+           if(!isLookForOK("lions"))
+             rtn = FALSE;
+       } /* fi */
+   } /* fi */
+
+   /* Mother Nature triggering Mothers & Mother-Child Relations */
+
+   if((strcmp(dui, "D009034") == 0) || (strcmp(dui, "D009035") == 0))
+   {
+       if(!isLookForOK("mothers"))
+         rtn = FALSE;
+   } /* fi */
+
    if(!rtn && RTM_Debug)
    {
        fprintf(fout, "L2R - Ignoring L2R Line: #%s|%s#\n", term, dui);
@@ -7609,7 +8010,7 @@ void checkForAgeYears()
 {
    int foundHumans, foundRange, found, okFoundAges, ok, done, loopDone, foundAge_CTs;
    long i, j, x, p, tPos, foundPos, diff, diffR, diffR2, len, lenT, pos,
-        strLen, tLen, bornYear, ageDiff, currYear, foundLen, posJ;
+        strLen, tLen, bornYear, ageDiff, currYear, foundLen, posJ, agedOK;
    float k;
    char *lcCit, *snippet, *foo, *fooR, *fooR2, *yearStr, *fooB,
         from[SMALL_LINE + 1], *tmp, *citSpan, *snippSD, *origSnippet,
@@ -7848,6 +8249,7 @@ void checkForAgeYears()
 
        /* Update list in ageLookFor.h (Special_Aged_Lookups) */
 
+       agedOK = TRUE;
        for(j = 0; j < numSpecial_Aged; j++)
        {
            foundPos = isTriggerInText(Special_Aged_Lookups[j].lookFor, lcCit);
@@ -7862,8 +8264,6 @@ void checkForAgeYears()
 
            /* Need to make sure it is not "aged between" or "aged 1-3" or something
               like that.
-
-              IMPORTANT NOTE: Also add to lookForAgedTermsRight
            */
 
            if((foundPos > -1) && (strcmp(Special_Aged_Lookups[j].lookFor, "aged") == 0))
@@ -7888,6 +8288,8 @@ void checkForAgeYears()
                   (strstr(lcCit, "aged range") != NULL) ||
                   (strstr(lcCit, "aged less") != NULL) ||
                   (strstr(lcCit, "aged more") != NULL) ||
+                  (strstr(lcCit, "same aged") != NULL) || 
+                  (strstr(lcCit, "same-aged") != NULL) || 
                   (strstr(lcCit, "females aged") != NULL) || 
                   (strstr(lcCit, "female aged") != NULL) ||
                   (strstr(lcCit, "women aged") != NULL) || (strstr(lcCit, "woman aged") != NULL) ||
@@ -7924,7 +8326,10 @@ void checkForAgeYears()
                   (strstr(lcCit, "aged ranged") != NULL) ||
                   (strstr(lcCit, "aged ranges") != NULL) ||
                   (strstr(lcCit, "aged range") != NULL))
-                 foundPos = -1;
+               {
+                   foundPos = -1;
+                   agedOK = FALSE;
+               } /* fi */
            } /* fi */
 
            /* ADULT: Need to make sure it is not "older adults" or something like that. */
@@ -8008,6 +8413,8 @@ void checkForAgeYears()
                   (strstr(lcCit, "2 year old child") != NULL) ||
                   (strstr(lcCit, "newborn children") != NULL) ||
                   (strstr(lcCit, "newborn child") != NULL) ||
+                  (strstr(lcCit, "unborn children") != NULL) ||
+                  (strstr(lcCit, "unborn child") != NULL) ||
                   (strstr(lcCit, "pre-school child") != NULL) ||
                   (strstr(lcCit, "preschool child") != NULL) ||
                   (strstr(lcCit, "pre-school children") != NULL) ||
@@ -8016,6 +8423,37 @@ void checkForAgeYears()
                   (strstr(lcCit, "child pugh") != NULL) ||
                   (strstr(lcCit, "preschool children") != NULL))
                  foundPos = -1;
+           } /* fi */
+
+           /* Want to make sure only allow if within title and not abstract */
+
+           if(foundPos > -1)
+           {
+               if(RTM_Debug)
+               {
+                   fprintf(fout, "foundPos: %ld -- Title Length: %ld  ABStartPos: %ld\n",
+                           foundPos, gTLen, ABStartPos);
+                   fflush(fout);
+               } /* fi */
+
+               if(foundPos > ABStartPos)
+               {
+                   if((strcmp(Special_Aged_Lookups[j].lookFor, "older aged") == 0) ||
+                      (strcmp(Special_Aged_Lookups[j].lookFor, "older-aged") == 0) ||
+                      (strcmp(Special_Aged_Lookups[j].lookFor, "older-age") == 0) ||
+                      (strcmp(Special_Aged_Lookups[j].lookFor, "older age") == 0) ||
+                      (strcmp(Special_Aged_Lookups[j].lookFor, "older-ages") == 0) ||
+                      (strcmp(Special_Aged_Lookups[j].lookFor, "older ages") == 0))
+                   {
+                       /* X-out the special aged lookup we found */
+
+                       foo = XoutTriggerInText(Special_Aged_Lookups[j].lookFor, lcCit);
+                       free(lcCit);
+                       lcCit = strdup(foo);
+                       free(foo);
+                       foundPos = -2;
+                   } /* fi match */
+               } /* fi in Abstract */
            } /* fi */
 
            if(foundPos > -1)
@@ -8066,7 +8504,7 @@ void checkForAgeYears()
 
        while(!loopDone)
        {
-           foundPos = lookForAgedTermsRight(lcCit);
+           foundPos = lookForAgedTermsRight(lcCit, agedOK);
 
            if(RTM_Debug)
            {
@@ -9514,8 +9952,7 @@ char *pullYears(char *snippet, long len, int hasRange, long snippetOffset)
        fflush(fout);
    } /* fi */
 
-   if((strchr(snippet, '&') != NULL) || (strchr(snippet, '#') != NULL) ||
-       (strchr(snippet, ';') != NULL))
+   if((strchr(snippet, '&') != NULL) && (strchr(snippet, ';') != NULL))
       tmp = Strip_Str(snippet);
    else
       tmp = strdup(snippet);
@@ -9993,8 +10430,8 @@ void checkBeforeFinalPrint()
 {
    int foundHumans, foundAnimals, foundInBreeding, foundConsanguinity,
        foundParents, foundPreliminaryData, done, foundUS, foundMEDICARE,
-       foundMice, foundRats, foundArabidopsis, foundDrosophila,
-       foundScerevisiae, foundCelegans, foundEcoli, foundZebrafish,
+       foundMice, foundRats, foundArabidopsis, foundDrosophila, foundMammalSpecific,
+       foundScerevisiae, foundCelegans, foundEcoli, foundZebrafish, foundMammals,
        foundXenopus, foundSpombe, foundAD, foundND, foundDementia,
        foundDiseases, foundAnimalDiseases, foundAgeRelated, ok, foundMaleFemale,
        foundPlants, foundPlantBreeding, foundLegendary, foundCongo, foundDCR,
@@ -10005,21 +10442,24 @@ void checkBeforeFinalPrint()
        foundCOVID_TREAT, foundCOVID_Drug, found_OtherCOVID, foundCOVID_Testing,
        foundPregnancy_Infectious, foundCOVID, foundHyperthermia, foundHyperthermiaLocal,
        foundFatalOutcome, foundCR, foundBreastNeoplasm, foundMale, yesAdd,
-       foundPuncture, foundSpinalPuncture, foundPedigree;
+       foundPuncture, foundSpinalPuncture, foundPedigree, foundPrimates, foundHeel, foundHallux,
+       foundMastitis, foundBMastitis, foundGMastitis, foundSpikeProtCorona, foundSpikeProtCov2,
+       foundInfantNewborn, foundVLBW;
 
    long i, j, l, p, inBreedingPos, consanguinityPos, parentsPos, prelimPos,
         NDpos, DemPos, plantBreedingPos, legendaryPos, congoPos, ruminantPos,
         breedingPos, pos, femalePos, posMicroEnv, pancreatitisPos, decompPos, malePos,
         singingPos, vocAnimalPos, DiabetesMPos, agingPos, topLimit, numFound,
         panChldPos, covidDrugPos, hyperthermiaPos, fatalOutcomePos, pregnancyPos,
-        puncturePos, spinalPuncturePos, pedigreePos;
+        puncturePos, spinalPuncturePos, pedigreePos, heelPos, halluxPos, mastitisPos,
+        spikeProtCoronaPos, posInfantNewborn;
 
    char *tmp, tmpMH[SMALL_LINE+ 1], mh[SMALL_LINE + 1], from[SMALL_LINE + 1];
 
    foundHumans = foundAnimals = foundUS = foundMice = foundRats = FALSE;
-   foundArabidopsis = foundDrosophila = foundScerevisiae = FALSE;
-   foundCelegans = foundEcoli = foundZebrafish = FALSE;
-   foundXenopus = foundSpombe = foundCongo = foundDCR = FALSE;
+   foundArabidopsis = foundDrosophila = foundScerevisiae = foundMammalSpecific = FALSE;
+   foundCelegans = foundEcoli = foundZebrafish = foundSpikeProtCorona = foundMammals = FALSE;
+   foundXenopus = foundSpombe = foundCongo = foundDCR = foundSpikeProtCov2 = FALSE;
    foundInBreeding = foundConsanguinity = foundRuminant = FALSE;
    foundParents = foundPreliminaryData = foundMEDICARE = FALSE;
    foundAD = foundND = foundDementia = foundMaleFemale = FALSE;
@@ -10033,14 +10473,17 @@ void checkBeforeFinalPrint()
    foundPregnancy = foundCOVID_Testing = foundPregnancy_Infectious = FALSE;
    foundHyperthermia = foundHyperthermiaLocal = foundFatalOutcome = FALSE;
    foundBreastNeoplasm = foundMale = foundPuncture = foundSpinalPuncture = FALSE;
-   foundPedigree = FALSE;
+   foundPedigree = foundPrimates = foundHeel = foundHallux = FALSE;
+   foundMastitis = foundBMastitis = foundGMastitis = FALSE;
+   foundInfantNewborn = foundVLBW = FALSE;
 
-   inBreedingPos = consanguinityPos = parentsPos = prelimPos = -1;
+   inBreedingPos = consanguinityPos = parentsPos = prelimPos = spikeProtCoronaPos = -1;
    NDpos = DemPos = plantBreedingPos = legendaryPos = congoPos = -1;
    breedingPos = femalePos = posMicroEnv = pancreatitisPos = malePos = -1;
-   decompPos = singingPos = vocAnimalPos = DiabetesMPos = agingPos = -1;
+   decompPos = singingPos = vocAnimalPos = DiabetesMPos = agingPos = mastitisPos = -1;
    panChldPos = covidDrugPos = hyperthermiaPos = fatalOutcomePos = pregnancyPos = -1;
-   puncturePos = spinalPuncturePos = pedigreePos = -1;
+   puncturePos = spinalPuncturePos = pedigreePos = heelPos = halluxPos = -1;
+   posInfantNewborn = -1;
 
    for(i = 0; i < numFinalCTs; i++)
    {
@@ -10078,14 +10521,23 @@ void checkBeforeFinalPrint()
             else if(finalCTlist[i].mh[0] == 'H')
             {
                 if(strcmp(finalCTlist[i].mh, "Humans") == 0)
-                  foundHumans = TRUE;
+                {
+                    foundHumans = TRUE;
+                    foundPrimates = TRUE;
+                } /* fi */
             } /* else fi 'H' */
 
             else if(finalCTlist[i].mh[0] == 'I')
             {
-                if((strcmp(finalCTlist[i].mh, "Infant") == 0) ||
-                   (strcmp(finalCTlist[i].mh, "Infant, Newborn") == 0))
+                if(strcmp(finalCTlist[i].mh, "Infant") == 0)
                   foundAgeRelated = TRUE;
+
+                else if(strcmp(finalCTlist[i].mh, "Infant, Newborn") == 0)
+                {
+                    foundAgeRelated = TRUE;
+                    foundInfantNewborn = TRUE;
+                    posInfantNewborn = i;
+                } /* else fi */
             } /* else fi 'I' */
 
             else if(finalCTlist[i].mh[0] == 'M')
@@ -10141,7 +10593,7 @@ void checkBeforeFinalPrint()
 
       Mice       : B01.050.150.900.649.313.992.635.505.500
       Rats       : B01.050.150.900.649.313.992.635.505.700
-      Arabidopsis: B01.650.940.800.575.912.250.157.100
+      Arabidopsis: B01.875.800.575.912.250.157.100
       Drosophila : B01.050.500.131.617.720.500.500.750.310.250
       Scerevisiae: B01.300.107.795.785.800; B01.300.930.705.655
       Celegans   : B01.050.500.500.294.400.875.660.250.250
@@ -10149,6 +10601,8 @@ void checkBeforeFinalPrint()
       Zebrafish  : B01.050.150.900.493.200.244.828
       Xenopus    : B01.050.150.900.090.180.610.500
       Spombe     : B01.300.107.797; B01.300.930.720
+
+      Primates   : B01.050.150.900.649.313.988
    */
 
    for(i = 0; i < numFinalMHs; i++)
@@ -10179,14 +10633,20 @@ void checkBeforeFinalPrint()
                   foundCOVID = TRUE;
             } /* fi */
 
-            if(mh[0] == 'r')
+            else if(mh[0] == 'r')
             {
                 if(strcmp(mh, "remdesivir") == 0)
                 {
                    foundCOVID_Drug = TRUE;
                    covidDrugPos = i;
                 } /* else fi */
-            } /* fi */
+            } /* else fi */
+
+            else if(mh[0] == 's')
+            {
+                if(strcmp(mh, "spike protein, SARS-CoV-2") == 0)
+                   foundSpikeProtCov2 = TRUE;
+            } /* else fi */
        } /* fi valid NMs */
 
 
@@ -10298,6 +10758,12 @@ void checkBeforeFinalPrint()
                 } /* else fi */
             } /* else fi 'F' */
 
+            else if(mh[0] == 'G')
+            {
+                if(strcmp(mh, "Granulomatous Mastitis") == 0)
+                  foundGMastitis = TRUE;
+            } /* else fi 'G' */
+
             else if(mh[0] == 'H')
             {
                 if(strcmp(mh, "Hydroxychloroquine") == 0)
@@ -10305,6 +10771,18 @@ void checkBeforeFinalPrint()
                    foundCOVID_Drug = TRUE;
                    covidDrugPos = i;
                 } /* fi */
+
+                else if(strcmp(mh, "Hallux") == 0)
+                {
+                   foundHeel = TRUE;
+                   heelPos = i;
+                } /* else fi */
+
+                else if(strcmp(mh, "Heel") == 0)
+                {
+                   foundHallux = TRUE;
+                   halluxPos = i;
+                } /* else fi */
 
                 else if(strcmp(mh, "Hyperthermia, Induced") == 0)
                   foundHyperthermiaLocal = TRUE;
@@ -10317,6 +10795,9 @@ void checkBeforeFinalPrint()
                     foundInBreeding = TRUE;
                     inBreedingPos = i;
                 } /* fi */
+
+                else if(strcmp(mh, "Infant, Very Low Birth Weight") == 0)
+                   foundVLBW = TRUE;
             } /* else fi 'I' */
 
             else if(mh[0] == 'L')
@@ -10333,6 +10814,21 @@ void checkBeforeFinalPrint()
                    covidDrugPos = i;
                 } /* else fi */
             } /* else fi 'L' */
+
+            else if(mh[0] == 'M')
+            {
+                if(strcmp(mh, "Mastitis") == 0)
+                {
+                    foundMastitis = TRUE;
+                    mastitisPos = i;
+                } /* fi */
+
+                else if(strcmp(mh, "Mastitis, Bovine") == 0)
+                  foundBMastitis = TRUE;
+
+                else if(strcmp(mh, "Mammals") == 0)
+                  foundMammals = TRUE;
+            } /* else fi 'M' */
 
             else if(mh[0] == 'N')
             {
@@ -10409,7 +10905,13 @@ void checkBeforeFinalPrint()
                 {
                     foundSpinalPuncture = TRUE;
                     spinalPuncturePos = i;
-                } /* fi */
+                } /* else fi */
+
+                else if(strcmp(mh, "Spike Glycoprotein, Coronavirus") == 0)
+                {
+                    foundSpikeProtCorona = TRUE;
+                    spikeProtCoronaPos = i;
+                } /* else fi */
             } /* else fi 'S' */
 
             else if(mh[0] == 'T')
@@ -10434,7 +10936,8 @@ void checkBeforeFinalPrint()
            {
                if(finalMHlist[i].treecodes[l][0] == 'A')
                {
-                   if(strstr(finalMHlist[i].treecodes[l], "A18") != NULL)
+                   if((strstr(finalMHlist[i].treecodes[l], "A18") != NULL) ||
+                      (strstr(finalMHlist[i].treecodes[l], "A19") != NULL))
                      foundPlants = TRUE;
                } /* fi A */
 
@@ -10449,7 +10952,11 @@ void checkBeforeFinalPrint()
                      foundRats = TRUE;
 
                    else if(strstr(finalMHlist[i].treecodes[l],
-                         "B01.650.940.800.575.912.250.157.100") != NULL)
+                         "B01.050.150.900.649.313.988") != NULL)
+                     foundPrimates = TRUE;
+
+                   else if(strstr(finalMHlist[i].treecodes[l],
+                         "B01.875.800.575.912.250.157.100") != NULL)
                      foundArabidopsis = TRUE;
 
                    else if(strstr(finalMHlist[i].treecodes[l],
@@ -10480,13 +10987,19 @@ void checkBeforeFinalPrint()
                          "B01.050.150.900.090.180.610.500") != NULL)
                      foundXenopus = TRUE;
 
+                   else if(strstr(finalMHlist[i].treecodes[l],
+                         "B01.050.150.900.649.") != NULL)
+                     foundMammalSpecific = TRUE;
+
                    else if((strstr(finalMHlist[i].treecodes[l],
                                "B01.300.107.797") != NULL) ||
                            (strstr(finalMHlist[i].treecodes[l],
                                "B01.300.930.720") != NULL))
                      foundSpombe = TRUE;
 
-                   else if(strstr(finalMHlist[i].treecodes[l], "B01.650") != NULL)
+                   else if((strstr(finalMHlist[i].treecodes[l], "B01.300") != NULL) ||
+                           (strstr(finalMHlist[i].treecodes[l], "B01.650") != NULL) ||
+                           (strstr(finalMHlist[i].treecodes[l], "B01.875") != NULL))
                      foundPlants = TRUE;
                } /* else fi "B" */
 
@@ -10537,6 +11050,170 @@ void checkBeforeFinalPrint()
            } /* for  each treecode */
        } /* fi */
    } /* for */
+
+   /* spike protein, SARS-CoV-2 - If we have Spike Glycoprotein, Coronavirus and this is a
+      COVID-19 related article, make sure to add the SCR spike protein, SARS-CoV-2.
+   */
+
+   if(foundSpikeProtCorona && COVID_Related && !foundSpikeProtCov2)
+   {
+       p = numFinalMHs;
+       finalMHlist[p].foundInL2R = FALSE;
+       finalMHlist[p].ETflag = FALSE;
+       finalMHlist[p].datatype = NM;
+       finalMHlist[p].oktoprint = TRUE;
+       finalMHlist[p].score = 1000;
+       if(spikeProtCoronaPos > -1)
+         finalMHlist[p].score += finalMHlist[spikeProtCoronaPos].score;
+      
+       finalMHlist[p].num_RCs = 0;
+       finalMHlist[p].VocabDenFactor = 0.0;
+       finalMHlist[p].origPos = 10000;
+       finalMHlist[p].wasForced = TRUE;
+
+       finalMHlist[p].muid = strdup(muid);
+       finalMHlist[p].mh = strdup("spike protein, SARS-CoV-2");
+       finalMHlist[p].mh_orig = strdup("");
+       finalMHlist[p].dui = strdup("C000657845");
+       finalMHlist[p].entry_term = strdup("");
+       finalMHlist[p].RC_PMIDs = strdup("");
+       finalMHlist[p].textloc = strdup("TI");
+       finalMHlist[p].trigger = strdup("Forced COVID-19 Term");
+
+       /* Positional Information */
+
+       finalMHlist[p].numPIs = 0;
+
+       /* Paths */
+
+       finalMHlist[p].paths[MMI] = TRUE;
+       finalMHlist[p].paths[PRC] = FALSE;
+
+       /* Treecodes */
+
+       finalMHlist[p].num_treecodes = 0;
+
+       /* Semantic Types - max 25 */
+
+       finalMHlist[p].num_STs = 0;
+
+       numFinalMHs++;
+   } /* fi */
+
+   /* If we have Infant, Newborn indexed, check to see if maybe should add
+      Infant, Very Low Birth Weight
+   */
+
+   if(foundInfantNewborn && !foundVLBW)
+   {
+       if(foundInText("birth weight", FALSE, FALSE) ||
+          foundInText("birth-weight", FALSE, FALSE) ||
+          foundInText("birthweight", FALSE, FALSE))
+       {
+           done = FALSE;
+           for(i = 0; !done && (i < numVLBW); i++)
+           {
+               if(foundInText(vlbwTriggers[i], FALSE, FALSE))
+               {
+                   done = TRUE;
+                   sprintf(from, "Forced VLBW - %s\0", vlbwTriggers[i]);
+                   p = numFinalMHs;
+                   finalMHlist[p].foundInL2R = FALSE;
+                   finalMHlist[p].ETflag = FALSE;
+                   finalMHlist[p].datatype = MH;
+                   finalMHlist[p].oktoprint = TRUE;
+                   finalMHlist[p].score = 1000;      
+                   finalMHlist[p].num_RCs = 0;
+                   finalMHlist[p].VocabDenFactor = 0.0;
+                   finalMHlist[p].origPos = 10000;
+                   finalMHlist[p].wasForced = TRUE;
+
+                   finalMHlist[p].muid = strdup(muid);
+                   finalMHlist[p].mh = strdup("Infant, Very Low Birth Weight");
+                   finalMHlist[p].mh_orig = strdup("");
+                   finalMHlist[p].dui = strdup("D019102");
+                   finalMHlist[p].entry_term = strdup("");
+                   finalMHlist[p].RC_PMIDs = strdup("");
+                   finalMHlist[p].textloc = strdup("TI");
+                   finalMHlist[p].trigger = strdup(from);
+
+                   if(posInfantNewborn > -1)
+                     finalMHlist[p].score += finalCTlist[posInfantNewborn].score;
+
+                   /* Positional Information */
+
+                   finalMHlist[p].numPIs = 0;
+
+                   /* Paths */
+
+                   finalMHlist[p].paths[MMI] = TRUE;
+                   finalMHlist[p].paths[PRC] = FALSE;
+
+                   /* Treecodes */
+
+                   finalMHlist[p].num_treecodes = 0;
+
+                   /* Semantic Types - max 25 */
+
+                   finalMHlist[p].num_STs = 0;
+
+                   numFinalMHs++;
+               } /* fi */
+           } /* for */
+       } /* fi */
+   } /* fi Newborn, !VLBW */
+
+   /* If we find "mammals", "mammal", "mammalians", or "mammalian" in TIAB, and we don't have
+      a more specific Mammals term indexed, add Mammals.
+   */
+
+   if(foundAnimals && !foundMammalSpecific && !foundMammals)
+   {
+       if(foundInText("mammalians", FALSE, FALSE) ||
+          foundInText("mammalian", FALSE, FALSE) ||
+          foundInText("mammals", FALSE, FALSE) ||
+          foundInText("mammal", FALSE, FALSE))
+       {
+           p = numFinalMHs;
+           finalMHlist[p].foundInL2R = FALSE;
+           finalMHlist[p].ETflag = FALSE;
+           finalMHlist[p].datatype = MH;
+           finalMHlist[p].oktoprint = TRUE;
+           finalMHlist[p].score = 1000;      
+           finalMHlist[p].num_RCs = 0;
+           finalMHlist[p].VocabDenFactor = 0.0;
+           finalMHlist[p].origPos = 10000;
+           finalMHlist[p].wasForced = TRUE;
+
+           finalMHlist[p].muid = strdup(muid);
+           finalMHlist[p].mh = strdup("Mammals");
+           finalMHlist[p].mh_orig = strdup("");
+           finalMHlist[p].dui = strdup("D008322");
+           finalMHlist[p].entry_term = strdup("");
+           finalMHlist[p].RC_PMIDs = strdup("");
+           finalMHlist[p].textloc = strdup("TI");
+           finalMHlist[p].trigger = strdup("Forced Mammals");
+
+           /* Positional Information */
+
+           finalMHlist[p].numPIs = 0;
+
+           /* Paths */
+
+           finalMHlist[p].paths[MMI] = TRUE;
+           finalMHlist[p].paths[PRC] = FALSE;
+
+           /* Treecodes */
+
+           finalMHlist[p].num_treecodes = 0;
+
+           /* Semantic Types - max 25 */
+
+           finalMHlist[p].num_STs = 0;
+
+           numFinalMHs++;
+       } /* fi mammals */
+   } /* fi */
 
    /* See Inbreeding vs Plant Breeding file for code that goes here if we
       need it back.
@@ -10625,6 +11302,25 @@ void checkBeforeFinalPrint()
 
    if(foundHyperthermia && foundHyperthermiaLocal && (hyperthermiaPos > -1))
      finalMHlist[hyperthermiaPos].oktoprint = FALSE;
+
+    /* If have Mastisis and either Mastitis, Bovine or Granulomatous Mastitis, remove Mastisis
+       February 14, 2022.
+    */
+
+    if(foundMastitis && (foundBMastitis || foundGMastitis))
+     finalMHlist[mastitisPos].oktoprint = FALSE;
+
+   /* If we have Heel but not anything within the Primates tree, remove it.
+   */
+
+   if(foundHeel && !foundPrimates)
+     finalMHlist[heelPos].oktoprint = FALSE;
+
+   /* If we have Hallux but not anything within the Primates tree, remove it.
+   */
+
+   if(foundHallux && !foundPrimates)
+     finalMHlist[halluxPos].oktoprint = FALSE;
 
    /* If we have Legendary Creatures - remove it.  1/10/19 */
 
@@ -10730,13 +11426,17 @@ void checkBeforeFinalPrint()
    } /* fi */
 
    /* Check to see if we are recommending Female on an article about
-      Prostate Cancer and if so, remove it.
+      Prostate Cancer and if so, remove it.  Might be other triggering things in the text
+      appropriate for Female though.  Ovarian Neoplasms & Prostatic Neoplasms (31307957)
    */
 
    if(foundProstateCancer && foundFemale)
    {
        if(foundFemale && (femalePos > -1))
-         finalCTlist[femalePos].oktoprint = FALSE;
+       {
+           if(strstr(finalCTlist[femalePos].trigger, "CT Treecode") == NULL)
+             finalCTlist[femalePos].oktoprint = FALSE;
+       } /* fi */
 
        /* If Male is not already recommended, add it. */
 
@@ -11385,7 +12085,7 @@ void checkBeforeFinalPrint()
 
    if(botanyJournal || foundPlants || foundPlantBreeding)
    {
-       if(foundFemale && (femalePos > -1))
+       if(!foundHumans && !foundAnimals && foundFemale && (femalePos > -1))
        {
             if(RTM_Debug)
             {
@@ -11396,7 +12096,7 @@ void checkBeforeFinalPrint()
             finalCTlist[femalePos].wasForced = FALSE;
        } /* if Female */
 
-       if(foundMale && (malePos > -1))
+       if(!foundHumans && !foundAnimals && foundMale && (malePos > -1))
        {
             if(RTM_Debug)
             {
@@ -11929,7 +12629,67 @@ void checkBeforeFinalPrint()
 
   if(!foundHumans && !foundAnimals && (foundFemale || foundMale))
   {
-      if(botanyJournal || foundPlants || foundPlantBreeding)
+      if(veterinaryJournal || insectsJournal || zootaxaJournal || isAnimalRelated())
+      {
+           pos = checkFinalCT("Animals");
+           if(pos > -1)  /* Have it, but make sure oktoprint */
+           {
+               finalCTlist[pos].oktoprint = TRUE;
+               foundHumans = TRUE;
+               tmp = (char *)malloc(strlen(finalCTlist[pos].trigger) + 1000);
+               if(strlen(finalCTlist[pos].trigger) > 0)
+                 sprintf(tmp, "%s; Forced Turn Back On - Male/Female Rule\0",
+                         finalCTlist[pos].trigger);
+               else
+                 strcpy(tmp, "Forced Turn Back On - Male/Female Rule");
+
+               free(finalCTlist[pos].trigger);
+               finalCTlist[pos].trigger = strdup(tmp);
+               free(tmp);
+           } /* fi */
+
+           else /* We need to add it */
+           {
+               foundHumans = TRUE;
+               p = numFinalCTs;
+               finalCTlist[p].ETflag = FALSE;
+               finalCTlist[p].datatype = CT;
+               finalCTlist[p].oktoprint = TRUE;
+               finalCTlist[p].score = 1000;
+               finalCTlist[p].num_RCs = 0;
+               finalCTlist[p].VocabDenFactor = 0.0;
+               finalCTlist[p].muid = strdup(muid);
+               finalCTlist[p].mh = strdup("Animals");
+               finalCTlist[p].mh_orig = strdup("");
+               finalCTlist[p].dui = strdup("D000818");
+               finalCTlist[p].entry_term = strdup("");
+               finalCTlist[p].RC_PMIDs = strdup("");
+               finalCTlist[p].textloc = strdup("TI");
+               finalCTlist[p].trigger = strdup("Forced Animals Male/Female Rule");
+
+               /* Positional Information */
+
+               finalCTlist[p].numPIs = 0;
+
+               /* Paths */
+
+               finalCTlist[p].paths[MMI] = TRUE;
+               finalCTlist[p].paths[PRC] = FALSE;
+
+               /* Treecodes */
+
+               finalCTlist[p].num_treecodes = 0;
+               pullTREEs_CT(p);
+
+               /* Semantic Types - max 25 */
+
+               finalCTlist[p].num_STs = 0;
+
+               numFinalCTs++;
+           } /* else need to add */
+      } /* fi */
+
+      else if(botanyJournal || foundPlants || foundPlantBreeding)
       {
 /* Do nothing for the moment for Plant based articles with Male/Female June 23, 2021
           if(foundFemale && (femalePos > -1))
@@ -11952,9 +12712,9 @@ void checkBeforeFinalPrint()
                } 
           }
 */
-      } /* fi Plant-based article */
+      } /* else fi Plant-based article */
 
-      else /* not plant-based, then add Humans */
+      else /* not veterinary or plant-based, then add Humans */
       {
            /* First check to see if we can just turn it back on */
 
@@ -12615,6 +13375,12 @@ int isBadL2R(char *mhL2R, char *pmidL2R)
            {
               if(foundInText("battle", FALSE, TRUE) ||
                  foundInText("war", FALSE, TRUE))
+                rtn = TRUE;
+           } /* else fi */
+
+           else if(strcmp(mhL2R, "movement") == 0)
+           {
+              if(foundInText("moving target", FALSE, FALSE))
                 rtn = TRUE;
            } /* else fi */
        } /* else fi 'm' */
@@ -13621,6 +14387,12 @@ void checkMaleFemalePct()
        } /* fi valid CT */
    } /* for */
 
+   if(RTM_Debug)
+   {
+      fprintf(fout, "  -- Intially, Male: %d  Female: %d\n", foundMale, foundFemale);
+      fflush(fout);
+   } /* fi */
+
    /* Going to ignore if already have both, or neither */
 
    ok = TRUE;
@@ -13629,6 +14401,17 @@ void checkMaleFemalePct()
 
    else if(!foundMale && !foundFemale)
      ok = FALSE;
+
+   /* If we don't have Boys, Female, Girls, Male, Men, or Women, no point in looking */
+
+   if(ok)
+   {
+       if(!foundInText("boy", FALSE, FALSE) && !foundInText("female", FALSE, FALSE) &&
+          !foundInText("girl", FALSE, FALSE) && !foundInText("male", FALSE, FALSE) &&
+          !foundInText("men", FALSE, FALSE) && !foundInText("women", FALSE, FALSE) &&
+          !foundInText("man", FALSE, FALSE) && !foundInText("woman", FALSE, FALSE))
+        ok = FALSE;
+   } /* fi */
 
    if(ok)
    {
@@ -13642,6 +14425,12 @@ void checkMaleFemalePct()
            strcpy(term, "");
            strcpy(loc, "");
            sscanf(foo, "%*ld|%ld|%[^|]|%[^\n]", &foundPos, loc, term);
+
+           if(RTM_Debug)
+           {
+               fprintf(fout, "Male/Female Trigger Term: #%s#\n", term);
+               fflush(fout);
+           } /* fi */
 
            strLen = (long)strlen(term);
            lcCit = (char *)strdup(citation);
@@ -13942,92 +14731,29 @@ void AddSpecialAgedTerms(int agePos, char *snippet, long begSpan)
 *
 ***************************************************************************/
 
-long lookForAgedTermsRight(char *haystack)
+long lookForAgedTermsRight(char *haystack, int agedOK)
 {
-   int found, ok;
+   int found;
    long foundPos, i;
 
    foundPos = -1;
    found = FALSE;
    for(i = 0; !found && (i < numAgeLookForRight); i++)
    {
-       ok = TRUE;
-       if(strcmp(ageTriggersRight[i], "aged") == 0)
-       {
-           if((strstr(haystack, "aged between") != NULL) ||
-              (strstr(haystack, "aged 1") != NULL) || (strstr(haystack, "aged 2") != NULL) ||
-              (strstr(haystack, "aged 3") != NULL) || (strstr(haystack, "aged 4") != NULL) ||
-              (strstr(haystack, "aged 5") != NULL) || (strstr(haystack, "aged 6") != NULL) ||
-              (strstr(haystack, "aged 7") != NULL) || (strstr(haystack, "aged 8") != NULL) ||
-              (strstr(haystack, "aged 9") != NULL) || (strstr(haystack, "aged 0") != NULL) ||
-              (strstr(haystack, "aged one") != NULL) || (strstr(haystack, "aged two") != NULL) ||
-              (strstr(haystack, "aged three") != NULL) || (strstr(haystack, "aged four") != NULL) ||
-              (strstr(haystack, "aged five") != NULL) ||
-              (strstr(haystack, "aged six") != NULL) ||
-              (strstr(haystack, "aged seven") != NULL) ||
-              (strstr(haystack, "aged eight") != NULL) ||
-              (strstr(haystack, "aged nine") != NULL) ||
-              (strstr(haystack, "aged ten") != NULL) ||
-              (strstr(haystack, "aged at least") != NULL) ||
-              (strstr(haystack, "aged from") != NULL) || 
-              (strstr(haystack, "aged  ranged") != NULL) ||
-              (strstr(haystack, "aged  ranges") != NULL) ||
-              (strstr(haystack, "aged ranged") != NULL) ||
-              (strstr(haystack, "aged ranges") != NULL) ||
-              (strstr(haystack, "aged range") != NULL) ||
-              (strstr(haystack, "aged less") != NULL) ||
-              (strstr(haystack, "aged more") != NULL) ||
-              (strstr(haystack, "females aged") != NULL) || 
-              (strstr(haystack, "female aged") != NULL) ||
-              (strstr(haystack, "women aged") != NULL) ||
-              (strstr(haystack, "woman aged") != NULL) ||
-              (strstr(haystack, "males aged") != NULL) ||
-              (strstr(haystack, "male aged") != NULL) ||
-              (strstr(haystack, "men aged") != NULL) ||
-              (strstr(haystack, "man aged") != NULL) ||
-              (strstr(haystack, "adults aged") != NULL) ||
-              (strstr(haystack, "adults aged") != NULL) ||
-              (strstr(haystack, "adolescents aged") != NULL) ||
-              (strstr(haystack, "adolescent aged") != NULL) ||
-              (strstr(haystack, "infants aged") != NULL) ||
-              (strstr(haystack, "infant aged") != NULL) ||
-              (strstr(haystack, "toddlers aged") != NULL) ||
-              (strstr(haystack, "toddler aged") != NULL) ||
-              (strstr(haystack, "children aged") != NULL) ||
-              (strstr(haystack, "child aged") != NULL) ||
-              (strstr(haystack, "students aged") != NULL) ||
-              (strstr(haystack, "student aged") != NULL) ||
-              (strstr(haystack, "middle aged") != NULL) ||
-              (strstr(haystack, "middle-aged") != NULL) ||
-              (strstr(haystack, "school aged") != NULL) ||
-              (strstr(haystack, "school-aged") != NULL) ||
-              (strstr(haystack, "preschool aged") != NULL) ||
-              (strstr(haystack, "preschool-aged") != NULL) ||
-              (strstr(haystack, "college aged") != NULL) ||
-              (strstr(haystack, "college-aged") != NULL) ||
-              (strstr(haystack, "reproductive aged") != NULL) ||
-              (strstr(haystack, "reproductive-aged") != NULL) ||
-              (strstr(haystack, "median aged") != NULL) ||
-              (strstr(haystack, "mean aged") != NULL) ||
-              (strstr(haystack, "aged (") != NULL) || (strstr(haystack, "aged(") != NULL) ||
-              (strstr(haystack, "aged:") != NULL) || (strstr(haystack, "aged :") != NULL) ||
-              (strstr(haystack, "aged<") != NULL) || (strstr(haystack, "aged <") != NULL) ||
-              (strstr(haystack, "aged>") != NULL) || (strstr(haystack, "aged >") != NULL) ||
-              (strstr(haystack, "aged ranged") != NULL) ||
-              (strstr(haystack, "aged ranges") != NULL) ||
-              (strstr(haystack, "aged range") != NULL))
-            ok = FALSE;
-       } /* fi */
-
-       if(ok)
-         foundPos = isTriggerInText(ageTriggersRight[i], haystack);
-       else
-         foundPos = -1;
-
+       foundPos = isTriggerInText(ageTriggersRight[i], haystack);
        if(foundPos > -1)
        {
            found = TRUE;
-           foundAgeTrigger = strdup(ageTriggersRight[i]);
+           if(strcmp(ageTriggersRight[i], "aged") == 0)
+           {
+               if(agedOK)
+                 foundAgeTrigger = strdup(ageTriggersRight[i]);
+               else
+                 foundPos = -1;
+           } /* fi */
+
+           else
+             foundAgeTrigger = strdup(ageTriggersRight[i]);
        } /* fi */
    } /* for */
 
@@ -14053,6 +14779,15 @@ long lookForAgedTermsLeft(char *haystack)
    for(i = 0; !found && (i < numAgeLookForLeft); i++)
    {
        foundPos = isTriggerInText(ageTriggersLeft[i], haystack);
+
+       /* Check to see if animal related trigger or not */
+
+       if(foundPos > -1)
+       {
+           if(isAnimalContext(ageTriggersLeft[i]))
+             foundPos = -1;
+       } /* fi */
+
        if(foundPos > -1)
        {
            found = TRUE;
@@ -14484,6 +15219,31 @@ void lookForAnimalDiseaseAdds()
            if(foundSwine && !foundSwineDisease)
              addAnimalDiseaseTerm("Swine Diseases", "D013553");
        } /* fi found other term */
+
+       else if(foundDiseases && (!foundCats && !foundCattle && !foundDogs && !foundHorses && 
+                            !foundRodents && !foundSheep && !foundSwine && !foundGoats))
+       {
+           if(!foundCats && foundCatDisease)
+             addAnimalDiseaseTerm("Cats", "D002415");
+
+           if(!foundCattle && foundCattleDisease)
+             addAnimalDiseaseTerm("Cattle", "D002417");
+
+           if(!foundDogs && foundDogDisease)
+             addAnimalDiseaseTerm("Dogs", "D004285");
+
+           if(!foundGoats && foundGoatDisease)
+             addAnimalDiseaseTerm("Goats", "D006041");
+
+           if(!foundHorses && foundHorseDisease)
+             addAnimalDiseaseTerm("Horses", "D006736");
+
+           if(!foundSheep && foundSheepDisease)
+             addAnimalDiseaseTerm("Sheep", "D012756");
+
+           if(!foundSwine && foundSwineDisease)
+             addAnimalDiseaseTerm("Swine", "D013552");
+       } /* else fi */
    } /* fi foundAnimals */
 } /* lookForAnimalDiseaseAdds */
 

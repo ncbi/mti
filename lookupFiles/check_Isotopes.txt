@@ -1,0 +1,196 @@
+106rh|TI|Rhodium-106|C000615528|2|D011868|Radioisotopes|D012238|Rhodium
+111in|TI|Indium-111|C000615551|1|D007205|Indium Radioisotopes
+11c|TI|Carbon-11|C000615233|1|D002250|Carbon Radioisotopes
+131cs|TI|Cesium-131|C000614985|1|D002588|Cesium Radioisotopes
+13c|TI|Carbon-13|C000615229|1|D002247|Carbon Isotopes
+14c|TI|Carbon-14|C000615234|1|D002250|Carbon Radioisotopes
+153sm|TI|Samarium-153|C000615023|2|D011868|Radioisotopes|D012493|Samarium
+15n|TI|Nitrogen-15|C000615243|1|D009587|Nitrogen Isotopes
+15o|TI|Oxygen-15|C000615263|1|D010104|Oxygen Radioisotopes
+17o|TI|Oxygen-17|C000615258|1|D010103|Oxygen Isotopes
+214pb|TI|Lead-214|C000615126|1|D007856|Lead Radioisotopes
+218po|TI|Polonium-218|C000615143|1|D011059|Polonium
+22na|TI|Sodium-22|C000615288|1|D012979|Sodium Radioisotopes
+234u|TI|Uranium-234|C000615175|1|D014501|Uranium
+237np|TI|Neptunium-237|C000615181|1|D009405|Neptunium
+252cf|TI|Californium-252|C000615199|1|D002142|Californium
+32p|TI|Phosphorus-32|C000615311|1|D010761|Phosphorus Radioisotopes
+40k|TI|Potassium-40|C000615339|1|D011197|Potassium Radioisotopes
+51cr|TI|Chromium-51|C000615375|1|D002860|Chromium Radioisotopes
+60co|TI|Cobalt-60|C000615395|1|D003037|Cobalt Radioisotopes
+67ga|TI|Gallium-67|C000615429|1|D005710|Gallium Radioisotopes
+75se|TI|Selenium-75|C000615451|1|D012644|Selenium Radioisotopes
+82rb|TI|Rubidium-82|C000615479|1|D012414|Rubidium Radioisotopes
+85kr|TI|Krypton-85|C000615471|1|D007727|Krypton Radioisotopes
+89sr|TI|Strontium-89|C000615489|1|D013326|Strontium Radioisotopes
+99tc|TI|Technetium-99|C000615519|1|D013667|Technetium
+am-241|TI|Americium-241|C000615192|1|D000576|Americium
+c-11|TI|Carbon-11|C000615233|1|D002250|Carbon Radioisotopes
+cl-36|TI|Chlorine-36|C000615326|2|D002713|Chlorine|D011868|Radioisotopes
+co-55|TI|Cobalt-55|C000615391|1|D003037|Cobalt Radioisotopes
+co-60|TI|Cobalt-60|C000615395|1|D003037|Cobalt Radioisotopes
+ga-67|TI|Gallium-67|C000615429|1|D005710|Gallium Radioisotopes
+ho-166|TI|Holmium-166|C000615044|2|D006695|Holmium|D011868|Radioisotopes
+i-124|TI|Iodine-124|C000614959|1|D007457|Iodine Radioisotopes
+ir-192|TI|Iridium-192|C000615087|1|D007496|Iridium Radioisotopes
+lu-177|TI|Lutetium-177|C000615061|2|D008187|Lutetium|D011868|Radioisotopes
+mn-54|TI|Manganese-54|C000615379|2|D008345|Manganese|D011868|Radioisotopes
+o-18|TI|Oxygen-18|C000615259|1|D010103|Oxygen Isotopes
+p-32|TI|Phosphorus-32|C000615311|1|D010761|Phosphorus Radioisotopes
+pb-210|TI|Lead-210|C000615124|1|D007856|Lead Radioisotopes
+ra-226|TI|Radium-226|C000615152|1|D011883|Radium
+ra-228|TI|Radium-228|C000615153|1|D011883|Radium
+ru-106|TI|Ruthenium-106|C000615522|1|D012429|Ruthenium Radioisotopes
+sr-90|TI|Strontium-90|C000615490|1|D013326|Strontium Radioisotopes
+u-226|TI|Uranium-226|C000615170|1|D014501|Uranium
+u-234|TI|Uranium-234|C000615175|1|D014501|Uranium
+y-86|TI|Yttrium-86|C000615493|1|D015021|Yttrium Radioisotopes
+100mo|TIAB|Molybdenum-100|C000615514|2|D007554|Isotopes|D008982|Molybdenum
+103pd|TIAB|Palladium-103|C000615531|2|D010165|Palladium|D011868|Radioisotopes
+103ru|TIAB|Ruthenium-103|C000615521|1|D012429|Ruthenium Radioisotopes
+106ru|TIAB|Ruthenium-106|C000615522|1|D012429|Ruthenium Radioisotopes
+109ag|TIAB|Silver-109|C000615533|2|D007554|Isotopes|D012834|Silver
+109cd|TIAB|Cadmium-109|C000615540|1|D002106|Cadmium Radioisotopes
+10be|TIAB|Beryllium-10|C000615218|2|D001608|Beryllium|D011868|Radioisotopes
+111cd|TIAB|Cadmium-111|C000615547|2|D002104|Cadmium|D007554|Isotopes
+124i|TIAB|Iodine-124|C000614959|1|D007457|Iodine Radioisotopes
+125i|TIAB|Iodine-125|C000614960|1|D007457|Iodine Radioisotopes
+129i|TIAB|Iodine-129|C000614963|1|D007457|Iodine Radioisotopes
+129te|TIAB|Tellurium-129|C000614950|2|D011868|Radioisotopes|D013691|Tellurium
+129xe|TIAB|Xenon-129|C000614971|1|D014979|Xenon Isotopes
+131i|TIAB|Iodine-131|C000614965|1|D007457|Iodine Radioisotopes
+132te|TIAB|Tellurium-132|C000614952|2|D011868|Radioisotopes|D013691|Tellurium
+133xe|TIAB|Xenon-133|C000614978|1|D014980|Xenon Radioisotopes
+134cs|TIAB|Cesium-134|C000614987|1|D002588|Cesium Radioisotopes
+135cs|TIAB|Cesium-135|C000614988|1|D002588|Cesium Radioisotopes
+135xe|TIAB|Xenon-135|C000614979|1|D014980|Xenon Radioisotopes
+137cs|TIAB|Cesium-137|C000614989|1|D002588|Cesium Radioisotopes
+13n|TIAB|Nitrogen-13|C000615247|1|D009590|Nitrogen Radioisotopes
+140la|TIAB|Lanthanum-140|C000614999|2|D007811|Lanthanum|D011868|Radioisotopes
+142pr|TIAB|Praseodymium-142|C000615006|2|D011221|Praseodymium|D011868|Radioisotopes
+149tb|TIAB|Terbium-149|C000615034|2|D011868|Radioisotopes|D013725|Terbium
+152tb|TIAB|Terbium-152|C000615035|2|D011868|Radioisotopes|D013725|Terbium
+153gd|TIAB|Gadolinium-153|C000615032|2|D005682|Gadolinium|D011868|Radioisotopes
+154eu|TIAB|Europium-154|C000615027|2|D005063|Europium|D011868|Radioisotopes
+161tb|TIAB|Terbium-161|C000615038|2|D011868|Radioisotopes|D013725|Terbium
+166ho|TIAB|Holmium-166|C000615044|2|D006695|Holmium|D011868|Radioisotopes
+169er|TIAB|Erbium-169|C000615046|2|D004871|Erbium|D011868|Radioisotopes
+176lu|TIAB|Lutetium-176|C000615060|2|D008187|Lutetium|D011868|Radioisotopes
+188re|TIAB|Rhenium-188|C000615081|2|D011868|Radioisotopes|D012211|Rhenium
+18o|TIAB|Oxygen-18|C000615259|1|D010103|Oxygen Isotopes
+192ir|TIAB|Iridium-192|C000615087|1|D007496|Iridium Radioisotopes
+201tl|TIAB|Thallium-201|C000615114|1|D013794|Thallium Radioisotopes
+202tl|TIAB|Thallium-202|C000615115|1|D013794|Thallium Radioisotopes
+203pb|TIAB|Lead-203|C000615121|1|D007856|Lead Radioisotopes
+204pb|TIAB|Lead-204|C000615127|2|D007554|Isotopes|D007854|Lead
+210bi|TIAB|Bismuth-210|C000615135|2|D001729|Bismuth|D011868|Radioisotopes
+210pb|TIAB|Lead-210|C000615124|1|D007856|Lead Radioisotopes
+210po|TIAB|Polonium-210|C000615141|1|D011059|Polonium
+211at|TIAB|Astatine-211|C000615146|1|D001246|Astatine
+212bi|TIAB|Bismuth-212|C000615136|2|D001729|Bismuth|D011868|Radioisotopes
+212pb|TIAB|Lead-212|C000615125|1|D007856|Lead Radioisotopes
+213bi|TIAB|Bismuth-213|C000615137|2|D001729|Bismuth|D011868|Radioisotopes
+220rn|TIAB|Radon-220|C000615147|1|D011886|Radon
+222rn|TIAB|Radon-222|C000615148|1|D011886|Radon
+223ra|TIAB|Radium-223|C000615150|1|D011883|Radium
+225ac|TIAB|Actinium-225|C000615155|1|D000186|Actinium
+226ra|TIAB|Radium-226|C000615152|1|D011883|Radium
+227th|TIAB|Thorium-227|C000615160|1|D013910|Thorium
+228ra|TIAB|Radium-228|C000615153|1|D011883|Radium
+232th|TIAB|Thorium-232|C000615164|1|D013910|Thorium
+233ra|TIAB|Radium-233|C000615154|1|D011883|Radium
+235u|TIAB|Uranium-235|C000615176|1|D014501|Uranium
+236u|TIAB|Uranium-236|C000615177|1|D014501|Uranium
+238pu|TIAB|Plutonium-238|C000615186|1|D011005|Plutonium
+238u|TIAB|Uranium-238|C000615179|1|D014501|Uranium
+239np|TIAB|Neptunium-239|C000615182|1|D009405|Neptunium
+239pu|TIAB|Plutonium-239|C000615187|1|D011005|Plutonium
+240pu|TIAB|Plutonium-240|C000615188|1|D011005|Plutonium
+241am|TIAB|Americium-241|C000615192|1|D000576|Americium
+241pu|TIAB|Plutonium-241|C000615189|1|D011005|Plutonium
+242pu|TIAB|Plutonium-242|C000615190|1|D011005|Plutonium
+244cm|TIAB|Curium-244|C000615196|1|D003476|Curium
+26al|TIAB|Aluminum-26|C000615298|2|D000535|Aluminum|D011868|Radioisotopes
+30si|TIAB|Silicon-30|C000615304|2|D007554|Isotopes|D012825|Silicon
+36cl|TIAB|Chlorine-36|C000615326|2|D002713|Chlorine|D011868|Radioisotopes
+37ar|TIAB|Argon-37|C000615332|2|D001128|Argon|D011868|Radioisotopes
+37cl|TIAB|Chlorine-37|C000615325|2|D002713|Chlorine|D007554|Isotopes
+41ca|TIAB|Calcium-41|C000615347|1|D002132|Calcium Radioisotopes
+44sc|TIAB|Scandium-44|C000615357|2|D011868|Radioisotopes|D012538|Scandium
+44ti|TIAB|Titanium-44|C000615365|2|D011868|Radioisotopes|D014025|Titanium
+45ti|TIAB|Titanium-45|C000615366|2|D011868|Radioisotopes|D014025|Titanium
+52mn|TIAB|Manganese-52|C000615377|2|D008345|Manganese|D011868|Radioisotopes
+54mn|TIAB|Manganese-54|C000615379|2|D008345|Manganese|D011868|Radioisotopes
+57ni|TIAB|Nickel-57|C000615404|2|D009532|Nickel|D011868|Radioisotopes
+5li|TIAB|Lithium-5|C000615212|2|D008094|Lithium|D011868|Radioisotopes
+60cu|TIAB|Copper-60|C000615408|1|D003301|Copper Radioisotopes
+61cu|TIAB|Copper-61|C000615409|1|D003301|Copper Radioisotopes
+62cu|TIAB|Copper-62|C000615410|1|D003301|Copper Radioisotopes
+63zn|TIAB|Zinc-63|C000615419|1|D015037|Zinc Radioisotopes
+64cu|TIAB|Copper-64|C000615411|1|D003301|Copper Radioisotopes
+64ni|TIAB|Nickel-64|C000615399|2|D007554|Isotopes|D009532|Nickel
+65cu|TIAB|Copper-65|C000615413|2|D003300|Copper|D007554|Isotopes
+66ga|TIAB|Gallium-66|C000615428|1|D005710|Gallium Radioisotopes
+67cu|TIAB|Copper-67|C000615412|1|D003301|Copper Radioisotopes
+68zn|TIAB|Zinc-68|C000615416|1|D015033|Zinc Isotopes
+72as|TIAB|Arsenic-72|C000615443|2|D001151|Arsenic|D011868|Radioisotopes
+72se|TIAB|Selenium-72|C000615449|1|D012644|Selenium Radioisotopes
+76se|TIAB|Selenium-76|C000615456|2|D007554|Isotopes|D012643|Selenium
+7be|TIAB|Beryllium-7|C000615216|2|D001608|Beryllium|D011868|Radioisotopes
+85sr|TIAB|Strontium-85|C000615488|1|D013326|Strontium Radioisotopes
+86sr|TIAB|Strontium-86|C000615485|1|D013325|Strontium Isotopes
+87sr|TIAB|Strontium-87|C000615486|1|D013325|Strontium Isotopes
+89zr|TIAB|Zirconium-89|C000615502|2|D011868|Radioisotopes|D015040|Zirconium
+90sr|TIAB|Strontium-90|C000615490|1|D013326|Strontium Radioisotopes
+90y|TIAB|Yttrium-90|C000615496|1|D015021|Yttrium Radioisotopes
+95mo|TIAB|Molybdenum-95|C000615511|2|D007554|Isotopes|D008982|Molybdenum
+99mo|TIAB|Molybdenum-99|C000615515|2|D008982|Molybdenum|D011868|Radioisotopes
+ac-225|TIAB|Actinium-225|C000615155|1|D000186|Actinium
+au-198|TIAB|Gold-198|C000615101|1|D006050|Gold Radioisotopes
+cf-252|TIAB|Californium-252|C000615199|1|D002142|Californium
+cs-131|TIAB|Cesium-131|C000614985|1|D002588|Cesium Radioisotopes
+cs-134|TIAB|Cesium-134|C000614987|1|D002588|Cesium Radioisotopes
+cs-135|TIAB|Cesium-135|C000614988|1|D002588|Cesium Radioisotopes
+cs-137|TIAB|Cesium-137|C000614989|1|D002588|Cesium Radioisotopes
+cu-61|TIAB|Copper-61|C000615409|1|D003301|Copper Radioisotopes
+cu-64|TIAB|Copper-64|C000615411|1|D003301|Copper Radioisotopes
+fe-59|TIAB|Iron-59|C000615388|1|D007504|Iron Radioisotopes
+ga-68|TIAB|Gallium-68|C000615430|1|D005710|Gallium Radioisotopes
+i-125|TIAB|Iodine-125|C000614960|1|D007457|Iodine Radioisotopes
+i-129|TIAB|Iodine-129|C000614963|1|D007457|Iodine Radioisotopes
+i-131|TIAB|Iodine-131|C000614965|1|D007457|Iodine Radioisotopes
+lu-176|TIAB|Lutetium-176|C000615060|2|D008187|Lutetium|D011868|Radioisotopes
+nb-90|TIAB|Niobium-90|C000615507|2|D009556|Niobium|D011868|Radioisotopes
+ni-59|TIAB|Nickel-59|C000615405|2|D009532|Nickel|D011868|Radioisotopes
+np-237|TIAB|Neptunium-237|C000615181|1|D009405|Neptunium
+np-239|TIAB|Neptunium-239|C000615182|1|D009405|Neptunium
+pb-203|TIAB|Lead-203|C000615121|1|D007856|Lead Radioisotopes
+pb-207|TIAB|Lead-207|C000615129|2|D007554|Isotopes|D007854|Lead
+pd-103|TIAB|Palladium-103|C000615531|2|D010165|Palladium|D011868|Radioisotopes
+po-209|TIAB|Polonium-209|C000615140|1|D011059|Polonium
+po-210|TIAB|Polonium-210|C000615141|1|D011059|Polonium
+pu-238|TIAB|Plutonium-238|C000615186|1|D011005|Plutonium
+pu-239|TIAB|Plutonium-239|C000615187|1|D011005|Plutonium
+ra-223|TIAB|Radium-223|C000615150|1|D011883|Radium
+rb-82|TIAB|Rubidium-82|C000615479|1|D012414|Rubidium Radioisotopes
+re-186|TIAB|Rhenium-186|C000615079|2|D011868|Radioisotopes|D012211|Rhenium
+re-188|TIAB|Rhenium-188|C000615081|2|D011868|Radioisotopes|D012211|Rhenium
+rh-105|TIAB|Rhodium-105|C000615527|2|D011868|Radioisotopes|D012238|Rhodium
+rn-220|TIAB|Radon-220|C000615147|1|D011886|Radon
+rn-222|TIAB|Radon-222|C000615148|1|D011886|Radon
+sm-153|TIAB|Samarium-153|C000615023|2|D011868|Radioisotopes|D012493|Samarium
+sn-119|TIAB|Tin-119|C000615565|2|D007554|Isotopes|D014001|Tin
+sr-86|TIAB|Strontium-86|C000615485|1|D013325|Strontium Isotopes
+tb-149|TIAB|Terbium-149|C000615034|2|D011868|Radioisotopes|D013725|Terbium
+th-227|TIAB|Thorium-227|C000615160|1|D013910|Thorium
+tl-201|TIAB|Thallium-201|C000615114|1|D013794|Thallium Radioisotopes
+tm-170|TIAB|Thulium-170|C000615050|2|D011868|Radioisotopes|D013932|Thulium
+u-233|TIAB|Uranium-233|C000615174|1|D014501|Uranium
+u-235|TIAB|Uranium-235|C000615176|1|D014501|Uranium
+u-238|TIAB|Uranium-238|C000615179|1|D014501|Uranium
+xe-131m|TIAB|Xenon-131m|C000614982|1|D014980|Xenon Radioisotopes
+xe-133|TIAB|Xenon-133|C000614978|1|D014980|Xenon Radioisotopes
+xe-135|TIAB|Xenon-135|C000614979|1|D014980|Xenon Radioisotopes
+y-90|TIAB|Yttrium-90|C000615496|1|D015021|Yttrium Radioisotopes
+yb-175|TIAB|Ytterbium-175|C000615057|2|D011868|Radioisotopes|D015018|Ytterbium
+zr-89|TIAB|Zirconium-89|C000615502|2|D011868|Radioisotopes|D015040|Zirconium

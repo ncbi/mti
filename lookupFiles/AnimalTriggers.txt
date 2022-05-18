@@ -1,0 +1,72 @@
+## List of Animal triggers from indexers (3/18/15)
+## Format: trigger|^ separated list of MH triplets (Term:DUI:CUI)
+##
+## Most cases will need a corresponding filter added in MTI.c
+## in the isLookForOK routine.
+##
+## Sorted into reverse alpha order to get plurals before singular triggers
+## sort -t'|' -k1,1r AnimalTriggers_2015.txt > z
+##
+wethers|Animals:D000818^Male:D008297
+wether|Animals:D000818^Male:D008297
+stallions|Animals:D000818^Male:D008297^Horses:D006736
+stallion|Animals:D000818^Male:D008297^Horses:D006736
+sows|Animals:D000818^Female:D005260^Swine:D013552
+sow|Animals:D000818^Female:D005260^Swine:D013552
+roosters|Animals:D000818^Male:D008297^Chickens:D002645
+rooster|Animals:D000818^Male:D008297^Chickens:D002645
+rams|Animals:D000818^Male:D008297^Sheep:D012756
+ram|Animals:D000818^Male:D008297^Sheep:D012756
+puppy|Animals:D000818^Dogs:D004285
+puppies|Animals:D000818^Dogs:D004285
+pullets|Animals:D000818^Female:D005260^Chickens:D002645
+pullet|Animals:D000818^Female:D005260^Chickens:D002645
+poults|Animals:D000818^Turkeys:D014422
+poult|Animals:D000818^Turkeys:D014422
+ovine|Animals:D000818^Sheep:D012756
+mares|Animals:D000818^Female:D005260^Horses:D006736
+mare's|Animals:D000818^Female:D005260^Horses:D006736
+mare|Animals:D000818^Female:D005260^Horses:D006736
+leghorn|Animals:D000818^Chickens:D002645
+lambs|Animals:D000818^Sheep:D012756
+lamb|Animals:D000818^Sheep:D012756
+kittens|Animals:D000818^Female:D005260^Cats:D002415
+kitten|Animals:D000818^Female:D005260^Cats:D002415
+jennies|Animals:D000818^Female:D005260^Equidae:D018397
+hens|Animals:D000818^Female:D005260^Chickens:D002645
+hen|Animals:D000818^Female:D005260^Chickens:D002645
+heifers|Animals:D000818^Female:D005260^Cattle:D002417
+heifer|Animals:D000818^Female:D005260^Cattle:D002417
+goslings|Animals:D000818^Geese:D005777
+gosling|Animals:D000818^Geese:D005777
+gilts|Animals:D000818^Female:D005260^Swine:D013552
+gilt|Animals:D000818^Female:D005260^Swine:D013552
+geldings|Animals:D000818^Male:D008297^Horses:D006736
+gelding|Animals:D000818^Male:D008297^Horses:D006736
+foals|Animals:D000818^Horses:D006736
+foal|Animals:D000818^Horses:D006736
+filly|Animals:D000818^Female:D005260^Horses:D006736
+fillies|Animals:D000818^Female:D005260^Horses:D006736
+feline|Animals:D000818^Cats:D002415
+ewes|Animals:D000818^Female:D005260^Sheep:D012756
+ewe|Animals:D000818^Female:D005260^Sheep:D012756
+equine|Animals:D000818^Horses:D006736
+crias|Animals:D000818^Camelids, New World:D002161
+cria|Animals:D000818^Camelids, New World:D002161
+cows|Animals:D000818^Female:D005260^Cattle:D002417
+cow|Animals:D000818^Female:D005260^Cattle:D002417
+colts|Animals:D000818^Male:D008297^Horses:D006736
+colt|Animals:D000818^Male:D008297^Horses:D006736
+cockerels|Animals:D000818^Male:D008297^Chickens:D002645
+cockerel|Animals:D000818^Male:D008297^Chickens:D002645
+chicks|Animals:D000818^Chickens:D002645
+chick|Animals:D000818^Chickens:D002645
+caprine|Animals:D000818^Goats:D006041
+canine|Animals:D000818^Dogs:D004285
+calves|Animals:D000818^Cattle:D002417
+calf|Animals:D000818^Cattle:D002417
+bulls|Animals:D000818^Male:D008297^Cattle:D002417
+bull|Animals:D000818^Male:D008297^Cattle:D002417
+bovine|Animals:D000818^Cattle:D002417
+boars|Animals:D000818^Male:D008297^Swine:D013552
+boar|Animals:D000818^Male:D008297^Swine:D013552

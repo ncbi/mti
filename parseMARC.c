@@ -554,6 +554,7 @@ char *Strip_Str(char *insegment)
             } /* else */
          } /* while */
       } /* fi */
+
       else
       {
          found = FALSE;
@@ -567,7 +568,6 @@ char *Strip_Str(char *insegment)
 
    len = (long)strlen(rtn);
    rtn = (char *)realloc(rtn, len + 1);
-
    return(rtn);
 } /* Strip_Str */
 

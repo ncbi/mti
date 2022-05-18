@@ -568,8 +568,8 @@ static struct OthCoordStruct othCoords[168] = {
 };
 
 
-static long numNewOthCoords = 53;
-static struct OthCoordStruct NewothCoords[53] = {
+static long numNewOthCoords = 54;
+static struct OthCoordStruct NewothCoords[54] = {
      { "Growth Hormone-Secreting Pituitary Adenoma", "Adenoma", "D000236", "C0001430", 0, { } },
      { "Thyroid Carcinoma, Anaplastic", "Thyroid Neoplasms", "D013964", "C0040136", 0, { } },
      { "Eccrine Porocarcinoma", "Sweat Gland Neoplasms", "D013544", "C0038987", 0, { } },
@@ -622,7 +622,8 @@ static struct OthCoordStruct NewothCoords[53] = {
      { "Thymoma", "Thymus Neoplasms", "D013953", "C3714644", 0, { } },
      { "Adenocarcinoma, Follicular", "Thyroid Neoplasms", "D013964", "C0040136", 0, { } },
      { "Thyroid Cancer, Papillary", "Thyroid Neoplasms", "D013964", "C0040136", 0, { } },
-     { "Yersinia ruckeri", "Yersinia Infections", "D015009", "C0043407", 0, { } }
+     { "Yersinia ruckeri", "Yersinia Infections", "D015009", "C0043407", 0, { } },
+     { "Osteosarcoma", "Bone Neoplasms", "D001859", "C0005967", 0, { } }
 };
 
 #define MAXSHs 76
@@ -716,8 +717,8 @@ static struct ctPlist SH_list[76] = {
    /* 75 */ { "virology", "Q000821", 0 }
 };
 
-static long numTCTs = 3411;
-static struct TermStruct TermCTs[3411] = {
+static long numTCTs = 3415;
+static struct TermStruct TermCTs[3415] = {
     { "1 year old", 2, { 10, 11 } },
     { "3t3 cells", 2, { 3, 14 } },
     { "[v]pregnant state, incidental", 2, { 8, 15 } },
@@ -1198,6 +1199,9 @@ static struct TermStruct TermCTs[3411] = {
     { "broad ligament", 1, { 8 } },
     { "bronchopulmonary dysplasia", 2, { 10, 12 } },
     { "brother", 1, { 13 } },
+    { "brother & sister", 2, { 8, 13 } },
+    { "brother and sister", 2, { 8, 13 } },
+    { "brother/sister", 2, { 8, 13 } },
     { "brown atlas cattle", 2, { 3, 5 } },
     { "brown swiss cattle", 2, { 3, 5 } },
     { "brown welsh cattle", 2, { 3, 5 } },
@@ -3614,6 +3618,7 @@ static struct TermStruct TermCTs[3411] = {
     { "setariasis", 1, { 3 } },
     { "setter", 2, { 3, 7 } },
     { "severe combined immunodeficient mice", 2, { 3, 14 } },
+    { "sex and gender", 2, { 8, 13 } },
     { "sex behavior, animal", 1, { 3 } },
     { "sex organs, accessory, male", 1, { 13 } },
     { "sex specific", 2, { 8, 13 } },
@@ -4163,8 +4168,8 @@ struct SubTreeStruct TreeSHs[28] = {
     { "N06.850.310", 1, { 69 } }
 };
 
-long numMHExcls = 1722;
-struct ExclStruct MHExcls[1722] = {
+long numMHExcls = 1725;
+struct ExclStruct MHExcls[1725] = {
     { "3',5'-Cyclic-AMP Phosphodiesterases", 1 },
     { "Abbreviations", 0 },
     { "Abbreviations as Topic", 0 },
@@ -4291,6 +4296,7 @@ struct ExclStruct MHExcls[1722] = {
     { "Autobiography", 0 },
     { "Autonomic Agents", 1 },
     { "Avitaminosis", 1 },
+    { "Axial Spondyloarthritis", 1 },
     { "Bacillaceae Infections", 1 },
     { "Back Muscles", 1 },
     { "Back Pain", 1 },
@@ -4537,7 +4543,6 @@ struct ExclStruct MHExcls[1722] = {
     { "Consensus Development Conference, NIH", 0 },
     { "Consensus Development Conferences as Topic", 0 },
     { "Consensus Development Conferences, NIH as Topic", 0 },
-    { "Continental Population Groups", 1 },
     { "Controlled Clinical Trial", 0 },
     { "Controlled Clinical Trials as Topic", 0 },
     { "Cookbook", 0 },
@@ -4923,6 +4928,7 @@ struct ExclStruct MHExcls[1722] = {
     { "Health Care Evaluation Mechanisms", 0 },
     { "Health Care Facilities, Manpower, and Services", 0 },
     { "Health Care Quality, Access, and Evaluation", 0 },
+    { "Health Disparity, Minority and Vulnerable Populations", 0 },
     { "Health Services", 1 },
     { "Health Services Administration", 1 },
     { "Hearing Disorders", 1 },
@@ -5021,7 +5027,6 @@ struct ExclStruct MHExcls[1722] = {
     { "Immunoassay", 1 },
     { "Immunoelectrophoresis", 1 },
     { "Immunogenetic Phenomena", 1 },
-    { "Immunoglobulin Allotypes", 1 },
     { "Immunoglobulins", 1 },
     { "Immunohistochemistry", 1 },
     { "Immunologic Deficiency Syndromes", 1 },
@@ -5277,6 +5282,7 @@ struct ExclStruct MHExcls[1722] = {
     { "Nervous System Physiological Phenomena", 1 },
     { "Neurobehavioral Manifestations", 0 },
     { "Neurodegenerative Diseases", 1 },
+    { "Neuroinflammatory Diseases", 1 },
     { "Neurologic Manifestations", 0 },
     { "Neuromuscular Agents", 1 },
     { "Neuromuscular Blocking Agents", 1 },
@@ -5471,6 +5477,7 @@ struct ExclStruct MHExcls[1722] = {
     { "Pragmatic Clinical Trial", 0 },
     { "Pragmatic Clinical Trials as Topic", 0 },
     { "Precipitating Factors", 1 },
+    { "Predatory Journals as Topic", 0 },
     { "Predictive Value of Tests", 1 },
     { "Pregnancy Outcome", 1 },
     { "Pregnancy Proteins", 1 },
@@ -5535,6 +5542,7 @@ struct ExclStruct MHExcls[1722] = {
     { "RNA, Transfer, Amino Acid-Specific", 1 },
     { "RNA, Untranslated", 1 },
     { "RNA-Binding Proteins", 1 },
+    { "Racial Groups", 1 },
     { "Radiation", 1 },
     { "Radiation Effects", 1 },
     { "Radioactive Tracers", 1 },
@@ -5889,8 +5897,8 @@ struct ExclStruct MHExcls[1722] = {
     { "beta-Lactam Resistance", 1 }
 };
 
-long numCatMHExcls = 216;
-struct CatExclStruct CatMHExcls[216] = {
+long numCatMHExcls = 217;
+struct CatExclStruct CatMHExcls[217] = {
     { "Diet, Food, and Nutrition", "D000066888" },
     { "Warfare and Armed Conflicts", "D000068336" },
     { "African Union", "D000068516" },
@@ -5901,6 +5909,7 @@ struct CatExclStruct CatMHExcls[216] = {
     { "Nurses Improving Care for Health System Elders", "D000076562" },
     { "UNESCO", "D000076892" },
     { "National Program of Cancer Registries", "D000079402" },
+    { "Health Disparity, Minority and Vulnerable Populations", "D000091202" },
     { "Alcoholics Anonymous", "D000436" },
     { "American Cancer Society", "D000570" },
     { "American Dental Association", "D000571" },
@@ -6124,14 +6133,26 @@ struct CatExclStruct HMD_OKExcls[11] = {
     { "Incunabula", "D057213" }
 };
 
-static long CTIcharStartPos[26] = { 0, 116, 182, 414, 445, 503, 545, 611, 620, 643, -1, 644, 647, 678, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+static long CTIcharStartPos[26] = { 0, 128, 192, 385, 416, 474, 515, 581, 590, 613, -1, 614, 617, 648, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
-static long numCTIs = 807;
-static struct CTIStruct CTInfo[807] = {
+static long numCTIs = 778;
+static struct CTIStruct CTInfo[778] = {
    { "A01.236.249", 1, { 10 }, 0, "Mammary Glands, Human" },
    { "A01.378.610.450", 1, { 10 }, 0, "Knee" },
    { "A05.360.319", 1, { 8 }, 1, "Genitalia, Female" },
-   { "A05.360.444", 1, { 13 }, 1, "Genitalia, Male" },
+   { "A05.360.576.497", 1, { 8 }, 1, "Ovary" },
+   { "A05.360.444", 1, { 13 }, 0, "Genitalia, Male" },
+   { "A05.360.444.123", 1, { 13 }, 0, "Bulbourethral Glands" },
+   { "A05.360.444.251", 1, { 13 }, 0, "Ejaculatory Ducts" },
+   { "A05.360.444.371", 1, { 13 }, 0, "Epididymis" },
+   { "A05.360.444.492", 1, { 13 }, 0, "Penis" },
+   { "A05.360.444.492.362", 1, { 13 }, 0, "Foreskin" },
+   { "A05.360.444.575", 1, { 13 }, 0, "Prostate" },
+   { "A05.360.444.661", 1, { 13 }, 0, "Scrotum" },
+   { "A05.360.444.713", 1, { 13 }, 0, "Seminal Vesicles" },
+   { "A05.360.444.777", 1, { 13 }, 0, "Spermatic Cord" },
+   { "A05.360.444.849", 1, { 13 }, 1, "Testis" },
+   { "A05.360.444.930", 1, { 13 }, 0, "Vas Deferens" },
    { "A05.360.490.890", 1, { 13 }, 1, "Spermatozoa" },
    { "A10.336.532", 1, { 10 }, 0, "Mammary Glands, Human" },
    { "A11.118.480", 1, { 3 }, 0, "Hemocytes" },
@@ -6257,8 +6278,7 @@ static struct CTIStruct CTInfo[807] = {
    { "B01.050.150.900.649.313.750", 1, { 3 }, 1, "Carnivora" },
    { "B01.050.150.900.649.313.875", 1, { 3 }, 1, "Cetacea" },
    { "B01.050.150.900.649.313.937", 1, { 3 }, 0, "Chiroptera" },
-   { "B01.050.150.900.649.313.957", 1, { 3 }, 0, "Hyraxes" },
-   { "B01.050.150.900.649.313.961", 1, { 3 }, 1, "Insectivora" },
+   { "B01.050.150.900.649.313.250.250", 1, { 3 }, 0, "Hyraxes" },
    { "B01.050.150.900.649.313.968", 1, { 3 }, 1, "Lagomorpha" },
    { "B01.050.150.900.649.313.984", 1, { 3 }, 1, "Perissodactyla" },
    { "B01.050.150.900.649.313.988", 1, { 3 }, 0, "Primates" },
@@ -6278,11 +6298,10 @@ static struct CTIStruct CTInfo[807] = {
    { "B01.050.150.900.649.313.992.635.505.500", 2, { 14, 3 }, 1, "Mice" },
    { "B01.050.150.900.649.313.992.635.505.700", 2, { 17, 3 }, 1, "Rats" },
    { "B01.050.150.900.649.313.996", 1, { 3 }, 1, "Scandentia" },
-   { "B01.050.150.900.649.313.998", 1, { 3 }, 1, "Sirenia" },
-   { "B01.050.150.900.649.313.999", 1, { 3 }, 1, "Cingulata" },
+   { "B01.050.150.900.649.313.250.750", 1, { 3 }, 1, "Sirenia" },
    { "B01.050.150.900.649.573", 1, { 3 }, 1, "Marsupialia" },
    { "B01.050.150.900.649.627", 1, { 3 }, 1, "Monotremata" },
-   { "B01.050.150.900.649.833", 1, { 3 }, 1, "Proboscidea Mammal" },
+   { "B01.050.150.900.649.313.250.500", 1, { 3 }, 1, "Proboscidea Mammal" },
    { "B01.050.150.900.833", 1, { 3 }, 1, "Reptiles" },
    { "B01.050.500", 1, { 3 }, 0, "Invertebrates" },
    { "B01.050.500.091", 1, { 3 }, 1, "Annelida" },
@@ -6301,10 +6320,10 @@ static struct CTIStruct CTInfo[807] = {
    { "B04.280.580.650.600.325.660", 2, { 7, 3 }, 0, "Parvovirus, Canine" },
    { "B04.280.580.650.600.550", 2, { 14, 3 }, 0, "Minute Virus of Mice" },
    { "B04.613.204.655.500.150", 2, { 16, 3 }, 0, "Cottontail rabbit papillomavirus" },
-   { "B04.820.095.500.380", 2, { 16, 3 }, 0, "Hemorrhagic Disease Virus, Rabbit" },
-   { "B04.820.455.600.670.600.750.700", 2, { 5, 3 }, 0, "Respiratory Syncytial Virus, Bovine" },
-   { "B04.820.504.080.500.100", 1, { 3 }, 0, "Equartevirus" },
-   { "B04.820.504.540.150.075.500.250", 2, { 7, 3 }, 0, "Coronavirus, Canine" },
+   { "B04.820.578.298.500.380", 2, { 16, 3 }, 0, "Hemorrhagic Disease Virus, Rabbit" },
+   { "B04.820.480.937.600.670.600.750.700", 2, { 5, 3 }, 0, "Respiratory Syncytial Virus, Bovine" },
+   { "B04.820.578.500.080.500.100", 1, { 3 }, 0, "Equartevirus" },
+   { "B04.820.578.500.540.150.075.500.250", 2, { 7, 3 }, 0, "Coronavirus, Canine" },
    { "B04.820.650.589.500", 2, { 5, 3 }, 0, "Lentiviruses, Bovine" },
    { "B04.820.650.589.520", 2, { 23, 3 }, 0, "Lentiviruses, Equine" },
    { "B04.820.650.589.530", 2, { 4, 3 }, 1, "Lentiviruses, Feline" },
@@ -6359,9 +6378,8 @@ static struct CTIStruct CTInfo[807] = {
    { "C04.557.470.200.280", 1, { 3 }, 0, "Carcinoma, Lewis Lung" },
    { "C04.588.180.260", 2, { 13, 10 }, 0, "Breast Neoplasms, Male" },
    { "C04.588.274.623.460", 1, { 3 }, 0, "Liver Neoplasms, Experimental" },
+   { "C04.588.322.455", 2, { 8, 10 }, 1, "Ovarian Neoplasms" },
    { "C04.588.531.500", 1, { 3 }, 0, "Mammary Neoplasms, Experimental" },
-   { "C04.588.945.418", 2, { 8, 10 }, 1, "Genital Neoplasms, Female" },
-   { "C04.588.945.440", 2, { 13, 10 }, 1, "Genital Neoplasms, Male" },
    { "C04.619.045", 1, { 3 }, 0, "Carcinoma 256, Walker" },
    { "C04.619.124", 1, { 3 }, 0, "Carcinoma, Brown-Pearce" },
    { "C04.619.169", 1, { 3 }, 0, "Carcinoma, Ehrlich Tumor" },
@@ -6389,78 +6407,38 @@ static struct CTIStruct CTInfo[807] = {
    { "C10.574.843.850", 1, { 3 }, 0, "Scrapie" },
    { "C11.187.183.220.538", 2, { 12, 10 }, 0, "Ophthalmia Neonatorum" },
    { "C11.294.354.220.625", 2, { 12, 10 }, 0, "Ophthalmia Neonatorum" },
-   { "C12", 2, { 13, 10 }, 0, "Male Urogenital Diseases" },
-   { "C12.294", 2, { 13, 10 }, 0, "Genital Diseases, Male" },
-   { "C12.294.199", 2, { 13, 10 }, 0, "Epididymitis" },
-   { "C12.294.260", 2, { 13, 10 }, 1, "Genital Neoplasms, Male" },
-   { "C12.294.287", 2, { 13, 10 }, 0, "Hematocele" },
-   { "C12.294.365.700", 2, { 13, 10 }, 1, "Infertility, Male" },
-   { "C12.294.494", 2, { 13, 10 }, 1, "Penile Diseases" },
-   { "C12.294.565", 2, { 13, 10 }, 1, "Prostatic Diseases" },
-   { "C12.294.644.242", 2, { 8, 10 }, 0, "Dyspareunia" },
-   { "C12.294.644.486", 2, { 13, 10 }, 1, "Erectile Dysfunction" },
-   { "C12.294.693", 2, { 13, 10 }, 0, "Spermatic Cord Torsion" },
-   { "C12.294.731", 2, { 13, 10 }, 0, "Spermatocele" },
-   { "C12.294.829", 2, { 13, 10 }, 1, "Testicular Diseases" },
-   { "C12.294.882", 2, { 13, 10 }, 0, "Testicular Hydrocele" },
-   { "C12.294.909", 2, { 13, 10 }, 0, "Tuberculosis, Male Genital" },
-   { "C12.294.936", 2, { 13, 10 }, 0, "Varicocele" },
-   { "C12.672.721", 2, { 13, 10 }, 0, "Tuberculosis, Male Genital" },
-   { "C12.706.316.096.500", 2, { 13, 10 }, 0, "Androgen-Insensitivity Syndrome" },
-   { "C12.758.409", 2, { 13, 10 }, 1, "Genital Neoplasms, Male" },
-   { "C13.351.500", 2, { 8, 10 }, 0, "Genital Diseases, Female" },
-   { "C13.351.500.056", 2, { 8, 10 }, 1, "Adnexal Diseases" },
-   { "C13.351.500.163", 2, { 8, 10 }, 0, "Endometriosis" },
-   { "C13.351.500.320", 2, { 8, 10 }, 0, "Gynatresia" },
-   { "C13.351.500.365.700", 2, { 8, 10 }, 0, "Infertility, Female" },
-   { "C13.351.500.665.313", 2, { 8, 10 }, 0, "Dyspareunia" },
-   { "C13.351.500.758", 2, { 8, 10 }, 0, "Tuberculosis, Female Genital" },
-   { "C13.351.500.852", 2, { 8, 10 }, 1, "Uterine Diseases" },
-   { "C13.351.500.852.593.120", 2, { 8, 15 }, 0, "Uterine Cervical Incompetence" },
-   { "C13.351.500.894", 2, { 8, 10 }, 1, "Vaginal Diseases" },
-   { "C13.351.500.894.767", 2, { 8, 10 }, 1, "Vaginal Fistula" },
-   { "C13.351.500.944", 2, { 8, 10 }, 1, "Vulvar Diseases" },
-   { "C13.351.750.940", 2, { 8, 10 }, 0, "Tuberculosis, Female Genital" },
-   { "C13.351.875.253.096.500", 2, { 13, 10 }, 0, "Androgen-Insensitivity Syndrome" },
-   { "C13.351.937.418", 2, { 8, 10 }, 1, "Genital Neoplasms, Female" },
-   { "C13.703", 2, { 15, 8 }, 0, "Pregnancy Complications" },
-   { "C13.703.039", 3, { 8, 10, 15 }, 0, "Abortion, Spontaneous" },
-   { "C13.703.039.089", 3, { 8, 10, 15 }, 0, "Abortion, Habitual" },
-   { "C13.703.039.089.339", 2, { 8, 15 }, 0, "Uterine Cervical Incompetence" },
-   { "C13.703.039.093", 2, { 8, 15 }, 0, "Abortion, Incomplete" },
-   { "C13.703.039.173", 2, { 8, 15 }, 0, "Abortion, Missed" },
-   { "C13.703.039.256", 2, { 8, 15 }, 0, "Abortion, Septic" },
-   { "C13.703.039.422", 3, { 3, 8, 15 }, 0, "Abortion, Veterinary" },
-   { "C13.703.039.711", 2, { 8, 15 }, 0, "Embryo Loss" },
-   { "C13.703.090", 2, { 8, 15 }, 0, "Abortion, Threatened" },
-   { "C13.703.141", 2, { 8, 15 }, 0, "Chorea Gravidarum" },
-   { "C13.703.170", 2, { 15, 8 }, 1, "Diabetes, Gestational" },
-   { "C13.703.277.220", 2, { 15, 8 }, 0, "Fetal Alcohol Spectrum Disorders" },
-   { "C13.703.277.785", 2, { 12, 10 }, 0, "Meconium Aspiration Syndrome" },
-   { "C13.703.395", 2, { 15, 8 }, 1, "Hypertension, Pregnancy-Induced" },
-   { "C13.703.407", 2, { 15, 8 }, 1, "Morning Sickness" },
-   { "C13.703.420", 2, { 15, 8 }, 1, "Obstetric Labor Complications" },
-   { "C13.703.560", 2, { 15, 8 }, 0, "Oligohydramnios" },
-   { "C13.703.570", 2, { 15, 8 }, 0, "Pemphigoid Gestationis" },
-   { "C13.703.575", 2, { 15, 8 }, 0, "Phenylketonuria, Maternal" },
-   { "C13.703.590", 2, { 15, 8 }, 1, "Placenta Diseases" },
-   { "C13.703.610", 2, { 15, 8 }, 0, "Polyhydramnios" },
-   { "C13.703.634", 2, { 15, 8 }, 1, "Pregnancy Complications, Cardiovascular" },
-   { "C13.703.667", 2, { 15, 8 }, 0, "Pregnancy Complications, Hematologic" },
-   { "C13.703.700", 2, { 15, 8 }, 1, "Pregnancy Complications, Infectious" },
-   { "C13.703.720", 2, { 15, 8 }, 0, "Pregnancy Complications, Neoplastic" },
-   { "C13.703.720.949", 2, { 8, 15 }, 0, "Trophoblastic Neoplasms" },
-   { "C13.703.720.949.208.875", 2, { 15, 8 }, 0, "Trophoblastic Tumor, Placental Site" },
-   { "C13.703.720.949.416", 2, { 15, 8 }, 0, "Gestational Trophoblastic Disease" },
-   { "C13.703.720.949.416.875", 2, { 15, 8 }, 1, "Hydatidiform Mole" },
-   { "C13.703.726", 2, { 15, 8 }, 1, "Pregnancy in Diabetics" },
-   { "C13.703.733", 2, { 15, 8 }, 1, "Pregnancy, Ectopic" },
-   { "C13.703.733.650", 2, { 15, 8 }, 1, "Pregnancy, Heterotopic" },
-   { "C13.703.805", 2, { 15, 8 }, 0, "Pregnancy, Prolonged" },
-   { "C13.703.824.500", 2, { 15, 8 }, 0, "Prenatal Exposure Delayed Effects" },
-   { "C13.703.844", 2, { 8, 10 }, 1, "Puerperal Disorders" },
-   { "C13.703.844.253", 2, { 8, 10 }, 0, "Depression, Postpartum" },
-   { "C13.703.844.506.389", 2, { 8, 15 }, 0, "Galactorrhea" },
+   { "C12.050", 2, { 8, 10 }, 0, "Female Urogenital Diseases and Pregnancy Complications" },
+   { "C12.050.351", 2, { 8, 10 }, 0, "Female Urogenital Diseases" },
+   { "C12.050.351.500", 2, { 8, 10 }, 0, "Genital Diseases, Female" },
+   { "C12.050.351.500.163", 2, { 8, 10 }, 0, "Endometriosis" },
+   { "C12.050.351.500.320", 2, { 8, 10 }, 0, "Gynatresia" },
+   { "C12.050.351.500.498", 2, { 8, 10 }, 0, "Infertility, Female" },
+   { "C12.050.351.500.758", 2, { 8, 10 }, 0, "Tuberculosis, Female Genital" },
+   { "C12.050.351.500.919", 2, { 8, 10 }, 0, "Vaginismus" },
+   { "C12.050.351.500.056", 2, { 8, 10 }, 1, "Adnexal Diseases" },
+   { "C12.050.351.500.852", 2, { 8, 10 }, 1, "Uterine Diseases" },
+   { "C12.050.351.500.894", 2, { 8, 10 }, 1, "Vaginal Diseases" },
+   { "C12.050.351.500.944", 2, { 8, 10 }, 1, "Vulvar Diseases" },
+   { "C12.050.351.937.418", 2, { 8, 10 }, 1, "Genital Neoplasms, Female" },
+   { "C12.050.703", 2, { 8, 10 }, 1, "Pregnancy Complications" },
+   { "C12.200", 2, { 13, 10 }, 0, "Male Urogenital Diseases" },
+   { "C12.100.500", 2, { 13, 10 }, 0, "Genital Diseases, Male" },
+   { "C12.100.500.199", 2, { 13, 10 }, 0, "Epididymitis" },
+   { "C12.100.500.229", 2, { 13, 10 }, 0, "Fournier Gangrene" },
+   { "C12.100.500.287", 2, { 13, 10 }, 0, "Hematocele" },
+   { "C12.100.500.293", 2, { 13, 10 }, 0, "Hemospermia" },
+   { "C12.100.500.530", 2, { 13, 10 }, 0, "Premature Ejaculation" },
+   { "C12.100.500.693", 2, { 13, 10 }, 0, "Spermatic Cord Torsion" },
+   { "C12.100.500.731", 2, { 13, 10 }, 0, "Spermatocele" },
+   { "C12.100.500.882", 2, { 13, 10 }, 0, "Testicular Hydrocele" },
+   { "C12.100.500.909", 2, { 13, 10 }, 0, "Tuberculosis, Male Genital" },
+   { "C12.100.500.936", 2, { 13, 10 }, 0, "Varicocele" },
+   { "C12.100.500.214", 2, { 13, 10 }, 1, "Erectile Dysfunction" },
+   { "C12.100.500.260", 2, { 13, 10 }, 1, "Genital Neoplasms, Male" },
+   { "C12.100.500.430", 2, { 13, 10 }, 1, "Infertility, Male" },
+   { "C12.100.500.494", 2, { 13, 10 }, 1, "Penile Diseases" },
+   { "C12.100.500.565", 2, { 13, 10 }, 1, "Prostatic Diseases" },
+   { "C12.100.500.829", 2, { 13, 10 }, 1, "Testicular Diseases" },
    { "C14.583", 2, { 15, 8 }, 1, "Pregnancy Complications, Cardiovascular" },
    { "C14.907.489.480", 2, { 15, 8 }, 1, "Hypertension, Pregnancy-Induced" },
    { "C14.907.903", 2, { 13, 10 }, 0, "Varicocele" },
@@ -6513,6 +6491,7 @@ static struct CTIStruct CTInfo[807] = {
    { "C19.391.482.293", 2, { 10, 13 }, 0, "Eunuchism" },
    { "C19.391.829", 2, { 13, 10 }, 1, "Testicular Diseases" },
    { "C22", 1, { 3 }, 1, "Animal Diseases" },
+   { "C22.021", 3, { 3, 8, 15 }, 0, "Abortion, Veterinary" },
    { "C22.180", 2, { 4, 3 }, 1, "Cat Diseases" },
    { "C22.196", 2, { 5, 3 }, 1, "Cattle Diseases" },
    { "C22.196.581", 3, { 8, 5, 3 }, 0, "Mastitis, Bovine" },
@@ -6529,6 +6508,7 @@ static struct CTIStruct CTInfo[807] = {
    { "C23.300.306.750", 2, { 13, 10 }, 0, "Spermatocele" },
    { "C23.300.575.925", 2, { 8, 10 }, 1, "Vaginal Fistula" },
    { "C23.550.210.815.970", 2, { 10, 13 }, 0, "XYY Karyotype" },
+   { "C23.550.260.440", 2, { 8, 15 }, 0, "Embryo Loss" },
    { "C23.550.414.817", 2, { 13, 10 }, 0, "Hematocele" },
    { "C23.550.429.249", 1, { 12 }, 0, "Hyperbilirubinemia, Neonatal" },
    { "C23.550.429.249.500", 2, { 12, 10 }, 0, "Jaundice, Neonatal" },
@@ -6638,7 +6618,6 @@ static struct CTIStruct CTInfo[807] = {
    { "F01.145.113.252", 1, { 3 }, 1, "Consummatory Behavior" },
    { "F01.145.113.646", 1, { 3 }, 0, "Homing Behavior" },
    { "F01.145.126.159", 1, { 6 }, 0, "Child Reactive Disorders" },
-   { "F01.145.153", 2, { 3, 10 }, 0, "Bonding, Human-Pet" },
    { "F01.145.179", 1, { 6 }, 0, "Child Behavior" },
    { "F01.145.407.199", 2, { 8, 10 }, 0, "Breast Feeding" },
    { "F01.145.802.975.500.400", 2, { 8, 10 }, 0, "Homosexuality, Female" },
@@ -6924,12 +6903,13 @@ static struct CTIStruct CTInfo[807] = {
    { "N05.715.360.300.360", 2, { 2, 10 }, 0, "Geriatric Assessment" },
    { "N05.715.360.300.800.438.500.575", 2, { 12, 10 }, 0, "Neonatal Screening" },
    { "N06.230.150.360.250", 1, { 3 }, 1, "Housing, Animal" },
-   { "N06.850.310.350", 1, { 3 }, 1, "Disease Vectors" },
+   { "N06.850.335.188", 1, { 3 }, 1, "Disease Vectors" },
    { "N06.850.460.350.145", 2, { 8, 10 }, 0, "Maternal Exposure" },
    { "N06.850.460.350.700", 2, { 13, 10 }, 0, "Paternal Exposure" },
    { "N06.850.490.812.250", 2, { 15, 8 }, 0, "Gravidity" },
    { "N06.850.505.400.425.350", 2, { 2, 10 }, 0, "Geriatric Assessment" },
    { "N06.850.505.400.975.775", 2, { 15, 8 }, 0, "Pregnancy Rate" },
+   { "N06.850.520.203.375", 1, { 3 }, 1, "Disease Vectors" },
    { "N06.850.520.308.225", 2, { 2, 10 }, 0, "Geriatric Assessment" },
    { "N06.850.520.308.980.438.580.580", 2, { 12, 10 }, 0, "Neonatal Screening" },
    { "N06.850.520.308.985.775", 2, { 15, 8 }, 0, "Pregnancy Rate" },
@@ -6938,9 +6918,10 @@ static struct CTIStruct CTInfo[807] = {
  };
 
 
-static long numMR = 30;
-static struct miceRatStruct MiceRats[30] = {
-   { "Mice, Inbred BALB C", "D008807", "C0025919", "mice", "BALB C;BALB-C;BALB/C;BALB/c", "N/A" },
+static long numMR = 32;
+static struct miceRatStruct MiceRats[32] = {
+   { "Mice, Knockout, ApoE", "D000074085", "C4505193", "mice", "Knockout, ApoE;Knockout,-ApoE;Knockout,/ApoE", "N/A" },
+   { "Mice, Inbred BALB C", "D008807", "C0025919", "mice", "BALB C;BALB-C;BALB/C", "N/A" },
    { "Mice, Inbred CBA", "D008808", "C0025922", "mice", "CBA", "N/A" },
    { "Mice, Inbred C3H", "D008809", "C0025920", "mice", "C3H", "N/A" },
    { "Mice, Inbred C57BL", "D008810", "C0025921", "mice", "C57BL", "N/A" },
@@ -6969,5 +6950,6 @@ static struct miceRatStruct MiceRats[30] = {
    { "Rats, Long-Evans", "D020318", "C0324537", "rats", "Long-Evans;Long Evans", "N/A" },
    { "Rats, Inbred OLETF", "D020334", "C0600548", "rats", "OLETF", "Otsuka-Long-Evans-Tokushima Fatty" },
    { "Mice, Biozzi", "D038602", "C1136222", "mice", "Biozzi", "N/A" },
+   { "Mice, 129 Strain", "D057507", "C1520439", "mice", "129 Strain;129-Strain;129/Strain", "N/A" },
    { "CDNF protein, rat", "C577430", "C3529877", "rats", "CDNF", "N/A" }
  };

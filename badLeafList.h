@@ -690,10 +690,13 @@ static char *badLeaves[] = { "a  80915b",
      "woodbine",
      "zona" };
 
-static int numLeafNoSingular = 222;
+static int numLeafNoSingular = 225;
 static char *noLeafSingles[] = { 
      "water-pipes",
      "water pipes",
+     "big cats",
+     "killings",
+     "prrs",
      "sisters",
      "feathers",
      "streams",

@@ -329,8 +329,8 @@ struct Special_Aged_Struct {
 
 */
 
-static long agedPos = 256;
-static long numSpecial_Aged = 257;
+static long agedPos = 273;
+static long numSpecial_Aged = 274;
 static struct Special_Aged_Struct Special_Aged_Lookups[] = {
      {"children older than eight months", 1, { 1 }},   /* Infant */
      {"children older than seven months", 1, { 1 }},   /* Infant */
@@ -413,6 +413,8 @@ static struct Special_Aged_Struct Special_Aged_Lookups[] = {
      {"children under 4 years", 1, { 2 }},   /* Child, Preschool */
      {"children under 5 years", 1, { 2 }},   /* Child, Preschool */
      {"children under 6 years", 1, { 2 }},   /* Child, Preschool */
+     {"older aged adolescents", 1, { 4 }},   /* Adolescent */
+     {"older-aged adolescents", 1, { 4 }},   /* Adolescent */
      {"18 years old and over", 2, { 4, 6 }},   /* Adolescent, Adult */
      {"18 years old or older", 2, { 4, 6 }},   /* Adolescent, Adult */
      {"middle aged and older", 2, { 7, 8 }},   /* Middle Aged, Aged */
@@ -422,6 +424,10 @@ static struct Special_Aged_Struct Special_Aged_Lookups[] = {
      {"older chinese adults", 2, { 7, 8 }},   /* Middle Aged, Aged */
      {"older japanese adult", 1, { 8 }},   /* Aged */
      {"over 18 years of age", 2, { 4, 6 }},   /* Adolescent, Adult */
+     {"over 20 years of age", 1, { 6 }},     /* Adult */
+     {"over 30 years of age", 1, { 6 }},     /* Adult */
+     {"over 40 years of age", 2, { 6, 7 }},     /* Adult, Middle Aged */
+     {"over 50 years of age", 1, { 7 }},     /* Middle Aged */
      {"over 60 years of age", 2, { 7, 8 }},   /* Middle Aged, Aged */
      {"over 70 years of age", 2, { 8, 9 }},   /* Aged, Aged, 80 and over */
      {"over 80 years of age", 2, { 8, 9 }},   /* Aged, Aged, 80 and over */
@@ -437,6 +443,8 @@ static struct Special_Aged_Struct Special_Aged_Lookups[] = {
      {"6 year old children", 1, { 3 }},   /* Child */
      {"6-year-old children", 1, { 3 }},   /* Child */
      {"older chinese adult", 3, { 6, 7, 8 }},   /* Adult, Middle Aged, Aged */
+     {"older aged children", 2, { 3, 4 }},   /* Child, Adolescent */
+     {"older-aged children", 2, { 3, 4 }},   /* Child, Adolescent */
      {"aged over 18 years", 2, { 6, 7 }},   /* Adult, Middle Aged */
      {"elderly population", 1, { 8 }},   /* Aged */
      {"older irish adults", 3, { 7, 8, 9 }},   /* Middle Aged, Aged, Aged, 80 and over */
@@ -452,6 +460,8 @@ static struct Special_Aged_Struct Special_Aged_Lookups[] = {
      {"older irish adult", 2, { 8, 9 }},   /* Aged, Aged, 80 and over */
      {"older u.s. adults", 3, { 6, 7, 8 }},   /* Adult, Middle Aged, Aged */
      {"older adolescents", 1, { 4 }},   /* Adolescent */
+     {"older aged adults", 2, { 6, 7 }},   /* Adult, Middle Aged */
+     {"older-aged adults", 2, { 6, 7 }},   /* Adult, Middle Aged */
      {"reproductive aged", 1, { 6 }},   /* Adult */
      {"reproductive-aged", 1, { 6 }},   /* Adult */
      {"2 year old child", 1, { 2 }},   /* Child, Preschool */
@@ -466,6 +476,10 @@ static struct Special_Aged_Struct Special_Aged_Lookups[] = {
      {"6-year-old child", 1, { 3 }},   /* Child */
      {"aged 18 and more", 2, { 4, 6 }},   /* Adolescent, Adult */
      {"aged 18 and over", 2, { 4, 6 }},   /* Adolescent, Adult */
+     {"aged 20 and more", 1, { 6 }},   /* Adult */
+     {"aged 20 and over", 1, { 6 }},   /* Adult */
+     {"aged 30 and more", 1, { 6 }},   /* Adult */
+     {"aged 30 and over", 1, { 6 }},   /* Adult */
      {"aged 40 and more", 2, { 7, 8 }},   /* Middle Aged, Aged */
      {"aged 40 and over", 2, { 6, 7 }},   /* Adult, Middle Aged */
      {"aged 50 and more", 2, { 7, 8 }},   /* Middle Aged, Aged */
@@ -556,7 +570,9 @@ static struct Special_Aged_Struct Special_Aged_Lookups[] = {
      {"long liver", 2, { 8, 9 }},   /* Aged, Aged, 80 and over */
      {"long-liver", 2, { 8, 9 }},   /* Aged, Aged, 80 and over */
      {"older aged", 2, { 7, 8 }},   /* Middle Aged, Aged */
+     {"older-aged", 2, { 7, 8 }},   /* Middle Aged, Aged */
      {"older ages", 2, { 7, 8 }},   /* Middle Aged, Aged */
+     {"older-ages", 2, { 7, 8 }},   /* Middle Aged, Aged */
      {"oldest old", 1, { 9 }},   /* Aged, 80 and over */
      {"oldest-old", 1, { 9 }},   /* Aged, 80 and over */
      {"adulthood", 1, { 6 }},   /* Adult */
@@ -564,6 +580,7 @@ static struct Special_Aged_Struct Special_Aged_Lookups[] = {
      {"childhood", 1, { 3 }},   /* Child */
      {"geriatric", 1, { 8 }},   /* Aged */
      {"older age", 1, { 8 }},   /* Aged */
+     {"older-age", 1, { 8 }},   /* Aged */
      {"older men", 1, { 8 }},   /* Aged */
      {"teenagers", 1, { 4 }},   /* Adolescent */
      {"age > 18", 2, { 6, 7 }},   /* Adult, Middle Aged */
@@ -600,3 +617,158 @@ static long numAgeIgnores = 95;
 static char *ageIgnores[] = {"across the ages", "bronze ages", "cultivation ages", "dark ages", "different ages", "during the ages", "for the ages", "groundwater ages", "ice ages", "industry ages", "iron ages", "middle ages", "next 10 months", "next 10 years", "next 2 months", "next 2 years", "next 3 months", "next 3 years", "next 4 months", "next 4 years", "next 5 months", "next 5 years", "next 6 months", "next 6 years", "next 7 months", "next 7 years", "next 8 months", "next 8 years", "next 9 months", "next 9 years", "next eight months", "next eight years", "next five months", "next five years", "next four months", "next four years", "next month", "next nine months", "next nine years", "next seven months", "next seven years", "next six months", "next six years", "next ten months", "next ten years", "next three months", "next three years", "next two months", "next two years", "next year", "past 10 months", "past 10 years", "past 2 months", "past 2 years", "past 3 months", "past 3 years", "past 4 months", "past 4 years", "past 5 months", "past 5 years", "past 6 months", "past 6 years", "past 7 months", "past 7 years", "past 8 months", "past 8 years", "past 9 months", "past 9 years", "past eight months", "past eight years", "past five months", "past five years", "past four months", "past four years", "past month", "past nine months", "past nine years", "past seven months", "past seven years", "past six months", "past six years", "past ten months", "past ten years", "past three months", "past three years", "past two months", "past two years", "past year", "through the ages", "throughout the ages", "translational ages", "two ages", "year period", "years after", "years before"
 };
 
+static long numVLBW = 152;
+static char *vlbwTriggers[] = {
+"1250 g birth weight",
+"1250 g birth-weight",
+"1250 g birthweight",
+"1500 g birth weight",
+"1500 g birth-weight",
+"1500 g birthweight",
+"1250g birth weight",
+"1250g birth-weight",
+"1250g birthweight",
+"1500g birth weight",
+"1500g birth-weight",
+"1500g birthweight",
+"<1250 g birth weight",
+"<1250 g birth-weight",
+"<1250 g birthweight",
+"< 1250 g birth weight",
+"< 1250 g birth-weight",
+"< 1250 g birthweight",
+"<1250g birth weight",
+"<1250g birth-weight",
+"<1250g birthweight",
+"< 1250g birth weight",
+"< 1250g birth-weight",
+"< 1250g birthweight",
+"<1500 g birth weight",
+"<1500 g birth-weight",
+"<1500 g birthweight",
+"< 1500 g birth weight",
+"< 1500 g birth-weight",
+"< 1500 g birthweight",
+"<1500g birth weight",
+"<1500g birth-weight",
+"<1500g birthweight",
+"< 1500g birth weight",
+"< 1500g birth-weight",
+"< 1500g birthweight",
+"1,500 g birth-weight",
+"1,500 g birthweight",
+"1,250g birth weight",
+"1,250g birth-weight",
+"1,250g birthweight",
+"1,500g birth weight",
+"1,500g birth-weight",
+"1,500g birthweight",
+"<1,250 g birth weight",
+"<1,250 g birth-weight",
+"<1,250 g birthweight",
+"< 1,250 g birth weight",
+"< 1,250 g birth-weight",
+"< 1,250 g birthweight",
+"<1,250g birth weight",
+"<1,250g birth-weight",
+"<1,250g birthweight",
+"< 1,250g birth weight",
+"< 1,250g birth-weight",
+"< 1,250g birthweight",
+"<1,500 g birth weight",
+"<1,500 g birth-weight",
+"<1,500 g birthweight",
+"< 1,500 g birth weight",
+"< 1,500 g birth-weight",
+"< 1,500 g birthweight",
+"<1,500g birth weight",
+"<1,500g birth-weight",
+"<1,500g birthweight",
+"< 1,500g birth weight",
+"< 1,500g birth-weight",
+"< 1,500g birthweight",
+"birth weight (BW) < 1500",
+"birth-weight (BW) < 1500",
+"birthweight (BW) < 1500",
+"birth weight (BW) <1500",
+"birth-weight (BW) <1500",
+"birthweight (BW) <1500",
+"birth weight (BW) < 1,500",
+"birth-weight (BW) < 1,500",
+"birthweight (BW) < 1,500",
+"birth weight (BW) <1,500",
+"birth-weight (BW) <1,500",
+"birthweight (BW) <1,500",
+"birth weight 1250",
+"birth-weight 1250",
+"birthweight 1250",
+"birth weight 1,250",
+"birth-weight 1,250",
+"birthweight 1,250",
+"birth weight 1500",
+"birth-weight 1500",
+"birthweight 1500",
+"birth weight 1,500",
+"birth-weight 1,500",
+"birthweight 1,500",
+"birth weight < 1500",
+"birth-weight < 1500",
+"birthweight < 1500",
+"birth weight < 1,500",
+"birth-weight < 1,500",
+"birthweight < 1,500",
+"birth weight <1500",
+"birth-weight <1500",
+"birthweight <1500",
+"birth weight <1,500",
+"birth-weight <1,500",
+"birthweight <1,500",
+"birth weight < 1250",
+"birth-weight < 1250",
+"birthweight < 1250",
+"birth weight < 1,250",
+"birth-weight < 1,250",
+"birthweight < 1,250",
+"birth weight <1250",
+"birth-weight <1250",
+"birthweight <1250",
+"birth weight <1,250",
+"birth-weight <1,250",
+"birthweight <1,250",
+"birth weight below 1500",
+"birth-weight below 1500",
+"birthweight below 1500",
+"birth weight below 1250",
+"birth-weight below 1250",
+"birthweight below 1250",
+"birth weight below 1,500",
+"birth-weight below 1,500",
+"birthweight below 1,500",
+"birth weight below 1,250",
+"birth-weight below 1,250",
+"birthweight below 1,250",
+"birth weight less than 1250",
+"birth-weight less than 1250",
+"birthweight less than 1250",
+"birth weight less than 1251",
+"birth-weight less than 1251",
+"birthweight less than 1251",
+"birth weight less than 1500",
+"birth-weight less than 1500",
+"birthweight less than 1500",
+"birth weight less than 1501",
+"birth-weight less than 1501",
+"birthweight less than 1501",
+"birth weight less than 1,250",
+"birth-weight less than 1,250",
+"birthweight less than 1,250",
+"birth weight less than 1,251",
+"birth-weight less than 1,251",
+"birthweight less than 1,251",
+"birth weight less than 1,500",
+"birth-weight less than 1,500",
+"birthweight less than 1,500",
+"birth weight less than 1,501",
+"birth-weight less than 1,501",
+"birthweight less than 1,501"
+};

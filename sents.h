@@ -41,15 +41,15 @@ static char *prePost[] = { "were", "are", "have been" };
        { 2, {{ "Randomized Controlled Trial", "D016449" },  { "Clinical Trial", "D016430" }},
 */
 
-static long numLookPTs = 13;
-static struct lookStruct lookForPTs[13] = { 
+static long numLookPTs = 17;
+static struct lookStruct lookForPTs[17] = { 
 
-       /* 0) we conducted a multi-centre randomised trial  - no prePost */
+       /* we conducted a multi-centre randomised trial  - no prePost */
        { TRUE, 2, {{ "Randomized Controlled Trial", "D016449" }, {"Multicenter Study", "D016448"}},
               "TIAB", 4, 0,
           { 
-             { -1, 11, -1, 0, 0, -1, { "we conducted", "we performed", "we present", "we report",
-                                       "was carried out", "was carried-out",
+             { -1, 12, -1, 0, 0, -1, { "we conducted", "we performed", "we present", "we report",
+                                       "was carried out", "was carried-out", "was conducted",
                                        "we carried out", "we carried-out", "this", "our", "a"  }},
              { -1, 2, -1, 0, 0, -1,  { "randomized", "randomised" }},
              { -1, 12, -1, 0, 0, -1, { "multicenter", "multi-center", "multi center", 
@@ -60,14 +60,14 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 1) this clinical study was randomized  - no prePost */
+       /* this clinical study was randomized  - no prePost */
        /* our randomized controlled trial  - no prePost */
        /* we conducted a randomized clinical study  - no prePost */
        { TRUE, 1, {{ "Randomized Controlled Trial", "D016449" }},
               "TIAB", 4, 0,
           { 
-             { -1, 11, -1, 0, 0, -1, { "we conducted", "we performed", "we present", "we report",
-                                       "was carried out", "was carried-out",
+             { -1, 12, -1, 0, 0, -1, { "we conducted", "we performed", "we present", "we report",
+                                       "was carried out", "was carried-out", "was conducted",
                                        "we carried out", "we carried-out", "this", "our", "a"  }},
              { -1, 2, -1, 0, 0, -1,  { "randomized", "randomised" }},
              { -1, 18, -1, 0, 0, -1, { "clinical", "control", "controlled", "prospective",
@@ -80,7 +80,91 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 2) patients [were randomly] divided */
+       /* this clinical study was randomized  - no prePost */
+       /* our randomized controlled trial  - no prePost */
+       /* we conducted a randomized clinical study  - no prePost */
+       { TRUE, 2, {{ "Randomized Controlled Trial", "D016449" }, {"Clinical Trial, Phase I", "D017426"}},
+              "TIAB", 5, 0,
+          { 
+             { -1, 12, -1, 0, 0, -1, { "we conducted", "we performed", "we present", "we report",
+                                       "was carried out", "was carried-out", "was conducted",
+                                       "we carried out", "we carried-out", "this", "our", "a"  }},
+             { -1, 2, -1, 0, 0, -1,  { "randomized", "randomised" }},
+             { -1, 18, -1, 0, 0, -1, { "clinical", "control", "controlled", "prospective",
+                                       "split-mouth", "split mouth", "splitmouth", 
+                                       "single-blinded", "single blinded", "pilot",
+                                       "single-masked", "single masked", "placebo",
+                                       "double-blinded", "double blinded", 
+                                       "cross-over", "cross over", "crossover" }},
+             { -1, 4, -1, 0, 0, -1, { "phase-1", "phase 1", "phase-i", "phase i" }},
+             { -1, 2, -1, 0, 0, -1, { "trial", "study" }}
+          }
+       },
+
+       /* this clinical study was randomized  - no prePost */
+       /* our randomized controlled trial  - no prePost */
+       /* we conducted a randomized clinical study  - no prePost */
+       { TRUE, 2, {{ "Randomized Controlled Trial", "D016449" }, {"Clinical Trial, Phase II", "D017427"}},
+              "TIAB", 5, 0,
+          { 
+             { -1, 12, -1, 0, 0, -1, { "we conducted", "we performed", "we present", "we report",
+                                       "was carried out", "was carried-out", "was conducted",
+                                       "we carried out", "we carried-out", "this", "our", "a"  }},
+             { -1, 2, -1, 0, 0, -1,  { "randomized", "randomised" }},
+             { -1, 18, -1, 0, 0, -1, { "clinical", "control", "controlled", "prospective",
+                                       "split-mouth", "split mouth", "splitmouth", 
+                                       "single-blinded", "single blinded", "pilot",
+                                       "single-masked", "single masked", "placebo",
+                                       "double-blinded", "double blinded", 
+                                       "cross-over", "cross over", "crossover" }},
+             { -1, 4, -1, 0, 0, -1, { "phase-2", "phase 2", "phase-ii", "phase ii" }},
+             { -1, 2, -1, 0, 0, -1, { "trial", "study" }}
+          }
+       },
+
+       /* this clinical study was randomized  - no prePost */
+       /* our randomized controlled trial  - no prePost */
+       /* we conducted a randomized clinical study  - no prePost */
+       { TRUE, 2, {{ "Randomized Controlled Trial", "D016449" }, {"Clinical Trial, Phase III", "D017428"}},
+              "TIAB", 5, 0,
+          { 
+             { -1, 12, -1, 0, 0, -1, { "we conducted", "we performed", "we present", "we report",
+                                       "was carried out", "was carried-out", "was conducted",
+                                       "we carried out", "we carried-out", "this", "our", "a"  }},
+             { -1, 2, -1, 0, 0, -1,  { "randomized", "randomised" }},
+             { -1, 18, -1, 0, 0, -1, { "clinical", "control", "controlled", "prospective",
+                                       "split-mouth", "split mouth", "splitmouth", 
+                                       "single-blinded", "single blinded", "pilot",
+                                       "single-masked", "single masked", "placebo",
+                                       "double-blinded", "double blinded", 
+                                       "cross-over", "cross over", "crossover" }},
+             { -1, 4, -1, 0, 0, -1, { "phase-3", "phase 3", "phase-iii", "phase iii" }},
+             { -1, 2, -1, 0, 0, -1, { "trial", "study" }}
+          }
+       },
+
+       /* this clinical study was randomized  - no prePost */
+       /* our randomized controlled trial  - no prePost */
+       /* we conducted a randomized clinical study  - no prePost */
+       { TRUE, 2, {{ "Randomized Controlled Trial", "D016449" }, {"Clinical Trial, Phase IV", "D017429"}},
+              "TIAB", 5, 0,
+          { 
+             { -1, 12, -1, 0, 0, -1, { "we conducted", "we performed", "we present", "we report",
+                                       "was carried out", "was carried-out", "was conducted",
+                                       "we carried out", "we carried-out", "this", "our", "a"  }},
+             { -1, 2, -1, 0, 0, -1,  { "randomized", "randomised" }},
+             { -1, 18, -1, 0, 0, -1, { "clinical", "control", "controlled", "prospective",
+                                       "split-mouth", "split mouth", "splitmouth", 
+                                       "single-blinded", "single blinded", "pilot",
+                                       "single-masked", "single masked", "placebo",
+                                       "double-blinded", "double blinded", 
+                                       "cross-over", "cross over", "crossover" }},
+             { -1, 4, -1, 0, 0, -1, { "phase-4", "phase 4", "phase-iv", "phase iv" }},
+             { -1, 2, -1, 0, 0, -1, { "trial", "study" }}
+          }
+       },
+
+       /* patients [were randomly] divided */
        { TRUE, 1, {{ "Randomized Controlled Trial", "D016449" }},
               "TIAB", 3, 0,
           { 
@@ -91,7 +175,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 3) [patients were] assigned randomly */
+       /* [patients were] assigned randomly */
        { TRUE, 1, {{ "Randomized Controlled Trial", "D016449" }},
               "TIAB", 3, 0,
           { 
@@ -102,7 +186,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 4) patients [were assigned] randomly */
+       /* patients [were assigned] randomly */
        { TRUE, 1, {{ "Randomized Controlled Trial", "D016449" }},
               "TIAB", 3, 0,
           { 
@@ -113,7 +197,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 5) patients [are randomized] */
+       /* patients [are randomized] */
        { TRUE, 1, {{ "Randomized Controlled Trial", "D016449" }},
               "TIAB", 2, 0,
           { 
@@ -123,7 +207,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 6) [women have been] randomized */
+       /* [women have been] randomized */
        { TRUE, 1, {{ "Randomized Controlled Trial", "D016449" }},
               "TIAB", 2, 0,
           { 
@@ -133,7 +217,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 7) nonrandomised interventional trial */
+       /* nonrandomised interventional trial */
        { FALSE, 1, {{ "Clinical Trial", "D016430" }},
               "TIAB", 3, 0,
           { 
@@ -146,7 +230,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 8) non-randomised interventional controlled trial */
+       /* non-randomised interventional controlled trial */
        { FALSE, 1, {{ "Controlled Clinical Trial", "D018848" }},
               "TIAB", 3, 0,
           { 
@@ -157,7 +241,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 9) this prospective, observational, multicenter study */
+       /* this prospective, observational, multicenter study */
        { FALSE, 2, {{ "Observational Study", "D064888" }, {"Multicenter Study", "D016448"}},
               "TIAB", 5, 0,
           { 
@@ -173,7 +257,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 10) This multicentric double-blind preliminary study */
+       /* This multicentric double-blind preliminary study */
        { FALSE, 1, {{ "Multicenter Study", "D016448" }},
               "TIAB", 2, 0,
           { 
@@ -187,7 +271,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 11) Observational, Pilot Trial */
+       /* Observational, Pilot Trial */
        { FALSE, 1, {{ "Observational Study", "D064888" }},
               "TI", 3, 0,
           { 
@@ -197,7 +281,7 @@ static struct lookStruct lookForPTs[13] = {
           }
        },
 
-       /* 12) Observational, Pilot Trial */
+       /* Observational, Pilot Trial */
        { FALSE, 1, {{ "Observational Study", "D064888" }},
               "TIAB", 3, 0,
           { 

@@ -355,7 +355,7 @@ void filterPreIndex(int isLevelOne)
     for(i = 0; i < numFinalMHs; i++)
       finalMHlist[i].saveFDOC = FALSE;
 
-    if(MTI_REVIEW)
+    if(MTI_REVIEW || MTI_AUTO)
       checkFDOC();
 
     for(i = 0; i < numFinalMHs; i++)
